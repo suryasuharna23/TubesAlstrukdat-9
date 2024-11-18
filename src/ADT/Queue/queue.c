@@ -14,56 +14,47 @@ boolean isEmpty(Queue q)
 
 boolean isFull(Queue q)
 {
-    return IDX_HEAD(q) == (IDX_TAIL(q) + 1) % CAPACITY;
+    return (q.idxHead == 0 && q.idxTail == CAPACITY - 1) || (q.idxTail + 1 == q.idxHead);
 }
 
-int length(Queue q)
-{
-    if (isEmpty(q))
-    {
+int length(Queue q) {
+    if (isEmpty(q)) {
         return 0;
-    }
-    else
-    {
-        return (IDX_TAIL(q) - IDX_HEAD(q) + CAPACITY) % CAPACITY + 1;
+    } else if (q.idxTail >= q.idxHead) {
+        return q.idxTail - q.idxHead + 1;
+    } else {
+        return CAPACITY - q.idxHead + q.idxTail + 1;
     }
 }
 
-void enqueue(Queue *q, ElType val)
+void enqueue(Queue *q, Barang val)
 {
     if (isFull(*q))
     {
-        printf("Queue is full!\n");
+        printf("Antrian penuh!\n");
     }
-    else
-    {
-        if (isEmpty(*q))
-        {
-            IDX_HEAD(*q) = 0;
-        }
-        IDX_TAIL(*q) = (IDX_TAIL(*q) + 1) % CAPACITY;
-        TAIL(*q) = val;
+   if (isEmpty(*q)) {
+        q->idxHead = 0;
+        q->idxTail = 0;
+    } else {
+        q->idxTail = (q->idxTail + 1) % CAPACITY;
     }
+    q->buffer[q->idxTail] = val;
 }
 
-void dequeue(Queue *q, ElType *val)
+void dequeue(Queue *q, Barang *val)
 {
     if (isEmpty(*q))
     {
-        printf("Queue is empty!\n");
+        printf("Antrian kosong!\n");
+        return;
     }
-    else
-    {
-        *val = HEAD(*q);
-        if (IDX_HEAD(*q) == IDX_TAIL(*q))
-        {
-            IDX_HEAD(*q) = IDX_UNDEF;
-            IDX_TAIL(*q) = IDX_UNDEF;
-        }
-        else
-        {
-            IDX_HEAD(*q) = (IDX_HEAD(*q) + 1) % CAPACITY;
-        }
+    *val = q->buffer[q->idxHead];
+    if (q->idxHead == q->idxTail) {
+        q->idxHead = IDX_UNDEF;
+        q->idxTail = IDX_UNDEF;
+    } else {
+        q->idxHead = (q->idxHead + 1) % CAPACITY;
     }
 }
 
@@ -71,16 +62,12 @@ void displayQueue(Queue q)
 {
     if (isEmpty(q))
     {
-        printf("[]\n");
+        printf("Antrian kosong\n");
     }
-    else
-    {
-        int i;
-        printf("[");
-        for (i = IDX_HEAD(q); i != IDX_TAIL(q); i = (i + 1) % CAPACITY)
-        {
-            printf("%d,", q.buffer[i]);
-        }
-        printf("%d]\n", TAIL(q));
+    int i = q.idxHead;
+    while (i != q.idxTail) {
+        printf("%s, %d ", q.buffer[i].name, q.buffer[i].price);
+        i = (i + 1) % CAPACITY;
     }
+    printf("%s, %d\n", q.buffer[i].name, q.buffer[i ].price);
 }
