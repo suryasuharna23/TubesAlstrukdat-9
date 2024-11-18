@@ -26,3 +26,9 @@ void PrintUser(const User *user) {
     printf("Password: %s\n", user->password);
     printf("Money: %d\n", user->money);
 }
+
+void AddMoney(User *user, int amount) {
+    if (amount > 0) {
+        user->money += amount;
+    }
+}
