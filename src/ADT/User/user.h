@@ -15,4 +15,7 @@ void CreateUser(User *user, const char *name, const char *password, int money);
 // Fungsi untuk mencetak informasi user
 void PrintUser(const User *user);
 
+// Fungsi untuk menambah saldo pada user
+void AddMoney(User *user, int amount);
+
 #endif
