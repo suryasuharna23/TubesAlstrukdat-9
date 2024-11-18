@@ -17,7 +17,7 @@ Barang CreateBarang (const char *name, int price){ // membuat barang baru
 }
 
 
-void CreateListDinamisBarang(ListDinamicBarang *list, int capacity) {
+void CreateListDinamicBarang(ListDinamicBarang *list, int capacity) {
     list->buffer = (Barang *)malloc(capacity * sizeof(Barang)); // Alokasi memori
     list->capacity = capacity;
     list->size = 0;

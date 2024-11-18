@@ -16,6 +16,8 @@ typedef struct {
 
 Barang CreateBarang (const char *name, int price); // membuat barang baru
 
+void CreateListDinamicBarang(ListDinamicBarang *list, int capacity); //alokasi list barang
+
 void PrintBarang (const Barang *barang); // mencetak informasi barang
 
 
