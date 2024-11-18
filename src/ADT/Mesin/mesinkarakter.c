@@ -7,7 +7,12 @@ boolean EOP;
 static FILE *pita;
 static int retval; 
 
-void START(){
+void START(char *FILE){
+    pita = fopen(FILE, "r");
+    ADV();
+}
+
+void STARTINPUT(){
     pita = stdin;
     ADV();
 }
@@ -25,6 +30,6 @@ char GetCC(){
 }
 
 boolean IsEOP(){
-    return (currentChar == MARK);
+    return (currentChar == MARK || feof(pita));
 }
 

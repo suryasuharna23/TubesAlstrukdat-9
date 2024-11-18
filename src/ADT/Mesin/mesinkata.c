@@ -10,10 +10,10 @@ void IgnoreBlanks(){
     }
 }
 
-void STARTWORD(){
-    START();
+void STARTWORD(char *FILE){
+    START(FILE);
     IgnoreBlanks();
-    if (IsEOP()){
+    if (currentChar == '\n' || currentChar == MARK){
         EndWord = true;
     }
     else{
@@ -22,9 +22,20 @@ void STARTWORD(){
     }
 }
 
+void STARTINPUTWORD() {
+    STARTINPUT(); 
+    IgnoreBlanks();
+    if (currentChar == '\n' || currentChar == MARK) { 
+        EndWord = true;
+    } else {
+        EndWord = false;
+        CopyWord();
+    }
+}
+
 void ADVWORD(){
     IgnoreBlanks();
-    if (IsEOP()){
+    if (currentChar == '\n' || currentChar == MARK){
         EndWord = true;
     }
     else{
@@ -34,12 +45,13 @@ void ADVWORD(){
 
 void CopyWord(){
     int i=0;
-    while ((currentChar != BLANK) && (currentChar != MARK) && (i<NMax)){
+    while ((currentChar != BLANK) && (currentChar != '\n') && (currentChar != MARK) && (i<NMax)){
         CurrentWord.TabWord[i] = currentChar;
         ADV();
         i++;
     }
     CurrentWord.Length=i;
+    if (CurrentWord.TabWord[CurrentWord.Length-1]=='\r');
 }
 
 void PrintCurrentWord() {
