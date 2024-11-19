@@ -132,3 +132,8 @@ void DeleteLast(ArrayDinStore *array){
 void DeleteFirst(ArrayDinStore *array){
     DeleteAt(array, 0);
 }
+
+
+void CreateStore(ArrayDinStore *array, int capacity){
+    
+}
