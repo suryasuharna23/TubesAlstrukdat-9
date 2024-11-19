@@ -1,6 +1,8 @@
 #ifndef BARANG_H
 #define BARANG_H
 
+#include "boolean.h"
+
 #define MAX_LEN 100 // Panjang maksimal nama barang
 
 typedef struct {
@@ -15,8 +17,11 @@ typedef struct {
 } ArrayDinStore;
 
 Barang CreateBarang (const char *name, int price); // membuat barang baru
-void PrintBarang (const Barang *barang); // INI PERLU DIHANDLE
+
+void PrintBarang (const Barang *barang); // mencetak informasi barang
+
 void CreateStore(ArrayDinStore *array, int capacity); //alokasi array barang
-void AddBarang (ArrayDinStore *array, int i, Barang barang);
+
+
 
 #endif
