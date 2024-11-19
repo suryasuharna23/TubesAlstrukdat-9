@@ -33,7 +33,7 @@ void enqueue(Queue *q, Barang val)
     {
         printf("Antrian penuh!\n");
     }
-   if (isEmpty(*q)) {
+    if (isEmpty(*q)) {
         q->idxHead = 0;
         q->idxTail = 0;
     } else {
