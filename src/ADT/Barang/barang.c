@@ -3,7 +3,7 @@
 #include "barang.h"
 
 Barang CreateBarang (const char *name, int price){ // membuat barang baru
- 
+
     Barang barang;
     int i = 0;
     while (name[i] != '\0' && i < MAX_LEN - 1) {
