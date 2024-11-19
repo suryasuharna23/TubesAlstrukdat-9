@@ -17,6 +17,7 @@ typedef struct {
     Eltype *store;    // Array dinamis barang untuk digunakan di store
     int capacity;      // Kapasitas maksimum
     int Neff;          // Jumlah elemen saat ini
+    int Neff;          // Jumlah elemen saat ini
 } ArrayDinStore;
 
 void CreateStore(ArrayDinStore *array, int capacity);
