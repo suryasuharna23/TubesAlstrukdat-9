@@ -1,64 +1,39 @@
 #ifndef BARANG_H
 #define BARANG_H
 
-#include "boolean.h"
-
-#define MAX_LEN 100 // Panjang maksimal nama barang
-#define InitialSize 10
+#define MAX_LEN 50
 
 typedef struct {
-    char name[MAX_LEN];  // Nama barang
-    int price;           // Harga barang
+    char name[MAX_LEN];
+    int price;
 } Barang;
 
-typedef int IdxType;
-typedef int Eltype;
 typedef struct {
-    Eltype *store;    // Array dinamis barang untuk digunakan di store
-    int capacity;      // Kapasitas maksimum
-    int Neff;          // Jumlah elemen saat ini
-    int Neff;          // Jumlah elemen saat ini
+    Barang *store;
+    int Neff;
+    int Capacity;
 } ArrayDinStore;
 
-void CreateStore(ArrayDinStore *array, int capacity);
+typedef int IdxType;
 
-Barang CreateBarang (const char *name, int price); // membuat barang baru
+#define A(array) (array).store
+#define Neff(array) (array).Neff
 
-void CreateListDinamicBarang(ArrayDinStore *list, int capacity); //alokasi list barang
+// KONSTRUKTOR STORE
+void CreateStore(ArrayDinStore *list, int capacity);
 
-void PrintBarang (const Barang *barang); // mencetak informasi barang
+// KONSTRUKTOR BARANG
+Barang CreateBarang(const char *name, int price);
+void PrintBarang(const Barang *barang);
 
 // KONSTRUKTOR ARRAY DINAMIS
-ArrayDinStore MakeArrayDinStore();
-
-void DeallocateArrayDinStore(ArrayDinStore *array);
-
-boolean IsEmptyArrayDin(ArrayDinStore array);
-
-int Length(ArrayDinStore array);
-
-Eltype Get(ArrayDinStore array, IdxType i);
-
-int GetCapacity(ArrayDinStore array);
-
-void InsertAt(ArrayDinStore *array, Eltype P, IdxType i);
-
-void InsertLast(ArrayDinStore *array, Eltype el);
-
-void InsertFirst(ArrayDinStore *array, Eltype el);
-
 void DeleteAt(ArrayDinStore *array, IdxType i);
-
 void DeleteLast(ArrayDinStore *array);
-
 void DeleteFirst(ArrayDinStore *array);
+void ResizeArray(ArrayDinStore *array, int newCapacity);
+void InsertLast(ArrayDinStore *array, Barang el);
+int Length(ArrayDinStore array);
+void DeallocateArrayDinStore(ArrayDinStore *array);
+int IsEmptyArrayDin(ArrayDinStore array);
 
-
-
-
-
-
-
-
-
-#endif
+#endif 

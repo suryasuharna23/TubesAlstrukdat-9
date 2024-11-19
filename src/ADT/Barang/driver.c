@@ -1,28 +1,40 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "barang.h"
+#include <stdio.h>
 
-int main(){
-    ListDinamicBarang list;
-    CreateListDinamicBarang(&list, 5);
+int main() {
+    ArrayDinStore list;
+    CreateStore(&list, 5);
 
-    Barang b1 = CreateBarang("kacamata", 500000);
+    Barang b1 = CreateBarang("Floppy Disk Drive", 500000);
     Barang b2 = CreateBarang("Lego", 1000000);
+    Barang b3 = CreateBarang("Mouse", 150000);
+    Barang b4 = CreateBarang("Keyboard", 300000);
+    Barang b5 = CreateBarang("Monitor", 2000000);
+    Barang b6 = CreateBarang("Printer", 1000000);
 
-    PrintBarang(&b1);
-    PrintBarang(&b2);
+    printf("%d\n", list.Capacity); // Kapasitas bernilai 5
 
-    // menambahkan barang ke list
-    list.buffer[list.size++] = b1;
-    list.buffer[list.size++] = b2;
+    InsertLast(&list, b1);
+    InsertLast(&list, b2);
+    InsertLast(&list, b3);
+    InsertLast(&list, b4);
+    InsertLast(&list, b5);
+    InsertLast(&list, b6); // Tambah kapasitas list dari 5 menjadi 10
+    printf("%d\n", list.Capacity);
 
-    // menampilkan list barang
-    printf("\nDaftar barang:\n");
-    for (int i=0; i<list.size; i++){
-        PrintBarang(&list.buffer[i]);
+    printf("Sebelum dihapus:\n");
+    for (int i = 0; i < list.Neff; i++) {
+        PrintBarang(&list.store[i]);
     }
 
-    free(list.buffer); //dealokasi memori
+    DeleteFirst(&list);
+
+    printf("Setelah dihapus:\n");
+    for (int i = 0; i < list.Neff; i++) {
+        PrintBarang(&list.store[i]);
+    }
+
+    printf("%d\n", list.Capacity);
 
     return 0;
 }

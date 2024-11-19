@@ -1,22 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "barang.h"
-
-#define A(AD) (AD).store
-#define Cap(AD) (AD).capacity
-#define Neff(AD) (AD).Neff
+#include <stdlib.h>
+#include <stdio.h>
 
 // KONSTRUKTOR STORE
-void CreateStore(ArrayDinStore *array, int capacity){
-    array->store = (Eltype *)malloc(capacity * sizeof(Eltype)); // Alokasi memori
-    array->capacity = capacity; // Set kapasitas maksimum
-    array->Neff = 0;  
+void CreateStore(ArrayDinStore *list, int capacity) {
+    if (capacity > 0) {
+        list->store = (Barang *)malloc((unsigned int)capacity * sizeof(Barang));
+        list->Neff = 0;
+        list->Capacity = capacity;
+    } else {
+        list->store = NULL;
+        list->Neff = 0;
+        list->Capacity = 0;
+    }
 }
 
-//KONSTRUKTOR BARANG
-
-Barang CreateBarang (const char *name, int price){ // membuat barang baru
-
+// KONSTRUKTOR BARANG
+Barang CreateBarang(const char *name, int price) { // membuat barang baru
     Barang barang;
     int i = 0;
     while (name[i] != '\0' && i < MAX_LEN - 1) {
@@ -24,129 +24,60 @@ Barang CreateBarang (const char *name, int price){ // membuat barang baru
         i++;
     }
     barang.name[i] = '\0';
-
     barang.price = price;
     return barang;
 }
 
-
-void CreateListDinamicBarang(ArrayDinStore *list, int capacity) {
-    list->store = (Barang *)malloc(capacity * sizeof(Barang)); // Alokasi memori
-    list->capacity = capacity;
-    list->Neff = 0;
+void PrintBarang(const Barang *barang) {
+    printf("Nama: %s, Harga: %d\n", barang->name, barang->price);
 }
 
-void PrintBarang (const Barang *barang) { // Mencetak informasi barang
-    printf("Nama Barang: %s\n", barang->name);
-    printf("Harga: Rp %d\n", barang->price);
+// KONSTRUKTOR ARRAY DINAMIS
+
+void DeleteAt(ArrayDinStore *array, IdxType i) {
+    for (int j = i; j < Length(*array) - 1; j++) {
+        A(*array)[j] = A(*array)[j + 1];
+    }
+    Neff(*array) -= 1;
 }
 
-
-/*KONSTRUKTOR ARRAY DIANMIS/
-/**
- * Destruktor
- * I.S. ArrayDin terdefinisi
- * F.S. array->store terdealokasi
- */
-ArrayDinStore MakeArrayDinStore(){
-    ArrayDinStore AD;
-    A(AD) = (Eltype*) malloc (InitialSize*sizeof(Eltype));
-    Cap(AD) = InitialSize;
-    Neff(AD)=0;
-    return AD;
+void DeleteLast(ArrayDinStore *array) {
+    DeleteAt(array, Length(*array) - 1);
 }
 
-void DeallocateArrayDinStore(ArrayDinStore *array){
-    free(A(*array));
-    Cap(*array) = 0;
-    Neff(*array)=0;
+void DeleteFirst(ArrayDinStore *array) {
+    DeleteAt(array, 0);
 }
 
-/**
- * Fungsi untuk mengetahui apakah suatu array kosong.
- * Prekondisi: array terdefinisi
- */
-boolean IsEmptyArrayDin(ArrayDinStore array){
-    return (Neff(array) == 0);
+void ResizeArray(ArrayDinStore *array, int newCapacity) {
+    Barang *newStore = (Barang *)malloc((unsigned int)newCapacity * sizeof(Barang));
+    for (int i = 0; i < array->Neff; i++) {
+        newStore[i] = array->store[i];
+    }
+    free(array->store);
+    array->store = newStore;
+    array->Capacity = newCapacity;
 }
 
-/**
- * Fungsi untuk mendapatkan banyaknya elemen efektif array, 0 jika tabel kosong.
- * Prekondisi: array terdefinisi
- */
-int Length(ArrayDinStore array){
+void InsertLast(ArrayDinStore *array, Barang el) {
+    if (Neff(*array) >= array->Capacity) {
+        ResizeArray(array, array->Capacity * 2); 
+    }
+    A(*array)[Neff(*array)] = el;
+    Neff(*array)++;
+}
+
+int Length(ArrayDinStore array) {
     return Neff(array);
 }
 
-/**
- * Mengembalikan elemen array L yang ke-I (indeks lojik).
- * Prekondisi: array tidak kosong, i di antara 0..Length(array).
- */
-Eltype Get(ArrayDinStore array, IdxType i){
-    return A(array)[i];
+void DeallocateArrayDinStore(ArrayDinStore *array) {
+    free(array->store);
+    array->store = NULL;
+    array->Neff = 0;
+    array->Capacity = 0;
 }
 
-/**
- * Fungsi untuk mendapatkan kapasitas yang tersedia.
- * Prekondisi: array terdefinisi
- */
-int GetCapacity(ArrayDinStore array){
-    return Cap(array);
-}
-
-/**
- * Fungsi untuk menambahkan elemen baru di index ke-i
- * Prekondisi: array terdefinisi, i di antara 0..Length(array).
- */
-void InsertAt(ArrayDinStore *array, Eltype P, IdxType i){
-    if (Length(*array)<Cap(*array)){
-        for (int j=Length(*array);j>i;j--){
-            A(*array)[j]=A(*array)[j-1];
-        }
-        A(*array)[i]=P;
-        Neff(*array)+=1;
-    }
-}
-
-/**
- * Fungsi untuk menambahkan elemen baru di akhir array.
- * Prekondisi: array terdefinisi
- */
-void InsertLast(ArrayDinStore *array, Eltype el){
-    InsertAt(array, el, Length(*array));
-}
-
-/**
- * Fungsi untuk menambahkan elemen baru di awal array.
- * Prekondisi: array terdefinisi
- */
-void InsertFirst(ArrayDinStore *array, Eltype el){
-    InsertAt(array, el, 0);
-}
-
-/**
- * Fungsi untuk menghapus elemen di index ke-i ArrayDin
- * Prekondisi: array terdefinisi, i di antara 0..Length(array).
- */
-void DeleteAt(ArrayDinStore *array, IdxType i){
-    for (int j=i; j<Length(*array); j++ ){
-        A(*array)[j]=A(*array)[j+1];
-    }
-    Neff(*array)-=1;
-}
-
-/**
- * Fungsi untuk menghapus elemen terakhir ArrayDin
- * Prekondisi: array tidak kosong
- */
-void DeleteLast(ArrayDinStore *array){
-    DeleteAt(array, Length(*array)-1);
-}
-
-/**
- * Fungsi untuk menghapus elemen pertama ArrayDin
- * Prekondisi: array tidak kosong
- */
-void DeleteFirst(ArrayDinStore *array){
-    DeleteAt(array, 0);
+int IsEmptyArrayDin(ArrayDinStore array) {
+    return array.Neff == 0;
 }
