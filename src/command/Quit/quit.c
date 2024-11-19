@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "quit.h"
 
 void Quit(int *isRunning) {
     char response;
