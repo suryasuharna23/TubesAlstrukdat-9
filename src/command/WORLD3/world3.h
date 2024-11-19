@@ -1,9 +1,11 @@
-#ifndef WORLD3_H
-#define WORLD3_H
+#ifndef __WORLD3_H__
+#define __WORLD3_H__
 
 #include "mesinkarakter.h"
 #include "mesinkata.h"
 #include "time.h"
+
+#define MAX_TRIES 5
 
 void READLINE(char *filename, int lineIDX);
 // membaca kata pada baris tertentu
@@ -11,7 +13,5 @@ void READLINE(char *filename, int lineIDX);
 void world3_challenge();
 // memulai Work Challenge WORLD3
 
-int randomIdx();
-// memuncul angka random
 
 #endif

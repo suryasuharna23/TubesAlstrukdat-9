@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "world3.h"
-
-int randomIdx(){
-    srand(time(NULL));
-
-    int idx = rand() % 10;
-
-    return idx;
-}
+#include "random_number.h"
 
 void READLINE(char *filename, int IdxLine){
     START(filename);
@@ -34,15 +27,19 @@ void READLINE(char *filename, int IdxLine){
 }
 
 void world3_challenge() {
-    int try = 5; // banyak kesempatan mencoba
-    boolean win = false;
+    int try = MAX_TRIES; // banyak kesempatan mencoba
+    boolean win = false; // menentukan apakah pemain menang atau kalah
 
-    int line = randomIdx();
+    // implementasi random number untuk menentukan keyword dan poin secara acak
+    int line = randomNumber(10) % 10;
+    int score = randomNumber(20);
 
     char *keyword = "word_list.txt";
 
     READLINE(keyword, line);
     Word key_word = CurrentWord;
+
+    printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
 
     while (try > 0 && !win) {
         // ngeprint si karakter kosong, tiap nyobain bakal berkurang jumlah barisnya
@@ -50,31 +47,32 @@ void world3_challenge() {
             printf("_ _ _ _ _\n");
         }
 
+        // menerima input kata yang ditebak
         printf("Masukkan kata tebakan Anda: ");
         STARTINPUTWORD();
         Word word = CurrentWord;
 
         if (word.Length != 5){ // kalau panjang katanya ga sesuai
             printf("Panjang kata tidak sesuai\n");
-            try++;
-        } else {
+        } else { // kalau sesuai
             printf("Hasil: \n");
-            for (int i = 0; i < word.Length; i++){
-                boolean match = false;
+            for (int i = 0; i < word.Length; i++){ // memanggil karakter dari kata pada yang ditebak
+                boolean match = false; // menentukan karakter yang sama
 
+                // mengecek tiap karakter dari input kata yang ditebak dengan keyword yang terpilih acak
                 for (int j = 0; j < key_word.Length; j++){
-                    if ((word.TabWord[i] == key_word.TabWord[j])) { // kalau karakter sama, di tempat yang sama
-                        if ((i == j)){
-                            printf("%c ", word.TabWord[i]);
-                        } else if (i != j){
+                    if ((word.TabWord[i] == key_word.TabWord[j])) { 
+                        if ((i == j)){ // kalau karakter ada dan pada posisi yang sama
+                            printf("%c ", word.TabWord[i]); 
+                        } else if (i != j){ // kalau karakter ada, tetapi beda posisi
                             printf("%c* ", word.TabWord[i]);
                         }
-                        match = true;
-                        break; 
+                        match = true; // karakter yang sama ditemukan
+                        break; // pengecekan berhenti dan berpindah ke karakter berikutnya
                     } 
                 }
                         
-                if (!match){
+                if (!match){ // jika karakter dari kata yang ditebak tidak ada pada keyword
                     printf("%c%% ", word.TabWord[i]);
                 }
             }
@@ -89,17 +87,24 @@ void world3_challenge() {
                 }
             }
 
-            // kalau katanya sama menang, dan pengecekan berhenti
+            // kalau katanya sama, pemain menang, dan pengecekan berhenti
             if (count == word.Length){
-                win = true;
-                printf("Selamat anda menang!");
+                win = true; // kalau pemain menang, win bernilai true, program berhenti
+                printf("Selamat anda menang!\n");
+                if (try > 3){ // kalau lebih dari 3 kali percobaan, scorenya minimal 1000
+                    score = (score % 100) * 100;
+                    printf("+%d rupiah telah ditambahkan ke akun Anda.\n", score);
+                } else { // sisanya, minimal score 100
+                    score = (score % 100) * 10;
+                    printf("+%d rupiah telah ditambahkan ke akun Anda.\n", score);
+                }
             }
         }
         // banyak kesempatan mencoba berkurang
         try--;
     }
 
-    if (!win){
-        printf("Anda belum beruntung\n");
+    if (!win){ // kalau pemain kalah, program berhenti
+        printf("Boo! Anda kalah.\n");
     }
 }
