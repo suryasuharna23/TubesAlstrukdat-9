@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "barang.h"
+#include "boolean.h"
 
 Barang CreateBarang (const char *name, int price){ // membuat barang baru
  
@@ -35,6 +36,8 @@ void PrintBarang (const Barang *barang) { // Mencetak informasi barang
  * I.S. ArrayDin terdefinisi
  * F.S. array->store terdealokasi
  */
+
+
 void DeallocateArrayDin(ArrayDinStore *array){
     free((*array).store);
     (*array).Capacity = 0;
