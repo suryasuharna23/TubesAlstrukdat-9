@@ -32,7 +32,6 @@ void world3_challenge() {
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
     int line = randomNumber(10) % 10;
-    int score = randomNumber(20);
 
     char *keyword = "word_list.txt";
 
@@ -91,13 +90,8 @@ void world3_challenge() {
             if (count == word.Length){
                 win = true; // kalau pemain menang, win bernilai true, program berhenti
                 printf("Selamat anda menang!\n");
-                if (try > 3){ // kalau lebih dari 3 kali percobaan, scorenya minimal 1000
-                    score = (score % 100) * 100;
-                    printf("+%d rupiah telah ditambahkan ke akun Anda.\n", score);
-                } else { // sisanya, minimal score 100
-                    score = (score % 100) * 10;
-                    printf("+%d rupiah telah ditambahkan ke akun Anda.\n", score);
-                }
+                int score = try * 150;
+                printf("+%d rupiah telah ditambahkan ke akun Anda.\n", score);
             }
         }
         // banyak kesempatan mencoba berkurang
