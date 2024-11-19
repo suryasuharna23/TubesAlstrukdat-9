@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "boolean.h"
+#include "load.h"
 
 bool IsLoad(char *file) {
     FILE *check = fopen(file, "r"); // mode "read"

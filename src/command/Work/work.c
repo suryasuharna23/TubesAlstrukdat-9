@@ -1,20 +1,21 @@
 #include <stdio.h>
+#include "boolean.h"
 
-// Cek apakah program dijalankan di Windows
+// Cek  program dijalankan di Windows
 #ifdef _WIN32
     #include <windows.h> // untuk fungsi Sleep di Windows
-    #define sleep(seconds) Sleep((seconds) * 1000) // Konversi detik ke milidetik
+    #define sleep(seconds) Sleep((seconds) * 1000) // konversi detik ke milidetik
 #else
     #include <unistd.h> // untuk fungsi sleep di Linux/macOS
 #endif
 
 #include "work.h"
+#include "mesinkata.h"
 
-// Daftar pekerjaan dan pendapatannya
 typedef struct {
     char jobName[50];
     int salary;
-    int duration; // dalam detik
+    int duration; 
 } Job;
 
 Job jobs[] = {
@@ -27,6 +28,28 @@ Job jobs[] = {
 
 int jobCount = sizeof(jobs) / sizeof(jobs[0]);
 
+// cocokin nama pekerjaan
+boolean compareJobName(Word input, char *jobName) {
+    int i;
+    // panjang nama pekerjaan
+    int jobNameLength = 0;
+    while (jobName[jobNameLength] != '\0') {
+        jobNameLength++;
+    }
+
+    // panjang input dan nama pekerjaan harus sama untuk cocok
+    if (input.Length != jobNameLength) {
+        return false;
+    }
+
+    for (i = 0; i < input.Length; i++) {
+        if (input.TabWord[i] != jobName[i]) {
+            return false; 
+        }
+    }
+    return true;
+}
+
 // Fungsi WORK
 void work(User *user) {
     printf("Daftar pekerjaan:\n");
@@ -34,22 +57,23 @@ void work(User *user) {
         printf("%d. %s (pendapatan=%d, durasi=%ds)\n", i + 1, jobs[i].jobName, jobs[i].salary, jobs[i].duration);
     }
 
-    printf("\nMasukkan nomor pekerjaan yang dipilih: ");
-    int choice;
-    scanf("%d", &choice);
+    printf("\nMasukkan nama pekerjaan yang dipilih: ");
+    STARTINPUTWORD(); 
 
-    if (choice < 1 || choice > jobCount) {
-        printf("Pilihan tidak valid!\n");
-        return;
+    Job *selectedJob = NULL; // pointer ke pekerjaan yang dipilih
+    for (int i = 0; i < jobCount; i++) {
+        if (compareJobName(CurrentWord, jobs[i].jobName)) {
+            selectedJob = &jobs[i];
+            break;
+        }
     }
 
-    Job selectedJob = jobs[choice - 1];
-    printf("\nAnda sedang bekerja sebagai %s... harap tunggu.\n", selectedJob.jobName);
-
-    // Simulasi waktu bekerja dengan fungsi sleep yang kompatibel
-    sleep(selectedJob.duration);
-
-    // Menambahkan pendapatan ke saldo user
-    AddMoney(user, selectedJob.salary);
-    printf("Pekerjaan selesai, +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob.salary);
+    if (selectedJob == NULL) {
+        printf("Pilihan pekerjaan tidak valid!\n");
+        return;
+    }
+    printf("\nAnda sedang bekerja sebagai %s... harap tunggu.\n", selectedJob->jobName);
+    sleep(selectedJob->duration);
+    AddMoney(user, selectedJob->salary);
+    printf("Pekerjaan selesai, +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob->salary);
 }
