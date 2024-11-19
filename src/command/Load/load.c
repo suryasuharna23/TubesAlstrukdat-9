@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "boolean.h"
 
-bool IsLoad(char *file) {
+boolean IsLoad(char *file) {
     FILE *check = fopen(file, "r"); // mode "read"
     if (check == NULL) {
         return false; 

@@ -15,13 +15,9 @@ int main(){
         ADVWORD();
     }
 
-    
-
     printf("Tes START dari INPUT\n");
     STARTINPUTWORD();
     PrintCurrentWord();
-    
-
 
     return 0;
 }

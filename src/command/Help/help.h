@@ -1,5 +1,5 @@
-#ifndef __help__
-#define __help__
+#ifndef HELP_H
+#define HELP_H
 
 //help sebelum start dan masih pada welcome menu
 void help_welcome();
