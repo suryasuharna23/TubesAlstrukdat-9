@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "boolean.h"
+#include "work.h"
+#include "mesinkata.h"
 
 // Cek  program dijalankan di Windows
 #ifdef _WIN32
@@ -8,10 +10,6 @@
 #else
     #include <unistd.h> // untuk fungsi sleep di Linux/macOS
 #endif
-
-#include "work.h"
-#include "mesinkata.h"
-
 typedef struct {
     char jobName[50];
     int salary;

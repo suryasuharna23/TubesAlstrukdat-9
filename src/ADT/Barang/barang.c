@@ -18,12 +18,6 @@ Barang CreateBarang (const char *name, int price){ // membuat barang baru
 }
 
 
-void CreateListDinamicBarang(ListDinamicBarang *list, int capacity) {
-    list->buffer = (Barang *)malloc(capacity * sizeof(Barang)); // Alokasi memori
-    list->capacity = capacity;
-    list->size = 0;
-}
-
 void PrintBarang (const Barang *barang) { // Mencetak informasi barang
     printf("Nama Barang: %s\n", barang->name);
     printf("Harga: Rp %d\n", barang->price);
@@ -36,11 +30,15 @@ void PrintBarang (const Barang *barang) { // Mencetak informasi barang
  * I.S. ArrayDin terdefinisi
  * F.S. array->store terdealokasi
  */
-
+void AddBarang (ArrayDinStore *array, int i, Barang barang){
+    if (!SearchBarangStore(array->store[i], barang.name)){
+        InsVLast(&(array->store[i]), barang);
+    }
+}
 
 void DeallocateArrayDin(ArrayDinStore *array){
-    free((*array).store);
-    (*array).Capacity = 0;
+    free((*array).store); // flag
+    (*array).capacity = 0;
     (*array).Neff=0;
 }
 
@@ -60,51 +58,13 @@ int Length(ArrayDinStore array){
     return array.Neff;
 }
 
-/**
- * Mengembalikan elemen array L yang ke-I (indeks lojik).
- * Prekondisi: array tidak kosong, i di antara 0..Length(array).
- */
-address Get(ArrayDinStore array, int i){
-    return (array.store[i]).First;
-}
 
 /**
  * Fungsi untuk mendapatkan kapasitas yang tersedia.
  * Prekondisi: array terdefinisi
  */
 int GetCapacity(ArrayDinStore array){
-    return array.Capacity;
-}
-
-/**
- * Fungsi untuk menambahkan elemen baru di index ke-i
- * Prekondisi: array terdefinisi, i di antara 0..Length(array).
- */
-void InsertAt(ArrayDinStore *array, address P, int i){
-    int j;
-
-    for (j = array->Neff - 1; j >= i; j--){
-        array->store[j+1] = array->store[j];
-    }
-    
-    array->store[i].First = P;
-    array->Neff += 1;
-}
-
-/**
- * Fungsi untuk menambahkan elemen baru di akhir array.
- * Prekondisi: array terdefinisi
- */
-void InsertLast(ArrayDinStore *array, address el){
-    InsertAt(array, el, Length(*array));
-}
-
-/**
- * Fungsi untuk menambahkan elemen baru di awal array.
- * Prekondisi: array terdefinisi
- */
-void InsertFirst(ArrayDinStore *array, address el){
-    InsertAt(array, el, 0);
+    return array.capacity;
 }
 
 /**
@@ -134,9 +94,4 @@ void DeleteLast(ArrayDinStore *array){
  */
 void DeleteFirst(ArrayDinStore *array){
     DeleteAt(array, 0);
-}
-
-
-void CreateStore(ArrayDinStore *array, int capacity){
-    
 }

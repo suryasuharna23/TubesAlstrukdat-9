@@ -9,20 +9,14 @@ typedef struct {
 } Barang;
 
 typedef struct {
-    Barang *buffer;    // Array dinamis barang untuk digunakan di store
+    Barang *store;    // Array dinamis barang untuk digunakan di store
     int capacity;      // Kapasitas maksimum
-    int size;          // Jumlah elemen saat ini
+    int Neff;          // Jumlah elemen saat ini
 } ArrayDinStore;
 
-
 Barang CreateBarang (const char *name, int price); // membuat barang baru
-
-void CreateListDinamicBarang(ListDinamicBarang *list, int capacity); //alokasi list barang
-
-void PrintBarang (const Barang *barang); // mencetak informasi barang
-
+void PrintBarang (const Barang *barang); // INI PERLU DIHANDLE
 void CreateStore(ArrayDinStore *array, int capacity); //alokasi array barang
-
-
+void AddBarang (ArrayDinStore *array, int i, Barang barang);
 
 #endif
