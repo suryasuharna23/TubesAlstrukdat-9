@@ -1,27 +1,39 @@
 #ifndef BARANG_H
 #define BARANG_H
 
-#include "boolean.h"
-
-#define MAX_LEN 100 // Panjang maksimal nama barang
+#define MAX_LEN 50
 
 typedef struct {
-    char name[MAX_LEN];  // Nama barang
-    int price;           // Harga barang
+    char name[MAX_LEN];
+    int price;
 } Barang;
 
 typedef struct {
-    Barang *store;    // Array dinamis barang untuk digunakan di store
-    int capacity;      // Kapasitas maksimum
-    int Neff;          // Jumlah elemen saat ini
+    Barang *store;
+    int Neff;
+    int Capacity;
 } ArrayDinStore;
 
-Barang CreateBarang (const char *name, int price); // membuat barang baru
+typedef int IdxType;
 
-void PrintBarang (const Barang *barang); // mencetak informasi barang
+#define A(array) (array).store
+#define Neff(array) (array).Neff
 
-void CreateStore(ArrayDinStore *array, int capacity); //alokasi array barang
+// KONSTRUKTOR STORE
+void CreateStore(ArrayDinStore *list, int capacity);
 
+// KONSTRUKTOR BARANG
+Barang CreateBarang(const char *name, int price);
+void PrintBarang(const Barang *barang);
 
+// KONSTRUKTOR ARRAY DINAMIS
+void DeleteAt(ArrayDinStore *array, IdxType i);
+void DeleteLast(ArrayDinStore *array);
+void DeleteFirst(ArrayDinStore *array);
+void ResizeArray(ArrayDinStore *array, int newCapacity);
+void InsertLast(ArrayDinStore *array, Barang el);
+int Length(ArrayDinStore array);
+void DeallocateArrayDinStore(ArrayDinStore *array);
+int IsEmptyArrayDin(ArrayDinStore array);
 
-#endif
+#endif 
