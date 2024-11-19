@@ -1,22 +1,47 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "world3.h"
 
-/*
-int random_idx(){
+int randomIdx(){
     srand(time(NULL));
+
     int idx = rand() % 10;
 
     return idx;
 }
-*/
+
+void READLINE(char *filename, int IdxLine){
+    START(filename);
+    int currentLine = 0;
+
+    while ((currentLine < IdxLine) && (!IsEOP())){
+        while ((currentChar != '\n') && (!IsEOP())){
+            ADV();
+        }
+        if (currentChar == '\n'){
+            ADV();
+        }
+        currentLine++;
+    }
+
+    IgnoreBlanks();
+    if (!IsEOP()){
+        CopyWord();
+        EndWord = false;
+    } else {
+        EndWord = true;
+    }
+}
 
 void world3_challenge() {
     int try = 5; // banyak kesempatan mencoba
     boolean win = false;
 
+    int line = randomIdx();
+
     char *keyword = "word_list.txt";
 
-    STARTWORD(keyword);
+    READLINE(keyword, line);
     Word key_word = CurrentWord;
 
     while (try > 0 && !win) {
@@ -34,19 +59,26 @@ void world3_challenge() {
             try++;
         } else {
             printf("Hasil: \n");
-            for (int i = 0; i < word.Length; i++) {
-                for (int j = 0; j < key_word.Length; j++) {
-                    if ((word.TabWord[i] == key_word.TabWord[j]) && (i == j)) { // kalau karakter sama, di tempat yang sama
-                        printf("%c ", word.TabWord[i]);
-                        i++;
-                    } else if ((word.TabWord[i] == key_word.TabWord[j]) && (i != j)){
-                        printf("%c* ", word.TabWord[i]);
-                        i++;
-                    } else if (j == key_word.Length - 1){
-                        printf("%c%% ", word.TabWord[i]);
-                    }
-                } 
+            for (int i = 0; i < word.Length; i++){
+                boolean match = false;
+
+                for (int j = 0; j < key_word.Length; j++){
+                    if ((word.TabWord[i] == key_word.TabWord[j])) { // kalau karakter sama, di tempat yang sama
+                        if ((i == j)){
+                            printf("%c ", word.TabWord[i]);
+                        } else if (i != j){
+                            printf("%c* ", word.TabWord[i]);
+                        }
+                        match = true;
+                        break; 
+                    } 
+                }
+                        
+                if (!match){
+                    printf("%c%% ", word.TabWord[i]);
+                }
             }
+
             printf("\n");
 
             // ini buat ngecek kalau katanya sama
