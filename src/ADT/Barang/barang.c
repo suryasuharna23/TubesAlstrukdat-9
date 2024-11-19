@@ -4,7 +4,6 @@
 #include "boolean.h"
 
 Barang CreateBarang (const char *name, int price){ // membuat barang baru
-
     Barang barang;
     int i = 0;
     while (name[i] != '\0' && i < MAX_LEN - 1) {
@@ -12,7 +11,6 @@ Barang CreateBarang (const char *name, int price){ // membuat barang baru
         i++;
     }
     barang.name[i] = '\0';
-
     barang.price = price;
     return barang;
 }
@@ -58,7 +56,6 @@ int Length(ArrayDinStore array){
     return array.Neff;
 }
 
-
 /**
  * Fungsi untuk mendapatkan kapasitas yang tersedia.
  * Prekondisi: array terdefinisi
@@ -72,7 +69,6 @@ int GetCapacity(ArrayDinStore array){
  * Prekondisi: array terdefinisi, i di antara 0..Length(array).
  */
 void DeleteAt(ArrayDinStore *array, int i){
-    
     int j;
     for (j=i;j<array->Neff; j++){
         array->store[j] = array->store[j+1];
