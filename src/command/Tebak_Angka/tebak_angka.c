@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include "random_number.h"
 #include "tebak_angka.h"
 
 int readInt(){
