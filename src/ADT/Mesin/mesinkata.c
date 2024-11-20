@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "mesinkata.h"
 
 boolean EndWord;
@@ -111,3 +112,48 @@ boolean isEqual(Word w, const char *c){
     }
     return true;
 }
+
+// CONVERTER //
+
+char * WordToString (Word word){
+    char* str = (char*)malloc((word.Length + 1) * sizeof(char));
+    if (str == NULL) {
+        return NULL; 
+    }
+
+    for (int i = 0; i < word.Length; i++) {
+        str[i] = word.TabWord[i];
+    }
+    str[word.Length] = '\0'; 
+    return str;
+}
+
+
+int WordToInt(Word word){
+    int result = 0;
+    for (int i = 0; i < word.Length; i++) {
+        if (word.TabWord[i] < '0' || word.TabWord[i] > '9') {
+            return 0; 
+        }
+        result = result * 10 + (word.TabWord[i] - '0');
+    }
+    return result;
+}
+
+
+Word StringtoWord (char*string){
+    Word word;
+    int i = 0;
+    word.Length = 0;
+
+    while (string[i] != '\0' && string[i] != BLANK && word.Length < NMax - 1) {
+        word.TabWord[word.Length] = string[i];
+        word.Length++;
+        i++;
+    }
+
+    word.TabWord[word.Length] = '\0';
+
+    return word;
+}
+

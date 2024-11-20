@@ -64,4 +64,16 @@ Word GetWord (Word w1, int a);
 boolean isEqual(Word w, const char *c);
 // memeriksa apakah kata yang di-input atau difolder itu sama dengan di parameter
 
+
+// CONVERT //
+
+char * WordToString (Word word);
+// mengubah tipe data word ke string
+
+int WordToInt(Word word);
+// mengubah tipe data word ke integer
+
+Word StringtoWord (char*string);
+// mengubah tipe data string ke word
+
 #endif
