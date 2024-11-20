@@ -16,26 +16,24 @@ void SList(ArrayDinStore listStore){
     }
 }
 
-void SRemove(ArrayDinStore *listStore){
+
+void SRemove(ArrayDinStore *listStore) {
     Word input;
-    Barang b;
-    //boolean found = true;
+    boolean found = false;
 
     printf("Nama barang yang akan dihapus:\n");
     STARTINPUTWORD();
     input = GetWord(CurrentWord, 1);
     char *rem_input = WordToString(input);
 
-
-    for (int i=0; i<(*listStore).Neff; i++){
-        if (rem_input != (*listStore).store[i].name){
-            printf("Toko tidak menjual %s\n", rem_input);
-            break;
-        }
-        else{
+    for (int i = 0; i < (*listStore).Neff && !found; i++) {
+        if (WordCompare(rem_input, (*listStore).store[i].name)) {
             DeleteAt(listStore, i);
-            break;
+            found = true;
         }
     }
     
+    if (!found) {
+        printf("Toko tidak menjual %s\n", rem_input);
+    }
 }

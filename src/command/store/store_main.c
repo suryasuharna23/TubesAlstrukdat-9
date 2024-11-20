@@ -2,8 +2,7 @@
 #include <stdio.h>
 
 //cara ngerun: 
-//gcc store_main.c store.c ../../ADT/Mesin/mesinkarakter.c ../../ADT/Mesin/mesinkata.c ../../ADT/Barang/barang.c -o store
-
+// gcc -I../../ADT/Mesin store_main.c store.c ../../ADT/Mesin/mesinkarakter.c ../../ADT/Mesin/mesinkata.c ../../ADT/Barang/barang.c -o store
 int main(){
     ArrayDinStore listStore;
     Barang b;
@@ -24,9 +23,13 @@ int main(){
             char *barang = WordToString(input);
             int harga = WordToInt(price);
 
-            
+            if (harga <=0){
+                printf("Harga tidak valid\n");
+            }
+            else{
             b = CreateBarang(barang, harga);
             InsertLast(&listStore, b);
+            }
 
             
             STARTINPUTWORD();
@@ -38,5 +41,6 @@ int main(){
 
     SRemove(&listStore);
 
+    SList(listStore);
     return 0;
 }

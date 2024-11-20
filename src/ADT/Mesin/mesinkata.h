@@ -76,4 +76,10 @@ int WordToInt(Word word);
 Word StringtoWord (char*string);
 // mengubah tipe data string ke word
 
+
+
+boolean WordCompare(const char *str1, const char *str2);
+// membandingkan dua kata
+
+
 #endif
