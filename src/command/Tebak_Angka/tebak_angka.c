@@ -32,8 +32,10 @@ void tebak_angka(){
 
         if (value < key_value){
             printf("Tebakanmu lebih kecil!\n");
+            printf("(kesempatanmu %d kali lagi untuk mencoba)\n", (try-1));
         } else if (value > key_value){
             printf("Tebakanmu lebih besar!\n");
+            printf("(kesempatanmu %d kali lagi untuk mencoba)\n", (try-1));
         } else {
             printf("Tebakanmu benar!");
             int poin = score(75, try);
@@ -45,5 +47,6 @@ void tebak_angka(){
 
     if (!win){
         printf("Anda kalah.\n");
+        printf("Angkamu yang benar adalah %d", key_value);
     }
 }
