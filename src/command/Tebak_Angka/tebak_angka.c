@@ -36,8 +36,8 @@ void tebak_angka(){
             printf("Tebakanmu lebih besar!\n");
         } else {
             printf("Tebakanmu benar!");
-            int score = try * 75;
-            printf(" +%d rupiah telah ditambahkan ke akun anda.\n", score);
+            int poin = score(75, try);
+            printf(" +%d rupiah telah ditambahkan ke akun anda.\n", poin);
             win = true;
         }
         try--;

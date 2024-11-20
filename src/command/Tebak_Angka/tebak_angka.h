@@ -5,6 +5,7 @@
 #include "../../ADT/Mesin/mesinkarakter.h"
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../command/Random_Number/random_number.h"
+#include "../../command/Score/score.h"
 
 #define MAX_TRIES 10
 

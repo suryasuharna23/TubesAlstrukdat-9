@@ -89,8 +89,8 @@ void world3_challenge() {
             if (count == word.Length){
                 win = true; // kalau pemain menang, win bernilai true, program berhenti
                 printf("Selamat anda menang!\n");
-                int score = try * 150;
-                printf("+%d rupiah telah ditambahkan ke akun Anda.\n", score);
+                int poin = score(150, try);;
+                printf("+%d rupiah telah ditambahkan ke akun Anda.\n", poin);
             }
         }
         // banyak kesempatan mencoba berkurang
