@@ -28,18 +28,31 @@ void READLINE(char *filename, int IdxLine){
 void world3_challenge() {
     int try = MAX_TRIES; // banyak kesempatan mencoba
     boolean win = false; // menentukan apakah pemain menang atau kalah
+    char flag;
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
     int line = randomNumber(3) % 100;
 
+    // mengambil keyword
     char *keyword = "word_list.txt";
 
     READLINE(keyword, line);
     Word key_word = CurrentWord;
 
+    char *history = "history.txt";
+    clearHist(history);
+
     printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
 
     while (try > 0 && !win) {
+        int isLast = false;
+
+        STARTWORD(history);
+        while (!EndWord) {
+            PrintCurrentWord();
+            ADVWORD();
+        }
+
         // ngeprint si karakter kosong, tiap nyobain bakal berkurang jumlah barisnya
         for (int i = 0; i < try; i++){
             printf("_ _ _ _ _\n");
@@ -56,14 +69,19 @@ void world3_challenge() {
             printf("Hasil: \n");
             for (int i = 0; i < word.Length; i++){ // memanggil karakter dari kata pada yang ditebak
                 boolean match = false; // menentukan karakter yang sama
+                if (i == word.Length - 1){
+                    isLast = true;
+                }
 
                 // mengecek tiap karakter dari input kata yang ditebak dengan keyword yang terpilih acak
                 for (int j = 0; j < key_word.Length; j++){
                     if ((word.TabWord[i] == key_word.TabWord[j])) { 
                         if ((i == j)){ // kalau karakter ada dan pada posisi yang sama
-                            printf("%c ", word.TabWord[i]); 
+                            flag = ' ';
+                            saveChar(flag, word.TabWord[i], isLast);
                         } else if (i != j){ // kalau karakter ada, tetapi beda posisi
-                            printf("%c* ", word.TabWord[i]);
+                            flag = '*';
+                            saveChar(flag, word.TabWord[i], isLast);
                         }
                         match = true; // karakter yang sama ditemukan
                         break; // pengecekan berhenti dan berpindah ke karakter berikutnya
@@ -71,11 +89,10 @@ void world3_challenge() {
                 }
                         
                 if (!match){ // jika karakter dari kata yang ditebak tidak ada pada keyword
-                    printf("%c%% ", word.TabWord[i]);
+                    flag = '%';
+                    saveChar(flag, word.TabWord[i], isLast);
                 }
             }
-
-            printf("\n");
 
             // ini buat ngecek kalau katanya sama
             int count= 0;
@@ -88,16 +105,53 @@ void world3_challenge() {
             // kalau katanya sama, pemain menang, dan pengecekan berhenti
             if (count == word.Length){
                 win = true; // kalau pemain menang, win bernilai true, program berhenti
+                STARTWORD(history);
+                while (!EndWord) {
+                    PrintCurrentWord();
+                    ADVWORD();
+                }
                 printf("Selamat anda menang!\n");
                 int poin = score(150, try);;
                 printf("+%d rupiah telah ditambahkan ke akun Anda.\n", poin);
             }
         }
+
         // banyak kesempatan mencoba berkurang
         try--;
     }
 
     if (!win){ // kalau pemain kalah, program berhenti
+        STARTWORD(history);
+        while (!EndWord) {
+            PrintCurrentWord();
+            ADVWORD();
+        }
         printf("Boo! Anda kalah.\n");
     }
+}
+
+void saveChar(char flag, char letter, boolean isLast){
+    FILE *history;
+
+    history = fopen("history.txt", "a");
+
+    fputc(letter, history);
+
+    if (flag != ' '){
+        fputc(flag, history);
+    }
+    fputc(' ', history);
+
+    if (isLast){
+        fputc('\n', history);
+    }
+
+    fclose(history);
+}
+
+void clearHist(char *filename){
+    STARTWORD(filename);
+
+    FILE *clear_hist = fopen("history.txt", "w");
+    fclose(clear_hist);
 }

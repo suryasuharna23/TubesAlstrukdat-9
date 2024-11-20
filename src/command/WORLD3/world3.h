@@ -15,4 +15,10 @@ void READLINE(char *filename, int lineIDX);
 void world3_challenge();
 // memulai Work Challenge WORLD3
 
+void saveChar(char flag, char letter, boolean isLast);
+// menyimpan hasil tebakan
+
+void clearHist(char *filename);
+// membersihkan history tebakan dari game sebelumnya setiap game baru dimulai
+
 #endif
