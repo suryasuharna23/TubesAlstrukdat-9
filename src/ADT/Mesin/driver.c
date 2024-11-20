@@ -19,5 +19,13 @@ int main(){
     STARTINPUTWORD();
     PrintCurrentWord();
 
+    printf("Tes GetWord dan isEqual\n");
+    
+    STARTINPUTWORD();
+    Word w = GetWord(CurrentWord, 1);
+    if (isEqual(w, "hai!")){
+        printf("hai jg");
+    }
+
     return 0;
 }

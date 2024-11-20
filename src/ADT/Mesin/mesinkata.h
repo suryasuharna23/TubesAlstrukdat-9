@@ -58,4 +58,10 @@ void PrintCurrentWord();
    I.S:  CurrentWord berisi kata yang sudah diakuisisi
    F.S:  semua karakter dalam CurrentWord tercetak sesuai urutan*/
 
+Word GetWord (Word w1, int a);
+// ngambil kata ke-a
+
+boolean isEqual(Word w, const char *c);
+// memeriksa apakah kata yang di-input atau difolder itu sama dengan di parameter
+
 #endif

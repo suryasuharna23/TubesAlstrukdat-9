@@ -61,3 +61,53 @@ void PrintCurrentWord() {
     printf("\n");
 }
 
+Word GetWord (Word w1, int a){
+    Word w2;
+    w2.Length=0;
+    int i=0, j=0;
+
+    while (i<w1.Length && w1.TabWord[i]==' '){
+        i++;
+    }
+
+   while (j != a - 1 && i < w1.Length) {
+        if (w1.TabWord[i] == ' ') {
+            j++;
+        }
+        i++;
+    }
+
+    
+    while (i < w1.Length) {
+        if (w1.TabWord[i] == ' ') {
+            break; 
+        } else {
+            w2.TabWord[w2.Length] = w1.TabWord[i];
+            w2.Length++;
+            i++;
+        }
+    }
+
+    w2.TabWord[w2.Length] = '\0'; 
+    return w2;
+}
+
+boolean isEqual(Word w, const char *c){
+    int i = 0;
+
+    while (c[i] != '\0') {
+        i++;
+    }
+    int cnt = i;
+
+    if (w.Length != cnt) {
+        return false;
+    }
+
+    for (i = 0; i < w.Length; i++) {
+        if (w.TabWord[i] != c[i]) {
+            return false;
+        }
+    }
+    return true;
+}
