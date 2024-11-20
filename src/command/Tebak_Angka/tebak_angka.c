@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include "random_number.h"
 #include "tebak_angka.h"
 
 int readInt(){
@@ -42,9 +41,9 @@ void tebak_angka(){
             win = true;
         }
         try--;
+    }
 
-        if (try == 0){
-            printf("Anda kalah.\n");
-        }
+    if (!win){
+        printf("Anda kalah.\n");
     }
 }
