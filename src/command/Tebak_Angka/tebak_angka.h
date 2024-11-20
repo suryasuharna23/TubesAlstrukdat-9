@@ -9,7 +9,7 @@
 
 #define MAX_TRIES 10
 
-int readInt();
+int getInt();
 // membaca masukan kata sebagai integer
 
 void tebak_angka();

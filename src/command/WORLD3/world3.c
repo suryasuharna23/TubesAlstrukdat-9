@@ -25,7 +25,7 @@ void READLINE(char *filename, int IdxLine){
     }
 }
 
-void world3_challenge() {
+void world3_challenge(){
     int try = MAX_TRIES; // banyak kesempatan mencoba
     boolean win = false; // menentukan apakah pemain menang atau kalah
     char flag;
@@ -47,6 +47,7 @@ void world3_challenge() {
     while (try > 0 && !win) {
         int isLast = false;
 
+        // print kata yang ada di file history, alias kata-kata hasil tebakan sebelumnya
         STARTWORD(history);
         while (!EndWord) {
             PrintCurrentWord();
@@ -66,6 +67,12 @@ void world3_challenge() {
         if (word.Length != 5){ // kalau panjang katanya ga sesuai
             printf("Panjang kata tidak sesuai\n");
         } else { // kalau sesuai
+            boolean checked[key_word.Length];
+
+            for (int i = 0; i < key_word.Length; i++){
+                checked[i] = false;
+            }
+
             printf("Hasil: \n");
             for (int i = 0; i < word.Length; i++){ // memanggil karakter dari kata pada yang ditebak
                 boolean match = false; // menentukan karakter yang sama
@@ -75,13 +82,15 @@ void world3_challenge() {
 
                 // mengecek tiap karakter dari input kata yang ditebak dengan keyword yang terpilih acak
                 for (int j = 0; j < key_word.Length; j++){
-                    if ((word.TabWord[i] == key_word.TabWord[j])) { 
+                    if ((word.TabWord[i] == key_word.TabWord[j]) && (checked[j] == false)) { 
                         if ((i == j)){ // kalau karakter ada dan pada posisi yang sama
                             flag = ' ';
                             saveChar(flag, word.TabWord[i], isLast);
+                            checked[j] = true; // checked menjadi true, berarti karakter pada indeks j dalam kata key_word nantinya tidak perlu dicek lagi
                         } else if (i != j){ // kalau karakter ada, tetapi beda posisi
                             flag = '*';
                             saveChar(flag, word.TabWord[i], isLast);
+                            checked[j] = true;
                         }
                         match = true; // karakter yang sama ditemukan
                         break; // pengecekan berhenti dan berpindah ke karakter berikutnya
@@ -126,7 +135,11 @@ void world3_challenge() {
             PrintCurrentWord();
             ADVWORD();
         }
-        printf("Boo! Anda kalah.\n");
+        printf("Boo! kamu kalah 'v(- o -)v'\n");
+        READLINE(keyword, line);
+        printf("Kata yang benar adalah ");
+        PrintCurrentWord();
+        printf("\n");
     }
 }
 

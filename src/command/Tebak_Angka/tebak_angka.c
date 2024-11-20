@@ -2,18 +2,13 @@
 #include <math.h>
 #include "tebak_angka.h"
 
-int readInt(){
+int getInt(){
     int result = 0;
 
     STARTINPUTWORD();
+    Word num = CurrentWord;
 
-    for (int i = 0; i < CurrentWord.Length; i++){
-        if (CurrentWord.TabWord[i] >= '0' && CurrentWord.TabWord[i] <= '9'){
-            result = result * 10 + (CurrentWord.TabWord[i] - '0');
-        }
-    }
-
-    return result;
+    return WordToInt(num);
 }
 
 void tebak_angka(){
@@ -28,7 +23,7 @@ void tebak_angka(){
         int value;
 
         printf("Tebak angka: ");
-        value = readInt();
+        value = getInt();
 
         if (value < key_value){
             printf("Tebakanmu lebih kecil!\n");
@@ -46,7 +41,7 @@ void tebak_angka(){
     }
 
     if (!win){
-        printf("Anda kalah.\n");
+        printf("Yahh kamu kalah \\(>A<)/\n");
         printf("Angkamu yang benar adalah %d", key_value);
     }
 }
