@@ -41,9 +41,9 @@ void tebak_angka(){
             win = true;
         }
         try--;
+    }
 
-        if (try == 0){
-            printf("Anda kalah.\n");
-        }
+    if (!win){
+        printf("Anda kalah.\n");
     }
 }
