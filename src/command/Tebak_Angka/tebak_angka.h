@@ -1,9 +1,10 @@
 #ifndef __TEBAK_ANGKA_H__
 #define __TEBAK_ANGKA_H__
 
-#include "boolean.h"
-#include "random_number.h"
-#include "mesinkata.h"
+#include "../../ADT/Mesin/boolean.h"
+#include "../../ADT/Mesin/mesinkarakter.h"
+#include "../../ADT/Mesin/mesinkata.h"
+#include "../../command/Random_Number/random_number.h"
 
 #define MAX_TRIES 10
 

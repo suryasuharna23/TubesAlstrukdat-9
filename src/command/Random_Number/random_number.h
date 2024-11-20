@@ -2,6 +2,6 @@
 #define __RANDOM_NUMBER__
 
 int randomNumber(int x);
-// membuat bilangan random
+// membuat bilangan acak dengan fungsi lcg
 
 #endif

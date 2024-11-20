@@ -19,8 +19,8 @@ int readInt(){
 void tebak_angka(){
     int try = MAX_TRIES;
 
-    int digit = (randomNumber(10) % 3) + 1;
-    int key_value = randomNumber(10) % (int)(pow(10, digit));
+    int digit = (randomNumber(3) % 3) + 1;
+    int key_value = randomNumber(3) % (int)(pow(10, digit));
 
     boolean win = false;
 

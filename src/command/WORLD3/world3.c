@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "world3.h"
-#include "random_number.h"
 
 void READLINE(char *filename, int IdxLine){
     START(filename);
@@ -31,7 +30,7 @@ void world3_challenge() {
     boolean win = false; // menentukan apakah pemain menang atau kalah
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
-    int line = randomNumber(10) % 100;
+    int line = randomNumber(3) % 100;
 
     char *keyword = "word_list.txt";
 
