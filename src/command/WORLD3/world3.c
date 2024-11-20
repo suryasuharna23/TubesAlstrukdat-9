@@ -31,7 +31,7 @@ void world3_challenge() {
     boolean win = false; // menentukan apakah pemain menang atau kalah
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
-    int line = randomNumber(10) % 10;
+    int line = randomNumber(10) % 100;
 
     char *keyword = "word_list.txt";
 
