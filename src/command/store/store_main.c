@@ -6,6 +6,7 @@
 int main(){
     ArrayDinStore listStore;
     Barang b;
+    Queue req;
 
     CreateStore(&listStore, 5);
     
@@ -42,5 +43,9 @@ int main(){
     SRemove(&listStore);
 
     SList(listStore);
+
+    
+    SRequest(&listStore, &req);
+    SRequest(&listStore, &req);
     return 0;
 }
