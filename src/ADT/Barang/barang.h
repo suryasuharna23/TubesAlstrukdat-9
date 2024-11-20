@@ -3,6 +3,8 @@
 
 #define MAX_LEN 50
 
+#include "boolean.h"
+
 typedef struct {
     char name[MAX_LEN];
     int price;
@@ -34,6 +36,6 @@ void ResizeArray(ArrayDinStore *array, int newCapacity);
 void InsertLast(ArrayDinStore *array, Barang el);
 int Length(ArrayDinStore array);
 void DeallocateArrayDinStore(ArrayDinStore *array);
-int IsEmptyArrayDin(ArrayDinStore array);
+boolean IsEmptyArrayDin(ArrayDinStore array);
 
 #endif 

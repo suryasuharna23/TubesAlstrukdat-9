@@ -29,7 +29,7 @@ Barang CreateBarang(const char *name, int price) { // membuat barang baru
 }
 
 void PrintBarang(const Barang *barang) {
-    printf("Nama: %s, Harga: %d\n", barang->name, barang->price);
+    printf("%s\n", barang->name);
 }
 
 // KONSTRUKTOR ARRAY DINAMIS
@@ -78,6 +78,6 @@ void DeallocateArrayDinStore(ArrayDinStore *array) {
     array->Capacity = 0;
 }
 
-int IsEmptyArrayDin(ArrayDinStore array) {
+boolean IsEmptyArrayDin(ArrayDinStore array) {
     return array.Neff == 0;
 }
