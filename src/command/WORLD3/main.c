@@ -2,7 +2,7 @@
 #include "world3.h"
 
 /* cara compile
-cd C:\TUBES_ALSTRUKDEAD\TubesAlstrukdat-9\src\command\WorkChallenge\WORLD3
+cd C:\TUBES_ALSTRUKDEAD\TubesAlstrukdat-9\src\command\WORLD3
 gcc main.c world3.c ../../ADT/Mesin/mesinkarakter.c ../../ADT/Mesin/mesinkata.c ../Random_Number/random_number.c ../../command/Score/score.c -o main
 */
 

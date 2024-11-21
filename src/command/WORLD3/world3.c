@@ -44,7 +44,7 @@ void world3_challenge(){
 
     printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
 
-    while (try > 0 && !win) {
+    while (try >= 0 && !win) {
         int isLast = false;
 
         // print kata yang ada di file history, alias kata-kata hasil tebakan sebelumnya
@@ -55,7 +55,7 @@ void world3_challenge(){
         }
 
         // ngeprint si karakter kosong, tiap nyobain bakal berkurang jumlah barisnya
-        for (int i = 0; i < try; i++){
+        for (int i = 0; i <= try; i++){
             printf("_ _ _ _ _\n");
         }
 
