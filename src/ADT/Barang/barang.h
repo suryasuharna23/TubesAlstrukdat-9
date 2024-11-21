@@ -33,7 +33,7 @@ void DeleteAt(ArrayDinStore *array, IdxType i);
 void DeleteLast(ArrayDinStore *array);
 void DeleteFirst(ArrayDinStore *array);
 void ResizeArray(ArrayDinStore *array, int newCapacity);
-void InsertLast(ArrayDinStore *array, Barang el);
+void InsertLast(ArrayDinStore *array, Barang el, boolean isFromFile);
 int Length(ArrayDinStore array);
 void DeallocateArrayDinStore(ArrayDinStore *array);
 boolean IsEmptyArrayDin(ArrayDinStore array);

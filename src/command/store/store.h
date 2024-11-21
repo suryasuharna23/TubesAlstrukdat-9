@@ -8,10 +8,13 @@
 #include "../../ADT/Barang/barang.h"
 #include "../../ADT/Queue/queue.h"
 
-void SList(ArrayDinStore listStore); //menampilkan barang di list store
+
+void SList(ArrayDinStore *listStore); //menampilkan barang di list store
 
 void SRemove (ArrayDinStore *listStore); //mengahpus barang dari list store
 
-void SRequest(ArrayDinStore *listStore, Queue *requestQueue); //meminta barang ke list store
+void SRequest(ArrayDinStore *listStore, Queue *req); //meminta barang ke list store
+
+void SSupply(ArrayDinStore *listStore, Queue *req); //menambahkan barang ke list store dari store request
 
 #endif
