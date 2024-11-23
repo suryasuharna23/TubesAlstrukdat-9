@@ -1,8 +1,8 @@
 #ifndef LOAD_H
 #define LOAD_H
 
-#include "../src/ADT/Mesin/mesinkarakter.h"
-#include "../src/ADT/Mesin/mesinkata.h"
+#include "../../src/ADT/Mesin/mesinkarakter.h"
+#include "../../src/ADT/Mesin/mesinkata.h"
 
 // Definisi Konstanta
 #define MAX_NAME 50

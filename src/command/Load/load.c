@@ -1,116 +1,82 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "../ADT/Mesin/mesinkarakter.h"
-#include "../ADT/Mesin/mesinkata.h"
-#include "../ADT/User/user.h"
+#include "mesinkata.h"
 #include "../ADT/Barang/barang.h"
+#include "../ADT/User/user.h"
+#include <stdio.h>
 
-
-#define MAX_NAME 50
-#define MAX_PASSWORD 50
-#define BLANK ' '
-
-// Prototipe fungsi
-void loadFile(char *filename);
-int wordToInt(Word word);
-void wordToCharArray(Word word, char *str);
-
-// Fungsi LOAD
-void loadFile(char *filename) {
-    Barang barangList[100];
-    User userList[100];
-    int jumlahBarang = 0, jumlahUser = 0;
-
-    // Menambahkan prefix folder "config/"
-    char filepath[100];
-    int i = 0, j = 0;
-
-    // Salin "config/" ke filepath
-    char folder[] = "config/";
-    while (folder[i] != '\0') {
-        filepath[i] = folder[i];
-        i++;
-    }
-
-    // Tambahkan nama file ke filepath
-    while (filename[j] != '\0') {
-        filepath[i] = filename[j];
-        i++;
-        j++;
-    }
-    filepath[i] = '\0'; // Null-terminator
-
-    // Buka file menggunakan Mesin Kata
-    STARTWORD(filepath);
-    if (IsEOP()) {
-        printf("Meload %s\n", filepath);
-        printf("Save file tidak ditemukan. PURRMART gagal dijalankan.\n");
+void LOAD(Barang *listbarang, User *listuser, char *filename) {
+    // mulai baca file
+    STARTWORD(filename);
+    if (EndWord) {
+        printf("File konfigurasi tidak ditemukan atau kosong. \n");
         return;
     }
 
-    printf("Meload %s\n", filepath);
-
-    // Membaca jumlah barang
-    jumlahBarang = wordToInt(CurrentWord);
-    Barang *barangListPtr = malloc(jumlahBarang * sizeof(Barang));
+    //baca jumlah barang 
+    int jumlahBarang = 0;
+    for (int i = 0; i < CurrentWord.Length; i++) {
+        jumlahBarang = jumlahBarang * 10 + (CurrentWord.TabWord[i] - '0');
+    }
     ADVWORD();
 
-    // Membaca data barang
+    //baca barang
     for (int i = 0; i < jumlahBarang; i++) {
-        barangListPtr[i].price = wordToInt(CurrentWord);
+        Word hargaWord, namaBarang;
+        int hargaBarang = 0;
+
+        // baca harga barang
+        hargaWord = CurrentWord;
+        for (int j = 0; j < hargaWord.Length; j++) {
+            hargaBarang = hargaBarang * 10 + (hargaWord.TabWord[j] -  '0');
+        }
         ADVWORD();
-        wordToCharArray(CurrentWord, barangListPtr[i].name);
+
+        // baca nama barang
+        namaBarang = CurrentWord;
         ADVWORD();
+
+        // tambah barang ke list
+        Barang b;
+        CreateBarang(&b, &namaBarang, hargaBarang);
+        AddBarang(listbarang, b);
     }
 
-    // Membaca jumlah pengguna
-    jumlahUser = wordToInt(CurrentWord);
-    User *userListPtr = malloc(jumlahUser * sizeof(User));
+    // baca jumlah user
+    int jumlahUser = 0;
+    for (int i = 0; i < CurrentWord.Length; i++) {
+        jumlahUser = jumlahUser * 10 + (CurrentWord.TabWord[i] - '0');
+    }
     ADVWORD();
 
-    // Membaca data pengguna
+    // baca jumlah user
+    int jumlahUser = 0;
+    for (int i = 0; i < CurrentWord.Length; i++) {
+        jumlahUser = jumlahUser * 10 + (CurrentWord.TabWord[i] - '0');
+    }
+    ADVWORD();
+
+    // baca data pengguna
     for (int i = 0; i < jumlahUser; i++) {
-        userListPtr[i].money = wordToInt(CurrentWord);
+        Word uangWord, username, password;
+        int uangUser = 0;
+
+        // baca uang pengguna
+        uangWord = CurrentWord;
+        for (int j = 0; j < uangWord.Length; j++) {
+            uangUser = uangUser * 10 + (uangWord.TabWord[j] - '0');
+        }
         ADVWORD();
-        wordToCharArray(CurrentWord, userListPtr[i].name);
+
+        username = CurrentWord;
         ADVWORD();
-        wordToCharArray(CurrentWord, userListPtr[i].password);
+
+        password = CurrentWord;
         ADVWORD();
+
+        User u;
+        CreateUser(&u, &username, &password, uangUser);
+        AddUser(listuser, u);
+        }
+
+        printf("konfigurasi berhasil dimuat dari file: %s\n", filename);
+    
     }
-
-    // Menampilkan hasil pembacaan
-    printf("Save file berhasil dibaca. PURRMART berhasil dijalankan.\n");
-
-    printf("Daftar Barang:\n");
-    for (int i = 0; i < jumlahBarang; i++) {
-        printf("  - %s (Harga: %d)\n", barangListPtr[i].name, barangListPtr[i].price);
-    }
-
-    printf("Daftar Pengguna:\n");
-    for (int i = 0; i < jumlahUser; i++) {
-        printf("  - Username: %s, Password: %s, Uang: %d\n",
-               userListPtr[i].name, userListPtr[i].password, userListPtr[i].money);
-    }
-
-    // Membersihkan memori
-    free(barangListPtr);
-    free(userListPtr);
-}
-
-// Konversi Word menjadi integer
-int wordToInt(Word word) {
-    int result = 0;
-    for (int i = 0; i < word.Length; i++) {
-        result = result * 10 + (word.TabWord[i] - '0');
-    }
-    return result;
-}
-
-// Konversi Word menjadi array karakter
-void wordToCharArray(Word word, char *str) {
-    int i;
-    for (i = 0; i < word.Length; i++) {
-        str[i] = word.TabWord[i];
-    }
-    str[i] = '\0'; // Null-terminator
-}

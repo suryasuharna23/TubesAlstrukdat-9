@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "mesinkata.h"
+
 // KONSTRUKTOR STORE
 void CreateStore(ArrayDinStore *list, int capacity) {
     if (capacity > 0) {
@@ -61,6 +62,7 @@ void ResizeArray(ArrayDinStore *array, int newCapacity) {
 
 void InsertLast(ArrayDinStore *array, Barang el) {
     // Jika barang sudah ada di toko
+    // as add barang
     for (int i = 0; i < Neff(*array); i++) {
         if (WordCompare(A(*array)[i].name, el.name)) {
             printf("Barang %s sudah ada di toko!\n", el.name);
