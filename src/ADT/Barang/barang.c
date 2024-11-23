@@ -60,19 +60,23 @@ void ResizeArray(ArrayDinStore *array, int newCapacity) {
     array->Capacity = newCapacity;
 }
 
-void InsertLast(ArrayDinStore *array, Barang el) {
+void InsertLast(ArrayDinStore *array, Barang el, boolean isFromFile) {
     // Jika barang sudah ada di toko
     // as add barang
     for (int i = 0; i < Neff(*array); i++) {
         if (WordCompare(A(*array)[i].name, el.name)) {
-            printf("Barang %s sudah ada di toko!\n", el.name);
+            if (!isFromFile){
+                printf("Barang %s sudah ada di toko!\n", el.name);
+            }
             return;
         }
     }
     
     // validasi jika harga barang valid
     if (el.price <= 0) {
-        printf("Barang tidak valid! Harga harus lebih dari 0\n");
+        if (!isFromFile){
+            printf("Barang tidak valid! Harga harus lebih dari 0\n");
+        }
         return;
     }
     
@@ -82,7 +86,10 @@ void InsertLast(ArrayDinStore *array, Barang el) {
     }
     A(*array)[Neff(*array)] = el;
     Neff(*array)++;
-    printf("Barang %s berhasil ditambahkan ke toko!\n", el.name);
+
+    if (!isFromFile){
+        printf("Barang %s berhasil ditambahkan ke toko!\n", el.name);
+    }
 }
 
 int Length(ArrayDinStore array) {

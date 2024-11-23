@@ -1,51 +1,80 @@
 #include "store.h"
 #include <stdio.h>
 
-//cara ngerun: 
-// gcc -I../../ADT/Mesin store_main.c store.c ../../ADT/Mesin/mesinkarakter.c ../../ADT/Mesin/mesinkata.c ../../ADT/Barang/barang.c -o store
-int main(){
+int main() {
     ArrayDinStore listStore;
-    Barang b;
     Queue req;
-
-    CreateStore(&listStore, 5);
+    Word command;
+    char *file = "list.txt";
+    boolean running = true;
     
-    STARTINPUTWORD();
+    CreateStore(&listStore, 10);
+    CreateQueue(&req);
 
-    while (true){
-        Word input = GetWord(CurrentWord, 1);
-        Word price = GetWord(CurrentWord, 2);
+    while (running) {
+        printf("\nMasukkan command (add/list/remove/request/supply/quit): ");
+        STARTINPUTWORD();
 
-        if(isEqual(input, "quit")){
-            break;
+        
+        if (CurrentWord.Length == 0) {
+            printf("Command tidak boleh kosong!\n");
+            continue;
         }
 
-        else{
-            char *barang = WordToString(input);
+        command = CurrentWord;
+        
+        // konversi ke lowercase
+        for(int i = 0; i < command.Length; i++) {
+            if(command.TabWord[i] >= 'A' && command.TabWord[i] <= 'Z') {
+                command.TabWord[i] += 32;
+            }
+        }
+        
+        // penerimaan command diakhiri dengan null
+        command.TabWord[command.Length] = '\0';
+
+        if (WordCompare("quit", command.TabWord)) {
+            running = false;
+            printf("Terima kasih telah menggunakan program ini!\n");
+            break;
+        }
+        else if (WordCompare("add", command.TabWord)) { //menambahkan barang ke store
+            printf("Nama barang dan harga: ");
+            STARTINPUTWORD();
+            if (CurrentWord.Length < 2) { //kalau user ga masukin nama barang/harga
+                printf("Input tidak valid! Format: <nama_barang> <harga>\n");
+                continue;
+            }
+            Word barang = GetWord(CurrentWord, 1);
+            Word price = GetWord(CurrentWord, 2);
             int harga = WordToInt(price);
 
-            if (harga <=0){
-                printf("Harga tidak valid\n");
+            if (harga <= 0) {
+                printf("Harga tidak valid!\n");
+            } else {
+                Barang b = CreateBarang(WordToString(barang), harga);
+                InsertLast(&listStore, b, false);
             }
-            else{
-            b = CreateBarang(barang, harga);
-            InsertLast(&listStore, b);
-            }
+        }
+        else if (WordCompare("list", command.TabWord)) {
+            SList(&listStore);
+        }
+        else if (WordCompare("remove", command.TabWord)) {
+            SRemove(&listStore);
+        }
+        else if (WordCompare("request", command.TabWord)) {
+            SRequest(&listStore, &req);
+        }
 
-            
-            STARTINPUTWORD();
+        else if (WordCompare("supply", command.TabWord)) {
+            SSupply(&listStore, &req);
+        }
+
+        else {
+            printf("Command tidak valid! Pilih: add/list/remove/request/supply/quit\n");
         }
     }
 
-
-    SList(listStore);
-
-    SRemove(&listStore);
-
-    SList(listStore);
-
-    
-    SRequest(&listStore, &req);
-    SRequest(&listStore, &req);
+    DeallocateArrayDinStore(&listStore);
     return 0;
 }
