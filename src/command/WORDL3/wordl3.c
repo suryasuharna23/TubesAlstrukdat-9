@@ -142,20 +142,21 @@ int wordl3_challenge(){
 void saveChar(char flag, char letter, boolean isLast){
     FILE *history;
 
-    history = fopen("history.txt", "a");
+    history = fopen("history.txt", "a"); //  membuka file history tebakan kata
 
+    // masukin karaketr ke file history
     fputc(letter, history);
 
-    if (flag != ' '){
+    if (flag != ' '){ // kalau karakter benar di posisi benar, flagnya ' ', jadi untuk selain itu, bakal dikasih ' ' setelah flagnya
         fputc(flag, history);
     }
     fputc(' ', history);
 
-    if (isLast){
+    if (isLast){ // kalau udah karakter terakhir, ganti baris
         fputc('\n', history);
     }
 
-    fclose(history);
+    fclose(history); // close file
 }
 
 void clearHist(char *filename){

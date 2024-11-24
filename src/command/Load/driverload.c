@@ -18,7 +18,6 @@ int main() {
     userList.Neff = 0;
     userList.Capacity = 5;
 
-    // Mulai pembacaan file
     STARTWORD((char *)filename);
 
     if (!EndWord) {
@@ -28,7 +27,6 @@ int main() {
         printf("Jumlah barang: %d\n", nBarang);
         ADVWORD();
 
-        // Membaca detail barang
         for (int i = 0; i < nBarang; i++) {
             Word harga = GetWord(CurrentWord, 1);
             int price = WordToInt(harga);
@@ -37,7 +35,6 @@ int main() {
             char *name = WordToString(nama);
             ADVWORD();
 
-            // Tambahkan barang ke array
             Barang barang = CreateBarang(name, price);
             InsertLast(&store, barang, true);
 
@@ -62,19 +59,17 @@ int main() {
             char *password = WordToString(pass);
             ADVWORD();
 
-            // Tambahkan pengguna ke array
             User user;
             CreateUser(&user, username, password, money);
             InsertUser(&userList, user);
 
 
-            free(username); // Bebaskan memori setelah digunakan
-            free(password); // Bebaskan memori setelah digunakan
+            free(username); 
+            free(password); 
         }
 
         printf("\nData berhasil dimuat dari file '%s'.\n", filename);
 
-        // Tampilkan data barang
         printf("\nDaftar Barang:\n");
         for (int i = 0; i < Length(store); i++) {
             printf("Barang %d:\n", i + 1);

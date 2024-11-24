@@ -1,0 +1,12 @@
+Users:
+Username: Surya
+Password: pazzword
+Uang: 50
+Username: Sada
+Password: alstrukdead
+Uang: 150
+Barang:
+Nama: meja
+Harga: 5
+Nama: kursi
+Harga: 15

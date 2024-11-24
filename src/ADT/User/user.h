@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#define MAX_LEN 50 // Panjang maksimal nama dan password
+#define MAX_LEN 50 
 
 #include "../../Boolean/boolean.h"
 
@@ -18,8 +18,8 @@ typedef struct {
 
 typedef struct {
     User *users;
-    int Neff;        // Banyaknya elemen efektif
-    int Capacity;    // Kapasitas maksimum array
+    int Neff;        
+    int Capacity;    
 } ArrayDinUser;
 
 typedef int IdxType;

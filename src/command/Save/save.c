@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdlib.h>
 #include "save.h"
 
 void save(const char *filename, ArrayDinUser *userArray, listBarang *barangList)
