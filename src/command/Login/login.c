@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "login.h"
+#include "../Mesin/mesinkata.h"
 
 void Login(ListUser *users, char *currentUser) {
     char username[MAX_LEN];
@@ -26,7 +27,13 @@ void Login(ListUser *users, char *currentUser) {
 
     // Input username
     printf("Username: ");
-    scanf("%s", username);
+    Word wordUsername = GetWord(CurrentWord, 1);
+
+    for (int i = 0; i < wordUsername.Length; i++)
+    {
+        username[i] = wordUsername.TabWord[i];
+    }
+    username[wordUsername.Length] = '\0';
 
     // Cari username di daftar pengguna
     for (int i = 0; i < users->count; i++) {
@@ -51,7 +58,13 @@ void Login(ListUser *users, char *currentUser) {
 
     // Input password
     printf("Password: ");
-    scanf("%s", password);
+    Word wordPassword = GetWord(CurrentWord, 1);
+
+    for (int i = 0; i < wordPassword.Length; i++)
+    {
+        password[i] = wordPassword.TabWord[i];
+    }
+    password[wordPassword.Length] = '\0';
 
     // Validasi password
     int isPasswordMatch = 1;
