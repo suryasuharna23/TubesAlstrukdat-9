@@ -9,7 +9,6 @@ void LOAD(const char *filename, ArrayDinStore *store, ArrayDinUser *userList) {
         return;
     }
 
-    // Membaca jumlah barang
     int nBarang;
     fscanf(file, "%d\n", &nBarang);
     for (int i = 0; i < nBarang; i++) {
@@ -21,7 +20,6 @@ void LOAD(const char *filename, ArrayDinStore *store, ArrayDinUser *userList) {
         InsertLast(store, barang, true);
     }
 
-    // Membaca jumlah pengguna
     int nUser;
     fscanf(file, "%d\n", &nUser);
     for (int i = 0; i < nUser; i++) {

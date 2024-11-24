@@ -3,7 +3,7 @@
 #include "work.h"
 #include "mesinkata.h"
 
-// Cek  program dijalankan di Windows
+// cek  program dijalankan di Windows
 #ifdef _WIN32
     #include <windows.h> // untuk fungsi Sleep di Windows
     #define sleep(seconds) Sleep((seconds) * 1000) // konversi detik ke milidetik
@@ -48,7 +48,6 @@ boolean compareJobName(Word input, char *jobName) {
     return true;
 }
 
-// Fungsi WORK
 void work(User *user) {
     printf("Daftar pekerjaan:\n");
     for (int i = 0; i < jobCount; i++) {
