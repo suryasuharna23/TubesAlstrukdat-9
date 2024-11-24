@@ -1,90 +1,77 @@
 #include <stdio.h>
 #include "login.h"
-#include "../Mesin/mesinkata.h"
+#include "../../ADT/Mesin/mesinkata.h"
 
-void Login(ListUser *users, char *currentUser) {
+void Login(ListUser *users, char *currentUser)
+{
     char username[MAX_LEN];
     char password[MAX_LEN];
     int userIdx = -1;
-    
+
     printf("Silakan LOGIN terlebih dahulu.\n");
-    // debug pengguna
-    // for (int i = 0; i < users->count; i++) {
-    //     for (int j = 0; users->users[i].name[j] != '\0'; j++) {
-    //         printf("%c", users->users[i].name[j]);
-    //     }
-    //     for (int j = 0; users->users[i].password[j] != '\0'; j++) {
-    //         printf("%c", users->users[i].password[j]);
-    //     }
-    //     printf("\n");
-    // }
 
     // Cek apakah sudah ada pengguna yang login
-    if (currentUser[0] != '\0') {
+    if (currentUser[0] != '\0')
+    {
         printf("Anda masih tercatat sebagai %s. Silakan LOGOUT terlebih dahulu.\n", currentUser);
         return;
     }
 
     // Input username
     printf("Username: ");
-    Word wordUsername = GetWord(CurrentWord, 1);
+    STARTINPUTWORD(); // Mulai membaca input kata untuk username
+    Word wordUsername = CurrentWord;
 
+    // Salin Word ke username
     for (int i = 0; i < wordUsername.Length; i++)
     {
         username[i] = wordUsername.TabWord[i];
     }
-    username[wordUsername.Length] = '\0';
+    username[wordUsername.Length] = '\0'; // Tambahkan null terminator
 
     // Cari username di daftar pengguna
-    for (int i = 0; i < users->count; i++) {
-        int isMatch = 1;
-        for (int j = 0; username[j] != '\0' || users->users[i].name[j] != '\0'; j++) {
-            if (username[j] != users->users[i].name[j]) {
-                isMatch = 0; // Tidak cocok
-                break;
-            }
-        }
-        if (isMatch) {
+    for (int i = 0; i < users->count; i++)
+    {
+        Word userWord = StringtoWord(users->users[i].name);
+        if (isEqual(wordUsername, userWord.TabWord))
+        {
             userIdx = i;
             break;
         }
     }
 
-    // Validasi hasil pencarian username
-    if (userIdx == -1) {
-        printf("Username atau password salah.\n");
+    if (userIdx == -1)
+    {
+        printf("Username tidak ditemukan.\n");
         return;
     }
 
     // Input password
     printf("Password: ");
-    Word wordPassword = GetWord(CurrentWord, 1);
+    STARTINPUTWORD(); // Mulai membaca input kata untuk password
+    Word wordPassword = CurrentWord;
 
+    // Salin Word ke password
     for (int i = 0; i < wordPassword.Length; i++)
     {
         password[i] = wordPassword.TabWord[i];
     }
-    password[wordPassword.Length] = '\0';
+    password[wordPassword.Length] = '\0'; // Tambahkan null terminator
 
     // Validasi password
-    int isPasswordMatch = 1;
-    for (int i = 0; password[i] != '\0' || users->users[userIdx].password[i] != '\0'; i++) {
-        if (password[i] != users->users[userIdx].password[i]) {
-            isPasswordMatch = 0; // Password tidak cocok
-            break;
+    Word passwordWord = StringtoWord(users->users[userIdx].password);
+    if (isEqual(wordPassword, passwordWord.TabWord))
+    {
+        // Salin nama pengguna ke currentUser
+        for (int i = 0; i < wordUsername.Length; i++)
+        {
+            currentUser[i] = wordUsername.TabWord[i];
         }
-    }
-
-    // Login berhasil atau gagal
-    if (isPasswordMatch) {
-        int i = 0;
-        while (users->users[userIdx].name[i] != '\0') {
-            currentUser[i] = users->users[userIdx].name[i];
-            i++;
-        }
-        currentUser[i] = '\0'; // Null terminator
+        currentUser[wordUsername.Length] = '\0'; // Tambahkan null terminator
         printf("Anda telah login ke PURRMART sebagai %s.\n", currentUser);
-    } else {
-        printf("Username atau password salah.\n");
+    }
+    else
+    {
+        printf("Password salah.\n");
     }
 }

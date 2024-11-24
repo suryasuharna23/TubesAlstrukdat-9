@@ -2,9 +2,8 @@
 #define LOGIN_H
 
 #include "boolean.h"
-#include "../User/user.h"
-
-#define MAX_LEN 100
+#include "../../ADT/User/user.h"
+#include "../../ADT/Mesin/mesinkata.h"
 
 // Fungsi untuk melakukan proses login
 void Login(ListUser *users, char *currentUser);
