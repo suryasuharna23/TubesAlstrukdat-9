@@ -25,7 +25,6 @@
 
 
 int main(){
-
     boolean EarlyQuit = false;
     boolean isShopOpen = false;
     boolean startSession = false;
@@ -80,13 +79,13 @@ int main(){
                             printf("Kamu mau main challenge nomor berapa? ");
                             STARTINPUTWORD();
                             if (isEqual(CurrentWord, "1")){
-                                // kurangin 200 dari sallary
+                                TakeMoney(&user, 200);
                                 int poin = tebak_angka();
-                                // tambahin poin ke sallary
+                                AddMoney(&user, poin);
                             } else if (isEqual(CurrentWord, "2")){
-                                // kurangin 500 dari sallary
+                                TakeMoney(&user, 500);
                                 int poin = wordl3_challenge();
-                                // tambahin poin ke sallary
+                                AddMoney(&user, poin);
                             } else {
                                 printf("Oitt, gaada dipilihan tuh. Masukin pilihan lain!\n");
                             }
@@ -115,6 +114,27 @@ int main(){
                         }
                         else if (isEqual(CurrentWord, "SAVE")){\
 
+                        }
+                        else if (isEqual(CurrentWord,"LOAD")){
+                            printf("Masukkan nama file: ");
+                            STARTINPUTWORD();
+                            fileword = GetWord(CurrentWord, 1);
+                            char *filename = WordToString(fileword);
+
+                            LOAD(filename, &listStore, &userList);
+
+                            if (listStore.Neff > 0 || userList.Neff > 0)
+                            {
+                                printf("\nBerhasil memuat file %s\n", filename);
+                                PrintLoadedData(&listStore, &userList);
+
+                                free(listStore.store);
+                                free(userList.users);
+                            }
+                            else {
+                                printf("Gagal memuat file %s\n", filename);
+                            }
+                            free(filename);
                         }
                         else if (isEqual(CurrentWord, "HELP")){
                             help_main();

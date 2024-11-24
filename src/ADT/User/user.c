@@ -38,6 +38,12 @@ void AddMoney(User *user, int amount) {
     }
 }
 
+void TakeMoney(User *user, int amount) {
+    if (amount > 0) {
+        user->money -= amount;
+    }
+}
+
 // buat array dinamis user
 void CreateArrayDinUser(ArrayDinUser *array, int capacity) {
     if (capacity > 0) {

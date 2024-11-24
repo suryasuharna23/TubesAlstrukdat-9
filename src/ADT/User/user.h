@@ -45,7 +45,8 @@ boolean IsEmptyArrayDinUser(ArrayDinUser array);
 void ResizeArrayUser(ArrayDinUser *array, int newCapacity);
 void PrintAllUsers(ArrayDinUser array);
 
-// Fungsi untuk menambah saldo pada user
+// Fungsi untuk menambah atau mengurangi saldo pada user
 void AddMoney(User *user, int amount);
+void TakeMoney(User *user, int amount);
 
 #endif
