@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include "user.h"
 
+// Membuat list user kosong
+void InitializeListUser(ListUser *list){
+    list->count = 0;
+}
+
 // Membuat user baru
 void CreateUser(User *user, const char *name, const char *password, int money) {
     int i = 0;

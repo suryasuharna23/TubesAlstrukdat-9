@@ -3,14 +3,19 @@
 
 #define MAX_LEN 50 // Panjang maksimal nama dan password
 
-#include "user.h"
 #include "boolean.h"
+
 
 typedef struct {
     char name[MAX_LEN];
     char password[MAX_LEN];
     int money;
 } User;
+
+typedef struct {
+    User users[MAX_LEN];
+    int count;
+} ListUser;
 
 typedef struct {
     User *users;
@@ -24,7 +29,11 @@ typedef int IdxType;
 #define U(array) (array).users
 #define Neff(array) (array).Neff
 
+// Konstruktor list user
+void InitializeListUser(ListUser *list);
+
 // Fungsi dan Prosedur
+void CreateUser(User *user, const char *name, const char *password, int money);
 void CreateArrayDinUser(ArrayDinUser *array, int capacity);
 void DeallocateArrayDinUser(ArrayDinUser *array);
 

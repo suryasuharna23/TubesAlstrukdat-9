@@ -1,11 +1,12 @@
 #ifndef REGISTER_H
 #define REGISTER_H
 
-typedef struct {
-    char username[50];
-    char password[50];
-} User;
+#include "mesinkata.h"  // Untuk menggunakan mesin kata
+#include "mesinkarakter.h"
+#include "user.h"
 
-void registerUser();
+// Fungsi untuk registrasi pengguna baru
+// Memeriksa apakah username sudah ada, jika belum maka menambahkan pengguna baru
+void registerUser(ListUser *users);
 
 #endif

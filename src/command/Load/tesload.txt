@@ -1,0 +1,7 @@
+3
+15000 Kopi
+20000 Teh
+10000 Roti
+2
+50000 user1 pass1
+30000 user2 pass2
