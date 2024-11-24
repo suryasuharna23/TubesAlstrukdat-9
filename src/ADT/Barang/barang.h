@@ -4,11 +4,19 @@
 #define MAX_LEN 50
 
 #include "boolean.h"
+#include "../../ADT/Mesin/mesinkarakter.h"
+#include "../../ADT/Mesin/mesinkata.h"
 
 typedef struct {
     char name[MAX_LEN];
     int price;
 } Barang;
+
+typedef struct
+{
+    Barang items[MAX_LEN];
+    int count;
+} listBarang ;
 
 typedef struct {
     Barang *store;
@@ -21,8 +29,8 @@ typedef int IdxType;
 #define A(array) (array).store
 #define Neff(array) (array).Neff
 
-// KONSTRUKTOR STORE
-void CreateStore(ArrayDinStore *list, int capacity);
+// KONSTRUKTOR LIST BARANG
+void InitializeListBarang(listBarang *list);
 
 // KONSTRUKTOR BARANG
 Barang CreateBarang(const char *name, int price);

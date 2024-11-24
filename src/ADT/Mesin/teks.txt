@@ -1,2 +1,6 @@
-AYAM CABE HIJAU 
-MAU 
+this 
+is
+a
+test
+of
+ADVWORD

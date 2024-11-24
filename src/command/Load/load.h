@@ -1,20 +1,15 @@
 #ifndef LOAD_H
 #define LOAD_H
 
-#include "../../src/ADT/Mesin/mesinkarakter.h"
-#include "../../src/ADT/Mesin/mesinkata.h"
+#include "../../ADT/Mesin/mesinkarakter.h"
+#include "../../ADT/Mesin/mesinkata.h"
+#include "../../ADT/Barang/barang.h"
+#include "../../ADT/User/user.h"
 
 // Definisi Konstanta
 #define MAX_NAME 50
 #define MAX_PASSWORD 50
 
-// Fungsi untuk memuat file konfigurasi
-void loadFile(char *filename);
-
-// Fungsi konversi Word ke integer
-int wordToInt(Word word);
-
-// Fungsi konversi Word ke array karakter
-void wordToCharArray(Word word, char *str);
+void LOAD(const char *filename, ArrayDinStore *store, ArrayDinUser *userList);
 
 #endif

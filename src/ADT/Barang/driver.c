@@ -14,12 +14,12 @@ int main() {
 
     printf("%d\n", list.Capacity); // Kapasitas bernilai 5
 
-    InsertLast(&list, b1);
-    InsertLast(&list, b2);
-    InsertLast(&list, b3);
-    InsertLast(&list, b4);
-    InsertLast(&list, b5);
-    InsertLast(&list, b6); // Tambah kapasitas list dari 5 menjadi 10
+    InsertLast(&list, b1, false);
+    InsertLast(&list, b2, false);
+    InsertLast(&list, b3, false);
+    InsertLast(&list, b4, false);
+    InsertLast(&list, b5, false);
+    InsertLast(&list, b6, false); // Tambah kapasitas list dari 5 menjadi 10
     printf("%d\n", list.Capacity);
 
     printf("Sebelum dihapus:\n");
