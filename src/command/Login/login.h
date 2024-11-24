@@ -1,15 +1,12 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-typedef struct {
-    char username[50];
-    char password[50];
-} User;
+#include "boolean.h"
+#include "../User/user.h"
 
-extern User users[];
-extern int userCount;
+#define MAX_LEN 100
 
-void loginUser();
-void logoutUser();
+// Fungsi untuk melakukan proses login
+void Login(ListUser *users, char *currentUser);
 
-#endif
+#endif // LOGIN_H

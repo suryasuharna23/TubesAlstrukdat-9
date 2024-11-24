@@ -1,45 +1,77 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "login.h"
-#include "logout.h"
 
-User users[100];
-int userCount = 0;
+void Login(ListUser *users, char *currentUser) {
+    char username[MAX_LEN];
+    char password[MAX_LEN];
+    int userIdx = -1;
+    
+    printf("Silakan LOGIN terlebih dahulu.\n");
+    // debug pengguna
+    // for (int i = 0; i < users->count; i++) {
+    //     for (int j = 0; users->users[i].name[j] != '\0'; j++) {
+    //         printf("%c", users->users[i].name[j]);
+    //     }
+    //     for (int j = 0; users->users[i].password[j] != '\0'; j++) {
+    //         printf("%c", users->users[i].password[j]);
+    //     }
+    //     printf("\n");
+    // }
 
-void loginUser() {
-    if (strlen(loggedInUser) > 0) {
-        printf("Anda masih tercatat sebagai %s. Silakan LOGOUT terlebih dahulu.\n", loggedInUser);
+    // Cek apakah sudah ada pengguna yang login
+    if (currentUser[0] != '\0') {
+        printf("Anda masih tercatat sebagai %s. Silakan LOGOUT terlebih dahulu.\n", currentUser);
         return;
     }
 
-    char username[50], password[50];
-    
-    printf("Username: "); //input username
+    // Input username
+    printf("Username: ");
     scanf("%s", username);
-    
-    printf("Password: "); //input password
-    scanf("%s", password);
 
-    for (int i = 0; i < userCount; i++) {
-        if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) {
-            strcpy(loggedInUser, username);
-            printf("Anda telah login ke PURRMART sebagai %s.\n", username);
-            return;
+    // Cari username di daftar pengguna
+    for (int i = 0; i < users->count; i++) {
+        int isMatch = 1;
+        for (int j = 0; username[j] != '\0' || users->users[i].name[j] != '\0'; j++) {
+            if (username[j] != users->users[i].name[j]) {
+                isMatch = 0; // Tidak cocok
+                break;
+            }
+        }
+        if (isMatch) {
+            userIdx = i;
+            break;
         }
     }
-    
-    printf("Username atau password salah.\n");
-}
 
-int main() {
-    strcpy(users[userCount].username, "johndoe");
-    strcpy(users[userCount++].password, "janedoe");
+    // Validasi hasil pencarian username
+    if (userIdx == -1) {
+        printf("Username atau password salah.\n");
+        return;
+    }
 
-    loginUser();
-    loginUser(); 
-    logoutUser();
-    loginUser(); 
+    // Input password
+    printf("Password: ");
+    scanf("%s", password);
 
-    return 0;
+    // Validasi password
+    int isPasswordMatch = 1;
+    for (int i = 0; password[i] != '\0' || users->users[userIdx].password[i] != '\0'; i++) {
+        if (password[i] != users->users[userIdx].password[i]) {
+            isPasswordMatch = 0; // Password tidak cocok
+            break;
+        }
+    }
+
+    // Login berhasil atau gagal
+    if (isPasswordMatch) {
+        int i = 0;
+        while (users->users[userIdx].name[i] != '\0') {
+            currentUser[i] = users->users[userIdx].name[i];
+            i++;
+        }
+        currentUser[i] = '\0'; // Null terminator
+        printf("Anda telah login ke PURRMART sebagai %s.\n", currentUser);
+    } else {
+        printf("Username atau password salah.\n");
+    }
 }
