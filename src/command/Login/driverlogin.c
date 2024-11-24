@@ -5,15 +5,6 @@
 #include "../../ADT/User/user.h"
 
 
-void simulateInput(char *input)
-{
-    int i;
-    for (i = 0; input[i] != '\0'; i++)
-    {
-        CurrentWord.TabWord[i] = input[i];
-    }
-    CurrentWord.Length = i;
-}
 
 int main()
 {
