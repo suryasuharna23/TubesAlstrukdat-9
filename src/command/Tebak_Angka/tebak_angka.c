@@ -11,8 +11,9 @@ int getInt(){
     return WordToInt(num);
 }
 
-void tebak_angka(){
+int tebak_angka(){
     int try = MAX_TRIES;
+    int poin = 0; //score pemain
 
     int digit = (randomNumber(3) % 3) + 1;
     int key_value = randomNumber(3) % (int)(pow(10, digit));
@@ -33,7 +34,7 @@ void tebak_angka(){
             printf("(kesempatanmu %d kali lagi untuk mencoba)\n", (try-1));
         } else {
             printf("Tebakanmu benar!");
-            int poin = score(75, try);
+            poin = score(75, try);
             printf(" +%d rupiah telah ditambahkan ke akun anda.\n", poin);
             win = true;
         }
@@ -44,4 +45,6 @@ void tebak_angka(){
         printf("Yahh kamu kalah \\(>A<)/\n");
         printf("Angkamu yang benar adalah %d", key_value);
     }
+
+    return poin;
 }

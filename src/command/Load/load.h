@@ -11,5 +11,6 @@
 #define MAX_PASSWORD 50
 
 void LOAD(const char *filename, ArrayDinStore *store, ArrayDinUser *userList);
+void PrintLoadedData(ArrayDinStore *store, ArrayDinUser *userList);
 
 #endif

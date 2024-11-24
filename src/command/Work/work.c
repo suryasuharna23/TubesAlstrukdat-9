@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include "boolean.h"
 #include "work.h"
-#include "mesinkata.h"
-
 // Cek  program dijalankan di Windows
 #ifdef _WIN32
     #include <windows.h> // untuk fungsi Sleep di Windows

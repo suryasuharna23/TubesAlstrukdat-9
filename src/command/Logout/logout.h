@@ -1,7 +1,7 @@
 #ifndef LOGOUT_H
 #define LOGOUT_H
 
-#include "../../ADT/Mesin/boolean.h"
+#include "../../Boolean/boolean.h"
 
 // Struktur data untuk User
 typedef struct

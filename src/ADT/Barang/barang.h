@@ -3,7 +3,7 @@
 
 #define MAX_LEN 50
 
-#include "boolean.h"
+#include "../../Boolean/boolean.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
 #include "../../ADT/Mesin/mesinkata.h"
 

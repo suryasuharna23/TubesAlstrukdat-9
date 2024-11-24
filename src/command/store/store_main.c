@@ -1,5 +1,6 @@
 #include "store.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main() {
     ArrayDinStore listStore;
@@ -7,8 +8,10 @@ int main() {
     Word command;
     char *file = "list.txt";
     boolean running = true;
-    
-    CreateStore(&listStore, 10);
+
+    listStore.store = (Barang *)malloc(10 * sizeof(Barang));
+    listStore.Neff = 0;
+    listStore.Capacity = 10;
     CreateQueue(&req);
 
     while (running) {

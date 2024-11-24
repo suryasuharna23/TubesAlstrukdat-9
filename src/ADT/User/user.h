@@ -3,8 +3,7 @@
 
 #define MAX_LEN 50 // Panjang maksimal nama dan password
 
-#include "boolean.h"
-
+#include "../../Boolean/boolean.h"
 
 typedef struct {
     char name[MAX_LEN];

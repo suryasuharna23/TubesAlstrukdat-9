@@ -1,8 +1,7 @@
 #ifndef __STORE_H__
 #define __STORE_H__
 
-
-#include "../../ADT/Mesin/boolean.h"
+#include "../../Boolean/boolean.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/Barang/barang.h"
