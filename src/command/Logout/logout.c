@@ -1,15 +1,19 @@
 #include <stdio.h>
-#include <string.h>
 #include "logout.h"
 
-char loggedInUser[50] = ""; 
 
-void logoutUser() {
-    if (strlen(loggedInUser) == 0) {
-        printf("Anda belum login.\n");
-        return;
+void logout(User *current_user)
+{
+    // Validasi apakah ada pengguna yang sedang login
+    if (current_user != NULL && current_user->is_logged_in)
+    {
+        printf("%s telah logout dari sistem PURRMART. Silakan REGISTER/LOGIN kembali untuk melanjutkan.\n", current_user->name);
+        // Set status pengguna menjadi tidak login
+        current_user->is_logged_in = false;
     }
-    
-    printf("%s telah logout dari sistem PURRMART. Silakan REGISTER/LOGIN kembali untuk melanjutkan.\n", loggedInUser);
-    strcpy(loggedInUser, "");
+    else
+    {
+        // Jika tidak ada pengguna yang sedang login
+        printf("Tidak ada pengguna yang sedang login.\n");
+    }
 }

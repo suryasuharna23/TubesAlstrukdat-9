@@ -71,7 +71,7 @@ Word GetWord (Word w1, int a){
         i++;
     }
 
-   while (j != a - 1 && i < w1.Length) {
+    while (j != a - 1 && i < w1.Length) {
         if (w1.TabWord[i] == ' ') {
             j++;
         }
