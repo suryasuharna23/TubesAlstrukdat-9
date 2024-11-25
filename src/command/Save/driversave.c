@@ -3,7 +3,7 @@
 #include "save.h"
 
 //cara compile:
-// gcc driver_save.c save.c ../../ADT/Mesin/mesinkarakter.c ../../ADT/Mesin/mesinkata.c ../../ADT/Barang/barang.c ../../ADT/User/user.c -o save
+// gcc driversave.c save.c ../../ADT/Mesin/mesinkarakter.c ../../ADT/Mesin/mesinkata.c ../../ADT/Barang/barang.c ../../ADT/User/user.c -o save
 
 int main() {
     ArrayDinUser  arr_user;
@@ -19,6 +19,10 @@ int main() {
     User user2;
     CreateUser (&user2, "Sada", "alstrukdead", 150);
     InsertUser (&arr_user, user2);
+
+    User user3;
+    CreateUser(&user3, "FDD", "KAWAKAWA", 999999);
+    InsertUser(&arr_user, user3);
 
     Barang barang1 = CreateBarang("meja", 5);
     list_barang.items[list_barang.count++] = barang1; 

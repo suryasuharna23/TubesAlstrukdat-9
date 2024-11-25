@@ -6,7 +6,7 @@ void SList(ArrayDinStore *listStore){
     boolean readFile = true;
     if (readFile){
 
-        STARTWORD("list.txt");
+        STARTWORD("sada.txt");
         while (!EndWord){
             Word barang = GetWord(CurrentWord, 1);
             Word harga = GetWord(CurrentWord, 2);

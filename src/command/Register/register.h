@@ -3,6 +3,6 @@
 #include "../../ADT/User/user.h"
 #include "../../ADT/Mesin/mesinkata.h"
 
-void registerUser(ListUser *users);
+void registerUser(ListUser *users, boolean *flag);
 
 #endif

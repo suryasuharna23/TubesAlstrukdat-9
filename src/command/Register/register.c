@@ -3,19 +3,37 @@
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/User/user.h"
 
-void registerUser(ListUser *users)
+void registerUser(ListUser *users, boolean *flag)
 {
     char username[MAX_LEN];
     char password[MAX_LEN];
     int i, j;
+    User u;
+    ArrayDinUser array;
+
+    boolean readFile = true;
+    if (readFile)
+    {
+
+        STARTWORD("default.txt");
+        ADVWORD();
+        while (!EndWord)
+        {
+            Word money = GetWord(CurrentWord, 1);
+            Word uname = GetWord(CurrentWord, 2);
+            Word password = GetWord(CurrentWord, 3);
+
+            int uang = WordToInt(money); // asumsi default.txt sudah berisikan nama dan harga yang valid
+            CreateUser(&u, WordToString(uname), WordToString(password), WordToInt(money));
+
+            InsertUser(&array, u);
+            ADVWORD();
+        }
+        readFile = false;
+    }
 
     printf("Masukkan username baru: ");
     STARTINPUTWORD();
-    for (i = 0; i < CurrentWord.Length; i++)
-    {
-        printf("%c", CurrentWord.TabWord[i]);
-    }
-    printf("\n");
 
     // Copy username
     for (i = 0; i < CurrentWord.Length && i < MAX_LEN - 1; i++)
@@ -79,6 +97,7 @@ void registerUser(ListUser *users)
         users->count++;
 
         printf("Registrasi berhasil! Selamat datang, %s.\n", username);
+        *flag = true;
     }
     else
     {

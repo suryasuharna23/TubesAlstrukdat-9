@@ -2,14 +2,7 @@
 #define LOGOUT_H
 
 #include "../../Boolean/boolean.h"
+#include "../../ADT/User/user.h"
 
-typedef struct
-{
-    char name[50];
-    char password[50];
-    int money;
-    boolean is_logged_in; 
-} User;
-
-void logout(User *current_user);
+void logout(char *current_user);
 #endif
