@@ -5,7 +5,6 @@
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/Barang/barang.h"
 #include "../../ADT/User/user.h"
-#include "../../config/tesload.txt"
 
 
 // Definisi Konstanta
