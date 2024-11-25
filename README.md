@@ -1,11 +1,13 @@
 PURRMART - Tugas Besar IF2111 Algoritma dan Struktur Data
+
 DISIAPKAN OLEH: 
-18223033	Persada Ramiiza Abyudaya
-18223073	Nawaf Amjad Rizqi A. Ismail
-18223075	Surya Suharna
-18221022	Athira Dhyanissa Tafkir
-18223061	Naura Ayurachmani
-ASISTEN TUGAS BESAR: Vincent Franstyo
+- 18223033	Persada Ramiiza Abyudaya
+- 18223073	Nawaf Amjad Rizqi A. Ismail
+- 18223075	Surya Suharna
+- 18221022	Athira Dhyanissa Tafkir
+- 18223061	Naura Ayurachmani
+
+- ASISTEN TUGAS BESAR: Vincent Franstyo
 
 PURRMART adalah aplikasi simulasi e-commerce berbasis Command-Line Interface (CLI) yang dirancang untuk membantu OWCA dalam memenuhi kebutuhan mereka selama masa kritis. Aplikasi ini memungkinkan pengguna untuk:
 - Menampilkan dan mengelola daftar barang toko.
