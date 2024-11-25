@@ -2,6 +2,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// KONSTRUKTOR STORE
+void CreateStore(ArrayDinStore *list, int capacity) {
+    if (capacity > 0) {
+        list->store = (Barang *)malloc((unsigned int)capacity * sizeof(Barang));
+        list->Neff = 0;
+        list->Capacity = capacity;
+    } else {
+        list->store = NULL;
+        list->Neff = 0;
+        list->Capacity = 0;
+    }
+}
+
 // KONSTRUKTOR LIST BARANG
 void InitializeListBarang(listBarang *list){
     list->count = 0;

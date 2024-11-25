@@ -29,6 +29,8 @@ typedef int IdxType;
 #define A(array) (array).store
 #define Neff(array) (array).Neff
 
+void CreateStore(ArrayDinStore *list, int capacity);
+
 // KONSTRUKTOR LIST BARANG
 void InitializeListBarang(listBarang *list);
 

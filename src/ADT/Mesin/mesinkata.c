@@ -44,6 +44,16 @@ void ADVWORD(){
     }
 }
 
+void ADVSENTENCE(){
+    IgnoreBlanks();
+    if (currentChar == '\n'){
+        EndWord = true;
+    }
+    else{
+        CopyWord();
+    }
+}
+
 void CopyWord(){
     int i=0;
     while ((currentChar != BLANK) && (currentChar != '\n') && (currentChar != MARK) && (i<NMax)){
@@ -67,6 +77,7 @@ Word GetWord (Word w1, int a){
     w2.Length=0;
     int i=0, j=0;
 
+    //advance terus sampe ketemu huruf
     while (i<w1.Length && w1.TabWord[i]==' '){
         i++;
     }
@@ -90,6 +101,43 @@ Word GetWord (Word w1, int a){
     }
 
     w2.TabWord[w2.Length] = '\0'; 
+    return w2;
+}
+
+/// @brief dapetin sentence
+/// @param w1 word masukan
+/// @param idx idx offset
+/// @return word yang dimulai dari kata ke-idx
+Word GetSentence(Word w1, int idx){
+    Word w2; w2.Length = 0;
+    int cursor = 0;
+
+    // Ignoreblanks
+    while (cursor < w1.Length && w1.TabWord[cursor] == ' ') {
+        cursor++;
+    }
+
+    // Ignore kata ke-x
+    int ignore = 0;
+    char before = 'a';
+    while (ignore < idx && cursor < w1.Length) {
+        if (w1.TabWord[cursor] == ' ') {
+            if (before != ' ') {
+                ignore++;
+            }
+        }
+        before = w1.TabWord[cursor];
+        cursor++;
+        
+    }
+
+    // Copy ke w2
+    while (w1.TabWord[cursor] != '\0') {
+        w2.TabWord[w2.Length] = w1.TabWord[cursor];
+        w2.Length++;
+        cursor++;
+    }
+    w2.TabWord[w2.Length] = '\0';
     return w2;
 }
 

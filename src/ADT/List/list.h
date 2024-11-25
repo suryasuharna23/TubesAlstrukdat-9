@@ -37,7 +37,7 @@ boolean IsEmptyListStatic(ListStatic L);
 /* Mengirimkan true jika list L kosong, mengirimkan false jika tidak */
 
 /* *** Menghasilkan sebuah elemen *** */
-ElType GetListStatic(ListStatic L, IdxType i) ;
+ElType GetListStatic(ListStatic L, int i) ;
 /* Prekondisi : list tidak kosong, i antara FirstIdx(T)..LastIdx(T) */
 /* Mengirimkan elemen list yang ke-i */
 

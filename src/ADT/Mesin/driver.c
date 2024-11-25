@@ -14,6 +14,7 @@ int main(){
     while (!EndWord) {
         PrintCurrentWord();
         ADVWORD();
+
     }
 
     printf("Tes START dari INPUT\n");
@@ -23,7 +24,10 @@ int main(){
     printf("Tes GetWord dan isEqual\n");
     
     STARTINPUTWORD();
-    Word w = GetWord(CurrentWord, 1);
+    Word w = GetSentence(CurrentWord, 1);
+    char *words = WordToString(w);
+    printf("%s\n", words);
+
     if (isEqual(w, "hai!")){
         printf("hai jg\n");
     }

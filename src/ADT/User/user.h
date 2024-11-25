@@ -4,6 +4,7 @@
 #define MAX_LEN 50 
 
 #include "../../Boolean/boolean.h"
+#include "../List/list.h"
 
 typedef struct {
     char name[MAX_LEN];
@@ -22,7 +23,6 @@ typedef struct {
     int Capacity;    
 } ArrayDinUser;
 
-typedef int IdxType;
 
 // Selektor
 #define U(array) (array).users
@@ -30,6 +30,7 @@ typedef int IdxType;
 
 // Konstruktor list user
 void InitializeListUser(ListUser *list);
+void InsertLastUser(ListUser *list, User u);
 
 // Fungsi dan Prosedur
 void CreateUser(User *user, const char *name, const char *password, int money);

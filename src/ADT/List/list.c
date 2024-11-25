@@ -2,7 +2,7 @@
 #include "list.h"
 
 /* ********** KONSTRUKTOR ********** */
-List MakeListStatic()
+ListStatic MakeListStatic()
 /* Konstruktor: create list statis yang kosong */
 /* I.S. sembarang */
 /* F.S. Terbentuk list L statis kosong dengan kapasitas MaxEl */
@@ -19,7 +19,7 @@ boolean IsListStaticEmpty(ListStatic L)
 /* Mengirimkan true jika list statis L kosong, mengirimkan false jika tidak */
 
 {
-    return (T.Neff == 0);
+    return (L.Neff == 0);
 }
 
 
@@ -29,11 +29,11 @@ int LengthListStatic(ListStatic L)
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list kosong */
 {
-    return (T.Neff);
+    return (L.Neff);
 }
 
 
-ElType GetListStatic(ListStatic L, IdxType i)
+ElType GetListStatic(ListStatic L, int i)
 /* *** Menghasilkan sebuah elemen *** */
 /* Prekondisi : list tidak kosong, i antara FirstIdx(T)..LastIdx(T) */
 /* Mengirimkan elemen list yang ke-i */
@@ -46,7 +46,7 @@ void InsertLastListStatic(ListStatic *L, ElType X)
 /* I.S. L terdefinisi, mungkin kosong. */
 /* F.S. v menjadi elemen terakhir L. */
 {
-    IdxType i = LengthListStatis(*L);
+    int i = LengthListStatis(*L);
 	L->A[i] = X;
 	L->Neff ++;
 }

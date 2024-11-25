@@ -7,6 +7,12 @@ void InitializeListUser(ListUser *list){
     list->count = 0;
 }
 
+void InsertLastUser(ListUser *list, User u){
+    int i = list->count;
+	list->users[i] = u;
+	list->count++;
+}
+
 // buat user baru
 void CreateUser(User *user, const char *name, const char *password, int money) {
     int i = 0;
@@ -75,7 +81,7 @@ void InsertUser(ArrayDinUser *array, User user) {
 }
 
 // hapus user di indeks tertentu
-void DeleteUserAt(ArrayDinUser *array, IdxType i) {
+void DeleteUserAt(ArrayDinUser *array, int i) {
     if (i >= 0 && i < array->Neff) {
         for (int j = i; j < array->Neff - 1; j++) {
             U(*array)[j] = U(*array)[j + 1];

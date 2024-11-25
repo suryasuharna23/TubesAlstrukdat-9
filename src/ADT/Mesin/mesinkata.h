@@ -45,6 +45,8 @@ void ADVWORD();
          Jika currentChar = MARK, EndWord = true.
    Proses : Akuisisi kata menggunakan procedure CopyWord */
 
+void ADVSENTENCE();
+
 void CopyWord();
 /* Mengakuisisi kata, menyimpan dalam currentWord
    I.S. : currentChar adalah karakter pertama dari kata
@@ -61,6 +63,8 @@ void PrintCurrentWord();
 Word GetWord (Word w1, int a);
 // ngambil kata ke-a
 
+Word GetSentence(Word w1, int idx);
+
 boolean isEqual(Word w, const char *c);
 // memeriksa apakah kata yang di-input atau difolder itu sama dengan di parameter
 
@@ -75,7 +79,6 @@ int WordToInt(Word word);
 
 Word StringtoWord (char*string);
 // mengubah tipe data string ke word
-
 
 
 boolean WordCompare(const char *str1, const char *str2);
