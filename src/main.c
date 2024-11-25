@@ -25,6 +25,7 @@
 
 
 int main(){
+
     boolean EarlyQuit = false;
     boolean isShopOpen = false;
     boolean startSession = false;
@@ -32,6 +33,7 @@ int main(){
 
     ArrayDinStore listStore;
     ArrayDinUser userList;
+    listBarang listbarang;
     Queue req;
     Word fileword;
 
@@ -79,27 +81,31 @@ int main(){
                             printf("Kamu mau main challenge nomor berapa? ");
                             STARTINPUTWORD();
                             if (isEqual(CurrentWord, "1")){
-                                TakeMoney(&user, 200);
+                                // kurangin 200 dari sallary
                                 int poin = tebak_angka();
-                                AddMoney(&user, poin);
+                                // tambahin poin ke sallary
                             } else if (isEqual(CurrentWord, "2")){
-                                TakeMoney(&user, 500);
+                                // kurangin 500 dari sallary
                                 int poin = wordl3_challenge();
-                                AddMoney(&user, poin);
+                                // tambahin poin ke sallary
                             } else {
                                 printf("Oitt, gaada dipilihan tuh. Masukin pilihan lain!\n");
                             }
                         }
-                        else if (isEqual(CurrentWord, "STORE LIST")){
+                        else if (isEqual(CurrentWord, "LIST")){
+                            printf("sebelum list\n");
+
+                            LOAD(WordToString(fileword), &listStore, &userList);
                             SList(&listStore);
+                            printf("berhasil\n");
                         }
-                        else if (isEqual(CurrentWord, "STORE REQUEST")){
+                        else if (isEqual(CurrentWord, "REQUEST")){
                             SRequest(&listStore, &req);
                         }
-                        else if (isEqual(CurrentWord, "STORE SUPPLY")){
+                        else if (isEqual(CurrentWord, "SUPPLY")){
                             SSupply(&listStore, &req);
                         }
-                        else if (isEqual(CurrentWord, "STORE REMOVE")){
+                        else if (isEqual(CurrentWord, "REMOVE")){
                             SRemove(&listStore);
                         }
                         else if (isEqual(CurrentWord, "LOGOUT")){
@@ -112,29 +118,14 @@ int main(){
                             Quit(&isShopOpen);
                             break;
                         }
-                        else if (isEqual(CurrentWord, "SAVE")){\
-
-                        }
-                        else if (isEqual(CurrentWord,"LOAD")){
-                            printf("Masukkan nama file: ");
+                        else if (isEqual(CurrentWord, "SAVE")){
+                            printf("Masukkan nama file untuk menyimpan: ");
                             STARTINPUTWORD();
-                            fileword = GetWord(CurrentWord, 1);
-                            char *filename = WordToString(fileword);
+                            fileword = CurrentWord;
 
-                            LOAD(filename, &listStore, &userList);
+                            save(WordToString(fileword), &userList, &listbarang);
 
-                            if (listStore.Neff > 0 || userList.Neff > 0)
-                            {
-                                printf("\nBerhasil memuat file %s\n", filename);
-                                PrintLoadedData(&listStore, &userList);
-
-                                free(listStore.store);
-                                free(userList.users);
-                            }
-                            else {
-                                printf("Gagal memuat file %s\n", filename);
-                            }
-                            free(filename);
+                            DeallocateArrayDinUser(&userList);
                         }
                         else if (isEqual(CurrentWord, "HELP")){
                             help_main();
@@ -168,7 +159,6 @@ int main(){
             if (listStore.Neff > 0 || userList.Neff > 0)
             {
                 printf("\nBerhasil memuat file %s\n", filename);
-                PrintLoadedData(&listStore, &userList);
 
                 free(listStore.store);
                 free(userList.users);

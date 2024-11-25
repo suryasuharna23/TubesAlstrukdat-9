@@ -35,12 +35,12 @@ int wordl3_challenge(){
     int line = randomNumber(3) % 100;
 
     // mengambil keyword
-    char *keyword = "word_list.txt";
+    char *keyword = "../../command/WORDL3/word_list.txt";
 
     READLINE(keyword, line);
     Word key_word = CurrentWord;
 
-    char *history = "history.txt";
+    char *history = "../../command/WORDL3/history.txt";
     clearHist(history);
 
     printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
@@ -108,7 +108,7 @@ int wordl3_challenge(){
             char *wordString = WordToString(word);
 
             // kalau katanya sama, pemain menang, dan pengecekan berhenti
-             if (WordCompare(keyString, wordString)){
+            if (WordCompare(keyString, wordString)){
                 win = true; // kalau pemain menang, win bernilai true, program berhenti
                 STARTWORD(history);
                 while (!EndWord) {
@@ -142,7 +142,7 @@ int wordl3_challenge(){
 void saveChar(char flag, char letter, boolean isLast){
     FILE *history;
 
-    history = fopen("history.txt", "a"); //  membuka file history tebakan kata
+    history = fopen("../../command/WORDL3/history.txt", "a"); //  membuka file history tebakan kata
 
     // masukin karaketr ke file history
     fputc(letter, history);
@@ -162,7 +162,7 @@ void saveChar(char flag, char letter, boolean isLast){
 void clearHist(char *filename){
     STARTWORD(filename);
 
-    FILE *clear_hist = fopen("history.txt", "w");
+    FILE *clear_hist = fopen("../../command/WORDL3/history.txt", "w");
     fclose(clear_hist);
 }
 
