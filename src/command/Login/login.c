@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "login.h"
-#include "../../ADT/Mesin/mesinkata.h"
+
 
 void Login(ListUser *users, char *currentUser)
 {
@@ -10,26 +10,25 @@ void Login(ListUser *users, char *currentUser)
 
     printf("Silakan LOGIN terlebih dahulu.\n");
 
-    // Cek apakah sudah ada pengguna yang login
+    // cek ada pengguna yang login
     if (currentUser[0] != '\0')
     {
         printf("Anda masih tercatat sebagai %s. Silakan LOGOUT terlebih dahulu.\n", currentUser);
         return;
     }
 
-    // Input username
     printf("Username: ");
-    STARTINPUTWORD(); // Mulai membaca input kata untuk username
+    STARTINPUTWORD(); 
     Word wordUsername = CurrentWord;
 
-    // Salin Word ke username
+    // copy Word ke username
     for (int i = 0; i < wordUsername.Length; i++)
     {
         username[i] = wordUsername.TabWord[i];
     }
-    username[wordUsername.Length] = '\0'; // Tambahkan null terminator
+    username[wordUsername.Length] = '\0'; 
 
-    // Cari username di daftar pengguna
+    // cari username di daftar pengguna
     for (int i = 0; i < users->count; i++)
     {
         Word userWord = StringtoWord(users->users[i].name);
@@ -46,28 +45,25 @@ void Login(ListUser *users, char *currentUser)
         return;
     }
 
-    // Input password
     printf("Password: ");
-    STARTINPUTWORD(); // Mulai membaca input kata untuk password
+    STARTINPUTWORD(); 
     Word wordPassword = CurrentWord;
 
-    // Salin Word ke password
+    // copy Word ke password
     for (int i = 0; i < wordPassword.Length; i++)
     {
         password[i] = wordPassword.TabWord[i];
     }
-    password[wordPassword.Length] = '\0'; // Tambahkan null terminator
+    password[wordPassword.Length] = '\0'; 
 
-    // Validasi password
     Word passwordWord = StringtoWord(users->users[userIdx].password);
     if (isEqual(wordPassword, passwordWord.TabWord))
     {
-        // Salin nama pengguna ke currentUser
         for (int i = 0; i < wordUsername.Length; i++)
         {
             currentUser[i] = wordUsername.TabWord[i];
         }
-        currentUser[wordUsername.Length] = '\0'; // Tambahkan null terminator
+        currentUser[wordUsername.Length] = '\0'; 
         printf("Anda telah login ke PURRMART sebagai %s.\n", currentUser);
     }
     else

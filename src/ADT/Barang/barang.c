@@ -52,8 +52,7 @@ void ResizeArray(ArrayDinStore *array, int newCapacity) {
 }
 
 void InsertLast(ArrayDinStore *array, Barang el, boolean isFromFile) {
-    // Jika barang sudah ada di toko
-    // as add barang
+    // kalau barang sudah ada di toko
     for (int i = 0; i < Neff(*array); i++) {
         if (WordCompare(A(*array)[i].name, el.name)) {
             if (!isFromFile){
@@ -71,7 +70,7 @@ void InsertLast(ArrayDinStore *array, Barang el, boolean isFromFile) {
         return;
     }
     
-    // Jika barang belum ada, maka akan ditambahkan
+    // kalau barang belum ada, maka akan ditambahkan
     if (Neff(*array) >= array->Capacity) {
         ResizeArray(array, array->Capacity * 2); 
     }

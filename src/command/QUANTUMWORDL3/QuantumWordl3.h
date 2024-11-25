@@ -1,7 +1,7 @@
 #ifndef __QUANTUMWORDL3_H__
 #define __QUANTUMWORDL3_H__
 
-#include "../../ADT/Mesin/boolean.h"
+#include "../../Boolean/boolean.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../command/Random_Number/random_number.h"

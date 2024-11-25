@@ -1,7 +1,7 @@
 #ifndef __TEBAK_ANGKA_H__
 #define __TEBAK_ANGKA_H__
 
-#include "../../ADT/Mesin/boolean.h"
+#include "../../Boolean/boolean.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../command/Random_Number/random_number.h"
@@ -12,7 +12,7 @@
 int getInt();
 // membaca masukan kata sebagai integer
 
-void tebak_angka();
+int tebak_angka();
 // program challenge tebak angka
 
 #endif

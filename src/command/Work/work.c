@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include "boolean.h"
 #include "work.h"
-#include "mesinkata.h"
-
 // Cek  program dijalankan di Windows
 #ifdef _WIN32
     #include <windows.h> // untuk fungsi Sleep di Windows
@@ -48,7 +45,6 @@ boolean compareJobName(Word input, char *jobName) {
     return true;
 }
 
-// Fungsi WORK
 void work(User *user) {
     printf("Daftar pekerjaan:\n");
     for (int i = 0; i < jobCount; i++) {

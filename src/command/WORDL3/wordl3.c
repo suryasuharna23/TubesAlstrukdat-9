@@ -25,10 +25,11 @@ void READLINE(char *filename, int IdxLine){
     }
 }
 
-void wordl3_challenge(){
-    int try = MAX_TRIES; // banyak kesempatan mencoba
+int wordl3_challenge(){
+    int try = MAX_PLAYS; // banyak kesempatan mencoba
     boolean win = false; // menentukan apakah pemain menang atau kalah
     char flag;
+    int poin = 0; //score pemain
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
     int line = randomNumber(3) % 100;
@@ -44,7 +45,7 @@ void wordl3_challenge(){
 
     printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
 
-    while (try >= 0 && !win){
+    while (try > 0 && !win){
         int isLast = false;
 
         // print kata yang ada di file history, alias kata-kata hasil tebakan sebelumnya
@@ -55,7 +56,7 @@ void wordl3_challenge(){
         }
 
         // ngeprint si karakter kosong, tiap nyobain bakal berkurang jumlah barisnya
-        for (int i = 0; i <= try; i++){
+        for (int i = 0; i < try; i++){
             printf("_ _ _ _ _\n");
         }
 
@@ -115,7 +116,7 @@ void wordl3_challenge(){
                     ADVWORD();
                 }
                 printf("Selamat anda menang!\n");
-                int poin = score(150, try);;
+                poin = score(150, try);;
                 printf("+%d rupiah telah ditambahkan ke akun Anda.\n", poin);
             }
         }
@@ -134,6 +135,8 @@ void wordl3_challenge(){
         printf("Kata yang benar adalah ");
         PrintCurrentWord();
     }
+
+    return poin;
 }
 
 void saveChar(char flag, char letter, boolean isLast){

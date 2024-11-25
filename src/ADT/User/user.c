@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "user.h"
 
-// Membuat list user kosong
+// buat list user kosong
 void InitializeListUser(ListUser *list){
     list->count = 0;
 }
 
-// Membuat user baru
+// buat user baru
 void CreateUser(User *user, const char *name, const char *password, int money) {
     int i = 0;
     while (name[i] != '\0' && i < MAX_LEN - 1) {
@@ -25,7 +25,7 @@ void CreateUser(User *user, const char *name, const char *password, int money) {
     user->money = money;
 }
 
-// Menampilkan informasi user
+// print informasi user
 void PrintUser(const User *user) {
     printf("Name: %s\n", user->name);
     printf("Password: %s\n", user->password);
@@ -38,7 +38,13 @@ void AddMoney(User *user, int amount) {
     }
 }
 
-// Membuat Array Dinamis untuk User
+void TakeMoney(User *user, int amount) {
+    if (amount > 0) {
+        user->money -= amount;
+    }
+}
+
+// buat array dinamis user
 void CreateArrayDinUser(ArrayDinUser *array, int capacity) {
     if (capacity > 0) {
         array->users = (User *)malloc((unsigned int)capacity * sizeof(User));
@@ -51,7 +57,7 @@ void CreateArrayDinUser(ArrayDinUser *array, int capacity) {
     }
 }
 
-// Menghapus Array Dinamis dan Membebaskan Memori
+// hapus array dinamis user
 void DeallocateArrayDinUser(ArrayDinUser *array) {
     free(array->users);
     array->users = NULL;
@@ -59,7 +65,7 @@ void DeallocateArrayDinUser(ArrayDinUser *array) {
     array->Capacity = 0;
 }
 
-// Menambahkan User ke Array
+// tambah user ke array
 void InsertUser(ArrayDinUser *array, User user) {
     if (array->Neff >= array->Capacity) {
         ResizeArrayUser(array, array->Capacity * 2);
@@ -68,7 +74,7 @@ void InsertUser(ArrayDinUser *array, User user) {
     array->Neff++;
 }
 
-// Menghapus User pada Indeks Tertentu
+// hapus user di indeks tertentu
 void DeleteUserAt(ArrayDinUser *array, IdxType i) {
     if (i >= 0 && i < array->Neff) {
         for (int j = i; j < array->Neff - 1; j++) {
@@ -89,17 +95,17 @@ void DeleteUserLast(ArrayDinUser *array) {
     }
 }
 
-// Mendapatkan Panjang Array
+// panjang array
 int LengthUser(ArrayDinUser array) {
     return array.Neff;
 }
 
-// Mengecek Apakah Array Kosong
+// cek array kosong
 boolean IsEmptyArrayDinUser(ArrayDinUser array) {
     return array.Neff == 0;
 }
 
-// Mengubah Kapasitas Array
+// ubah kapasitas array
 void ResizeArrayUser(ArrayDinUser *array, int newCapacity) {
     if (newCapacity > 0) {
         User *newUsers = (User *)malloc((unsigned int)newCapacity * sizeof(User));
@@ -114,7 +120,7 @@ void ResizeArrayUser(ArrayDinUser *array, int newCapacity) {
     }
 }
 
-// Mencetak Semua User
+// print semua user
 void PrintAllUsers(ArrayDinUser array) {
     for (int i = 0; i < array.Neff; i++) {
         printf("User #%d:\n", i + 1);
