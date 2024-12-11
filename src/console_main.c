@@ -5,6 +5,7 @@
 #include "ADT/Mesin/mesinkata.h"
 #include "ADT/Mesin/mesinkarakter.h"
 #include "ADT/Map/map.h"
+#include "ADT/Stack/stack.h"
 #include "command/Load/load.h"
 #include "command/Save/save.h"
 #include "command/Register/register.h"
@@ -16,13 +17,14 @@
 #include "command/Store/store.h"
 #include "command/Profile/profile.h"
 #include "command/Cart/cart.h"
-
+#include "command/History/history.h"
 
 // Deklarasi global
 ListUser users;
 ListBarang listbarang;
 Queue requestQueue;
 User CurrentUser = {"", "", 0}; // Menyimpan data pengguna yang sedang login
+Stack purchaseHistory;
 
 void STARTINPUTWORD();
 Word CurrentWord;
@@ -36,6 +38,7 @@ int main() {
     CreateListUser(&users);
     CreateListBarang(&listbarang);
     CreateQueue(&requestQueue);
+    CreateEmptyS(&purchaseHistory);
 
     printf("****************************************\n");
     printf("*      Selamat Datang di PURRMART      *\n");
@@ -126,6 +129,7 @@ int main() {
                 printf("| 13. CART REMOVE - Tampilkan profile   |\n");
                 printf("| 14. CART SHOW - Tampilkan profile     |\n");
                 printf("| 15. CART PAY - Tampilkan profile      |\n");
+                printf("| 16. HISTORY - Tampilkan profile       |\n");
                 printf("+----------------------------------------+\n");
 
                 printf(">>> ");
@@ -166,6 +170,8 @@ int main() {
                     CartShow(&CurrentUser, &listbarang);
                 } else if (isEqual(CurrentWord, "CART PAY")) {
                     CartPay(&CurrentUser, &listbarang);
+                } else if (isEqual(CurrentWord, "HISTORY")) {
+                    ShowPurchaseHistory(&purchaseHistory);
                 } else {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
