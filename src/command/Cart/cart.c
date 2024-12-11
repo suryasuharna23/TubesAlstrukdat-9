@@ -7,59 +7,94 @@
 #include "../../ADT/Mesin/mesinkata.h"
 
 void CartAdd(User *CurrentUser, ListBarang *listbarang) {
-    printf("Masukkan nama barang dan jumlah: ");
-    STARTINPUTWORD();
-    Word namaBarang = GetWord(CurrentWord, 1);
-    Word jumlahBarangWord = GetWord(CurrentWord, 2);
-    int jumlahBarang = WordToInt(jumlahBarangWord);
+    while (true) {
+        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): ");
+        STARTINPUTWORD();
 
-    char *nama = WordToString(namaBarang);
+        if (isEqual(CurrentWord, "BACK")) {
+            printf("Kembali ke menu sebelumnya.\n");
+            return;
+        }
 
-    int i;
-    for (i = 0; i < listbarang->count; i++) {
-        if (WordCompare(listbarang->items[i].name, nama)) {
-            if (IsMember(CurrentUser->keranjang, i)) {
-                Insert(&CurrentUser->keranjang, i, Value(CurrentUser->keranjang, i) + jumlahBarang);
-            } else {
-                Insert(&CurrentUser->keranjang, i, jumlahBarang);
+        Word namaBarang = GetWord(CurrentWord, 1);
+        Word jumlahBarangWord = GetWord(CurrentWord, 2);
+        int jumlahBarang = WordToInt(jumlahBarangWord);
+
+        char *nama = WordToString(namaBarang);
+
+        int i;
+        for (i = 0; i < listbarang->count; i++) {
+            if (WordCompare(listbarang->items[i].name, nama)) {
+                if (!IsMember(CurrentUser->keranjang, i)) {
+                    Insert(&CurrentUser->keranjang, i, jumlahBarang);
+                    printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", jumlahBarang, nama);
+                } else {
+                    printf("Barang %s sudah ada di keranjang, tidak dapat menambahkan lebih banyak.\n", nama);
+                }
+                free(nama);
+                break;
             }
-            printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", jumlahBarang, nama);
-            free(nama);
+        }
+
+        if (i == listbarang->count) {
+            printf("Barang tidak ada di toko!\n");
+        }
+
+        free(nama);
+        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "BACK")) {
+            printf("Kembali ke menu utama.\n");
             return;
         }
     }
-    printf("Barang tidak ada di toko!\n");
-    free(nama);
 }
 
 void CartRemove(User *CurrentUser, ListBarang *listbarang) {
-    printf("Masukkan nama barang dan jumlah: ");
-    STARTINPUTWORD();
-    Word namaBarang = GetWord(CurrentWord, 1);
-    Word jumlahBarangWord = GetWord(CurrentWord, 2);
-    int jumlahBarang = WordToInt(jumlahBarangWord);
+    while (true) {
+        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): ");
+        STARTINPUTWORD();
 
-    char *nama = WordToString(namaBarang);
+        if (isEqual(CurrentWord, "BACK")) {
+            printf("Kembali ke menu sebelumnya.\n");
+            return;
+        }
 
-    int i;
-    for (i = 0; i < CurrentUser->keranjang.Count; i++) {
-        int key = CurrentUser->keranjang.Elements[i].Key;
-        if (WordCompare(listbarang->items[key].name, nama)) {
-            if (CurrentUser->keranjang.Elements[i].Value >= jumlahBarang) {
-                CurrentUser->keranjang.Elements[i].Value -= jumlahBarang;
-                if (CurrentUser->keranjang.Elements[i].Value == 0) {
-                    Delete(&CurrentUser->keranjang, key);
+        Word namaBarang = GetWord(CurrentWord, 1);
+        Word jumlahBarangWord = GetWord(CurrentWord, 2);
+        int jumlahBarang = WordToInt(jumlahBarangWord);
+
+        char *nama = WordToString(namaBarang);
+
+        int i;
+        for (i = 0; i < CurrentUser->keranjang.Count; i++) {
+            int key = CurrentUser->keranjang.Elements[i].Key;
+            if (WordCompare(listbarang->items[key].name, nama)) {
+                if (CurrentUser->keranjang.Elements[i].Value >= jumlahBarang) {
+                    CurrentUser->keranjang.Elements[i].Value -= jumlahBarang;
+                    if (CurrentUser->keranjang.Elements[i].Value == 0) {
+                        Delete(&CurrentUser->keranjang, key);
+                    }
+                    printf("Berhasil mengurangi %d %s dari keranjang belanja!\n", jumlahBarang, nama);
+                } else {
+                    printf("Tidak berhasil mengurangi, hanya terdapat %d %s pada keranjang!\n", CurrentUser->keranjang.Elements[i].Value, nama);
                 }
-                printf("Berhasil mengurangi %d %s dari keranjang belanja!\n", jumlahBarang, nama);
-            } else {
-                printf("Tidak berhasil mengurangi, hanya terdapat %d %s pada keranjang!\n", CurrentUser->keranjang.Elements[i].Value, nama);
+                break;
             }
-            free(nama);
+        }
+
+        if (i == CurrentUser->keranjang.Count) {
+            printf("Barang tidak ada di keranjang belanja!\n");
+        }
+
+        free(nama);
+        printf("Ketik 'REMOVE' untuk mengurangi barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "BACK")) {
+            printf("Kembali ke menu utama.\n");
             return;
         }
     }
-    printf("Barang tidak ada di keranjang belanja!\n");
-    free(nama);
 }
 
 void CartShow(User *CurrentUser, ListBarang *listbarang) {
@@ -68,17 +103,27 @@ void CartShow(User *CurrentUser, ListBarang *listbarang) {
         return;
     }
 
-    printf("Berikut adalah isi keranjangmu.\n");
-    printf("Kuantitas  Nama    Total\n");
+    printf("Berikut adalah isi keranjangmu:\n");
+    printf("+------------+----------------+------------+------------+\n");
+    printf("| Kuantitas  | Nama           | Harga/unit | Total      |\n");
+    printf("+------------+----------------+------------+------------+\n");
 
     int totalBiaya = 0;
     for (int i = 0; i < CurrentUser->keranjang.Count; i++) {
         int key = CurrentUser->keranjang.Elements[i].Key;
         int value = CurrentUser->keranjang.Elements[i].Value;
-        printf("%-10d %-7s %-5d\n", value, listbarang->items[key].name, value * listbarang->items[key].price);
-        totalBiaya += value * listbarang->items[key].price;
+        int harga = listbarang->items[key].price;
+        printf("| %-10d | %-14s | %-10d | %-10d |\n", value, listbarang->items[key].name, harga, value * harga);
+        totalBiaya += value * harga;
     }
+    printf("+------------+----------------+------------+------------+\n");
     printf("Total biaya yang harus dikeluarkan adalah %d.\n", totalBiaya);
+
+    printf("Ketik 'BACK' untuk kembali ke menu utama: ");
+    STARTINPUTWORD();
+    if (isEqual(CurrentWord, "BACK")) {
+        printf("Kembali ke menu utama.\n");
+    }
 }
 
 void CartPay(User *CurrentUser, ListBarang *listbarang) {
@@ -87,16 +132,20 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
         return;
     }
 
-    printf("Kamu akan membeli barang-barang berikut.\n");
-    printf("Kuantitas  Nama    Total\n");
+    printf("Kamu akan membeli barang-barang berikut:\n");
+    printf("+------------+----------------+------------+------------+\n");
+    printf("| Kuantitas  | Nama           | Harga/unit | Total      |\n");
+    printf("+------------+----------------+------------+------------+\n");
 
     int totalBiaya = 0;
     for (int i = 0; i < CurrentUser->keranjang.Count; i++) {
         int key = CurrentUser->keranjang.Elements[i].Key;
         int value = CurrentUser->keranjang.Elements[i].Value;
-        printf("%-10d %-7s %-5d\n", value, listbarang->items[key].name, value * listbarang->items[key].price);
-        totalBiaya += value * listbarang->items[key].price;
+        int harga = listbarang->items[key].price;
+        printf("| %-10d | %-14s | %-10d | %-10d |\n", value, listbarang->items[key].name, harga, value * harga);
+        totalBiaya += value * harga;
     }
+    printf("+------------+----------------+------------+------------+\n");
     printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): ", totalBiaya);
 
     STARTINPUTWORD();
@@ -110,5 +159,11 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
         }
     } else {
         printf("Pembelian dibatalkan.\n");
+    }
+
+    printf("Ketik 'BACK' untuk kembali ke menu utama: ");
+    STARTINPUTWORD();
+    if (isEqual(CurrentWord, "BACK")) {
+        printf("Kembali ke menu utama.\n");
     }
 }
