@@ -8,7 +8,10 @@
 
 void CartAdd(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
-        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): ");
+        printf("Masukkan nama barang dan jumlah :)\n");
+        printf("[ KETIK 'BACK' UNTUK KEMBALI ]\n");
+        printf("Format <NAMABARANG> <KUANTITAS>: \n");
+        printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
@@ -29,7 +32,8 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
                     Insert(&CurrentUser->keranjang, i, jumlahBarang);
                     printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", jumlahBarang, nama);
                 } else {
-                    printf("Barang %s sudah ada di keranjang, tidak dapat menambahkan lebih banyak.\n", nama);
+                    CurrentUser->keranjang.Elements[i].Value += jumlahBarang;
+                    printf("Berhasil menambahkan %d %s ke keranjang belanja (jumlah diperbarui).\n", jumlahBarang, nama);
                 }
                 free(nama);
                 break;
@@ -41,7 +45,9 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
         }
 
         free(nama);
-        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf("Ketik 'ADD' --> Tambah barang lagi.\n");
+        printf("Ketik 'BACK' --> Kembali ke menu utama.\n");
+        printf(">>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");
@@ -52,7 +58,10 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
 
 void CartRemove(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
-        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): ");
+        printf("Masukkan nama barang dan jumlah :)\n");
+        printf("[ KETIK 'BACK' UNTUK KEMBALI ]\n");
+        printf("Format <NAMABARANG> <KUANTITAS>: \n");
+        printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
@@ -88,7 +97,9 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
         }
 
         free(nama);
-        printf("Ketik 'REMOVE' untuk mengurangi barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf("Ketik 'REMOVE' --> Tambah barang lagi.\n");
+        printf("Ketik 'BACK' --> Kembali ke menu utama.\n");
+        printf(">>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");
