@@ -4,6 +4,7 @@
 #include "ADT/Barang/barang.h"
 #include "ADT/Mesin/mesinkata.h"
 #include "ADT/Mesin/mesinkarakter.h"
+#include "ADT/Map/map.h"
 #include "command/Load/load.h"
 #include "command/Save/save.h"
 #include "command/Register/register.h"
@@ -14,11 +15,12 @@
 #include "command/WORDL3/wordl3.h"
 #include "command/Store/store.h"
 #include "command/Profile/profile.h"
+#include "command/Cart/cart.h"
+
 
 // Deklarasi global
 ListUser users;
 ListBarang listbarang;
-ListBarang listStore;
 Queue requestQueue;
 User CurrentUser = {"", "", 0}; // Menyimpan data pengguna yang sedang login
 
@@ -33,7 +35,6 @@ int main() {
     // Inisialisasi
     CreateListUser(&users);
     CreateListBarang(&listbarang);
-    CreateListBarang(&listStore);
     CreateQueue(&requestQueue);
 
     printf("****************************************\n");
@@ -60,14 +61,14 @@ int main() {
             if (isEqual(CurrentWord, "START")) {
                 Load(NULL);  // Memuat data default jika ada
                 printf("Data dimuat menggunakan setelan default.\n");
-                SList(&listStore); // Tampilkan barang setelah mulai
+                SList(&listbarang); // Tampilkan barang setelah mulai
                 IsStarted = true;  // Set IsStarted menjadi true
             } else if (isEqual(CurrentWord, "LOAD")) {
                 printf("Masukkan nama file konfigurasi: ");
                 STARTINPUTWORD();
                 if (Load(WordToString(CurrentWord))) {
                     printf("Konfigurasi berhasil dimuat.\n");
-                    SList(&listStore); // Tampilkan barang setelah load
+                    SList(&listbarang); // Tampilkan barang setelah load
                     IsStarted = true;  // Set IsStarted menjadi true
                 } else {
                     printf("Gagal memuat konfigurasi.\n");
@@ -120,7 +121,11 @@ int main() {
                 printf("| 8. STORE LIST - Tampilkan barang      |\n");
                 printf("| 9. STORE REQUEST - Lihat request barang|\n");
                 printf("| 10. HELP - Tampilkan bantuan          |\n");
-                printf("| 11. PROFILE - Tampilkan profile          |\n");
+                printf("| 11. PROFILE - Tampilkan profile       |\n");
+                printf("| 12. CART ADD - Tampilkan profile      |\n");
+                printf("| 13. CART REMOVE - Tampilkan profile   |\n");
+                printf("| 14. CART SHOW - Tampilkan profile     |\n");
+                printf("| 15. CART PAY - Tampilkan profile      |\n");
                 printf("+----------------------------------------+\n");
 
                 printf(">>> ");
@@ -153,6 +158,14 @@ int main() {
                     Save(WordToString(CurrentWord));  // Menyimpan dengan nama file yang diinputkan
                 } else if (isEqual(CurrentWord, "HELP")) {
                     help_main();
+                } else if (isEqual(CurrentWord, "CART ADD")) {
+                    CartAdd(&CurrentUser, &listbarang);
+                } else if (isEqual(CurrentWord, "CART REMOVE")) {
+                    CartRemove(&CurrentUser, &listbarang);
+                } else if (isEqual(CurrentWord, "CART SHOW")) {
+                    CartShow(&CurrentUser, &listbarang);
+                } else if (isEqual(CurrentWord, "CART PAY")) {
+                    CartPay(&CurrentUser, &listbarang);
                 } else {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }

@@ -5,11 +5,15 @@
 
 #include "../../Boolean/boolean.h"
 #include "../List/list.h"
+#include "../Map/map.h"
 
 typedef struct {
     char name[MAX_LEN];
     char password[MAX_LEN];
     int money;
+    Map keranjang;
+    // Stack riwayat_pembelian;
+    // Linkedlist wishlist;
 } User;
 
 typedef struct {
