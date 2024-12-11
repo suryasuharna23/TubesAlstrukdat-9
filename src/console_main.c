@@ -6,6 +6,7 @@
 #include "ADT/Mesin/mesinkarakter.h"
 #include "ADT/Map/map.h"
 #include "ADT/Stack/stack.h"
+#include "ADT/LinkedList/listlinier.h"
 #include "command/Load/load.h"
 #include "command/Save/save.h"
 #include "command/Register/register.h"
@@ -18,16 +19,18 @@
 #include "command/Profile/profile.h"
 #include "command/Cart/cart.h"
 #include "command/History/history.h"
+#include "command/Wishlist/wishlist.h"
 
 // Deklarasi global
-ListUser users;
-ListBarang listbarang;
+//ListUser users;
+//ListBarang listbarang;
 Queue requestQueue;
 User CurrentUser = {"", "", 0}; // Menyimpan data pengguna yang sedang login
 Stack purchaseHistory;
+List wishlist;
 
 void STARTINPUTWORD();
-Word CurrentWord;
+//Word CurrentWord;
 
 int main() {
     boolean running = true;
@@ -39,6 +42,7 @@ int main() {
     CreateListBarang(&listbarang);
     CreateQueue(&requestQueue);
     CreateEmptyS(&purchaseHistory);
+    CreateEmptyList(&wishlist);
 
     printf("****************************************\n");
     printf("*      Selamat Datang di PURRMART      *\n");
@@ -130,6 +134,10 @@ int main() {
                 printf("| 14. CART SHOW - Tampilkan profile     |\n");
                 printf("| 15. CART PAY - Tampilkan profile      |\n");
                 printf("| 16. HISTORY - Tampilkan profile       |\n");
+                printf("| 17. WISHLIST ADD - Tampilkan profile  |\n");
+                printf("| 18. WISHLIST REMOVE - Tampilkan profi |\n");
+                printf("| 19. WISHLIST CLEAR - Tampilkan profile|\n");
+                printf("| 20. WISHLIST SHOW - Tampilkan profile |\n");
                 printf("+----------------------------------------+\n");
 
                 printf(">>> ");
@@ -172,7 +180,10 @@ int main() {
                     CartPay(&CurrentUser, &listbarang);
                 } else if (isEqual(CurrentWord, "HISTORY")) {
                     ShowPurchaseHistory(&purchaseHistory);
-                } else {
+                } else if (isEqual(CurrentWord, "WISHLIST ADD")) {
+                    wishlistAdd(&wishlist, &listbarang);
+                }
+                else {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
             }

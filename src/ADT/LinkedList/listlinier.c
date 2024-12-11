@@ -2,57 +2,57 @@
 #include <stdlib.h>
 #include "listlinier.h"
 
-boolean IsEmpty (List L){
-    return (First(L) == Nil);
+boolean IsEmptyList (List L){
+    return (First(L) == Nol);
 }
 
-void CreateEmpty (List *L){
-    First(*L) = Nil;
+void CreateEmptyList (List *L){
+    First(*L) = Nol;
 }
 
-address Alokasi (infotype X){
-    address P = (address) malloc (sizeof(ElmtList));
-    if (P != Nil){
+address_list Alokasi (infotypes X){
+    address_list P = (address_list) malloc (sizeof(ElmtList));
+    if (P != Nol){
         Info(P) = X;
-        Next(P) = Nil;
+        Next(P) = Nol;
     }
     return P;
 }
 
-void Dealokasi (address *P){
+void Dealokasi (address_list *P){
     free (*P);
 }
 
-address Search (List L, infotype X){
-    address P = First(L);
+address_list Search (List L, infotypes X){
+    address_list P = First(L);
 
-    while (P != Nil && Info(P) != X){
+    while (P != Nol && Info(P) != X){
         P = Next(P);
     }
     return P;
 }
 
-/****************** PRIMITIF BERDASARKAN NILAI ******************/
+/****************** PRIMITIF BERDASARKAN NolAI ******************/
 
-void InsVFirst (List *L, infotype X){
-    address P = Alokasi(X);
+void InsVFirst (List *L, infotypes X){
+    address_list P = Alokasi(X);
 
-    if (P != Nil){
+    if (P != Nol){
         Next(P) =  First(*L);
         First(*L) = P;
     }
 }
 
-void InsVLast (List *L, infotype X){
-    address P = Alokasi(X);
+void InsVLast (List *L, infotypes X){
+    address_list P = Alokasi(X);
     
-    if (P != Nil){
-        if (IsEmpty(*L)){
+    if (P != Nol){
+        if (IsEmptyList(*L)){
             First(*L) = P;
         }
         else{
-            address Last = First(*L);
-            while (Next(Last) != Nil){
+            address_list Last = First(*L);
+            while (Next(Last) != Nol){
                 Last = Next(Last);
             }
             Next(Last) = P;
@@ -60,28 +60,28 @@ void InsVLast (List *L, infotype X){
     }
 }
 
-void DelVFirst (List *L, infotype *X){
-    address P = First(*L);
+void DelVFirst (List *L, infotypes *X){
+    address_list P = First(*L);
     *X = Info(P);
     First(*L) = Next(P);
     Dealokasi(&P);
 }
 
-void DelVLast (List *L, infotype *X){
-    address Last = First(*L);
-    address PrecLast = Nil;
+void DelVLast (List *L, infotypes *X){
+    address_list Last = First(*L);
+    address_list PrecLast = Nol;
 
-    while (Next(Last)!=Nil){
+    while (Next(Last)!=Nol){
         PrecLast = Last;
         Last = Next(Last);
     }
 
     *X = Info(Last);
-    if (PrecLast == Nil){
-        First(*L) = Nil;
+    if (PrecLast == Nol){
+        First(*L) = Nol;
     }
     else{
-        Next(PrecLast) = Nil;
+        Next(PrecLast) = Nol;
     }
 
     Dealokasi(&Last);
@@ -90,22 +90,22 @@ void DelVLast (List *L, infotype *X){
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
 
-void InsertFirst (List *L, address P){
+void InsertFirst (List *L, address_list P){
     Next(P) = First(*L);
     First(*L) = P;
 }
 
-void InsertAfter (List *L, address P, address Prec){
+void InsertAfter (List *L, address_list P, address_list Prec){
     Next(P) = Next(Prec);
     Next(Prec) = P;
 }
 
-void InsertLast (List *L, address P){
-    if (IsEmpty(*L)){
+void InsertLast (List *L, address_list P){
+    if (IsEmptyList(*L)){
         InsertFirst(L, P);
     } else {
-        address Last = First(*L);
-        while (Next(Last) != Nil){
+        address_list Last = First(*L);
+        while (Next(Last) != Nol){
             Last = Next(Last);
         }
         InsertAfter(L, P, Last);
@@ -114,57 +114,57 @@ void InsertLast (List *L, address P){
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
 
-void DelFirst (List *L, address *P){
+void DelFirst (List *L, address_list *P){
     *P = First(*L);
     First(*L) = Next(*P);
-    Next(*P) = Nil; 
+    Next(*P) = Nol; 
 }
 
-void DelP (List *L, infotype X){
-    address P = First(*L);
-    address Prec = Nil;
-    while (P != Nil && Info(P) != X){
+void DelP (List *L, infotypes X){
+    address_list P = First(*L);
+    address_list Prec = Nol;
+    while (P != Nol && Info(P) != X){
         Prec = P;
         P = Next(P);
     }
-    if (P != Nil){
-        if (Prec == Nil){
+    if (P != Nol){
+        if (Prec == Nol){
             First(*L) = Next(P);
         } else {
             Next(Prec) = Next(P);
         }
-        Next(P) = Nil;
+        Next(P) = Nol;
         Dealokasi(&P);
     }
 }
 
-void DelLast (List *L, address *P){
-    address Last = First(*L);
-    address PrecLast = Nil;
-    while (Next(Last) != Nil){
+void DelLast (List *L, address_list *P){
+    address_list Last = First(*L);
+    address_list PrecLast = Nol;
+    while (Next(Last) != Nol){
         PrecLast = Last;
         Last = Next(Last);
     }
     *P = Last;
-    if (PrecLast == Nil){
-        First(*L) = Nil;
+    if (PrecLast == Nol){
+        First(*L) = Nol;
     } else {
-        Next(PrecLast) = Nil;
+        Next(PrecLast) = Nol;
     }
 }
 
-void DelAfter (List *L, address *Pdel, address Prec){
+void DelAfter (List *L, address_list *Pdel, address_list Prec){
     *Pdel = Next(Prec);
     Next(Prec) = Next(*Pdel);
-    Next(*Pdel) = Nil;
+    Next(*Pdel) = Nol;
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 
 void PrintInfo (List L){
-    address P = First(L);
+    address_list P = First(L);
     int idx = 1;
-    while (P != Nil) {
+    while (P != Nol) {
         printf("%d %s\n", idx, Info(P));
         P = Next(P);
         idx++;
@@ -172,10 +172,10 @@ void PrintInfo (List L){
 }
 
 int NbElmt (List L){
-    address P = First(L);
+    address_list P = First(L);
     int count = 0;
 
-    while (P != Nil){
+    while (P != Nol){
         count++;
         P = Next(P);
     }
@@ -183,11 +183,11 @@ int NbElmt (List L){
 }
 
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype Max (List L){
-    infotype max = Info(First(L));
-    address P = Next(First(L));
+infotypes Max (List L){
+    infotypes max = Info(First(L));
+    address_list P = Next(First(L));
 
-    while (P != Nil){
+    while (P != Nol){
         if (Info(P) > max){
             max = Info(P);
         }
@@ -196,11 +196,11 @@ infotype Max (List L){
     return max;
 }
 
-address AdrMax (List L){
-    address P = Next(First(L));
-    address max = First(L);
+address_list AdrMax (List L){
+    address_list P = Next(First(L));
+    address_list max = First(L);
 
-    while (P != Nil){
+    while (P != Nol){
         if (Info(P) > Info(max)){
             max = P;
         }
@@ -209,11 +209,11 @@ address AdrMax (List L){
     return max;
 }
 
-infotype Min (List L){
-    infotype min = Info(First(L));
-    address P = Next(First(L));
+infotypes Min (List L){
+    infotypes min = Info(First(L));
+    address_list P = Next(First(L));
 
-    while (P != Nil){
+    while (P != Nol){
         if (Info(P) < min){
             min = Info(P);
         }
@@ -222,11 +222,11 @@ infotype Min (List L){
     return min;
 }
 
-address AdrMin (List L){
-    address P = Next(First(L));
-    address min = First(L);
+address_list AdrMin (List L){
+    address_list P = Next(First(L));
+    address_list min = First(L);
 
-    while (P != Nil){
+    while (P != Nol){
         if (Info(P) < Info(min)){
             min = P;
         }
@@ -236,11 +236,11 @@ address AdrMin (List L){
 }
 
 float Average (List L){
-    address P = First(L);
+    address_list P = First(L);
     float sum = 0;
     int count = 0;
 
-    while (P != Nil){
+    while (P != Nol){
         sum += Info(P);
         count++;
         P = Next(P);
@@ -251,11 +251,11 @@ float Average (List L){
 /****************** PROSES TERHADAP LIST ******************/
 
 void InversList (List *L){
-    address P = First(*L);
-    address Prec = Nil;
-    address NextP = Nil;
+    address_list P = First(*L);
+    address_list Prec = Nol;
+    address_list NextP = Nol;
 
-    while (P != Nil){
+    while (P != Nol){
         NextP = Next(P);
         Next(P) = Prec;
         Prec = P;
@@ -266,17 +266,17 @@ void InversList (List *L){
 
 void Konkat1 (List *L1, List *L2, List *L3){
     First(*L3) = First(*L1);
-    if (IsEmpty(*L3)){
+    if (IsEmptyList(*L3)){
         First(*L3) = First(*L2);
     } else {
-        address Last = First(*L3);
-        while (Next(Last) != Nil){
+        address_list Last = First(*L3);
+        while (Next(Last) != Nol){
             Last = Next(Last);
         }
         Next(Last) = First(*L2);
     }
-    CreateEmpty(L1);
-    CreateEmpty(L2);
+    CreateEmptyList(L1);
+    CreateEmptyList(L2);
 }
 
 
