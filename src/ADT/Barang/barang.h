@@ -1,6 +1,5 @@
 #ifndef BARANG_H
 #define BARANG_H
-
 #define MAX_LEN 50
 
 #include "../../Boolean/boolean.h"
@@ -12,40 +11,21 @@ typedef struct {
     int price;
 } Barang;
 
-typedef struct
-{
+typedef struct {
     Barang items[MAX_LEN];
     int count;
-} listBarang ;
+} ListBarang;
 
-typedef struct {
-    Barang *store;
-    int Neff;
-    int Capacity;
-} ArrayDinStore;
+extern ListBarang listbarang;
 
-typedef int IdxType;
+void CreateListBarang(ListBarang *list); 
+int CountBarang(ListBarang *listbarang);
+int IndexBarang(ListBarang *listbarang, char *name);
+void AddBarang(ListBarang *list, char *name, int price);
+void TakeBarang(ListBarang *listbarang, char *name);
+boolean IsBarangExist(ListBarang *listbarang, char *name);
+boolean IsEmptyListBarang(ListBarang list);
+void PrintBarang(Barang *barang);
+boolean StringCompare(const char *str1, const char *str2);
 
-#define A(array) (array).store
-#define Neff(array) (array).Neff
-
-void CreateStore(ArrayDinStore *list, int capacity);
-
-// KONSTRUKTOR LIST BARANG
-void InitializeListBarang(listBarang *list);
-
-// KONSTRUKTOR BARANG
-Barang CreateBarang(const char *name, int price);
-void PrintBarang(const Barang *barang);
-
-// KONSTRUKTOR ARRAY DINAMIS
-void DeleteAt(ArrayDinStore *array, IdxType i);
-void DeleteLast(ArrayDinStore *array);
-void DeleteFirst(ArrayDinStore *array);
-void ResizeArray(ArrayDinStore *array, int newCapacity);
-void InsertLast(ArrayDinStore *array, Barang el, boolean isFromFile);
-int Length(ArrayDinStore array);
-void DeallocateArrayDinStore(ArrayDinStore *array);
-boolean IsEmptyArrayDin(ArrayDinStore array);
-
-#endif 
+#endif /* BARANG_H */

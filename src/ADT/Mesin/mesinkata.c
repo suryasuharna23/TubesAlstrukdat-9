@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "mesinkata.h"
+#include "mesinkarakter.h"
 
 boolean EndWord;
 Word CurrentWord;
 
 void IgnoreBlanks(){
-    while (currentChar == BLANK && !IsEOP()){
+    while (GetCC() == BLANK && !IsEOP() && GetCC() == NL){
         ADV();
     }
 }
@@ -14,7 +16,7 @@ void IgnoreBlanks(){
 void STARTWORD(char *FILE){
     START(FILE);
     IgnoreBlanks();
-    if (currentChar == '\n' || currentChar == MARK){
+    if (EOP){
         EndWord = true;
     }
     else{
@@ -24,45 +26,48 @@ void STARTWORD(char *FILE){
 }
 
 void STARTINPUTWORD() {
-    STARTINPUT(); 
-    IgnoreBlanks();
-    if (currentChar == '\n' || currentChar == MARK) { 
+    int i = 0;
+    char c = getchar();
+    while (c != '\n' && c != EOF && i < NMax - 1) {
+        CurrentWord.TabWord[i] = c;
+        i++;
+        c = getchar();
+    }
+    CurrentWord.TabWord[i] = '\0';
+    CurrentWord.Length = i;
+    EndWord = (i == 0);
+}
+
+void ADVWORD() {
+    IgnoreBlanks();  // Abaikan spasi
+
+    if (EOP) {  // Jika sudah mencapai akhir input
         EndWord = true;
     } else {
-        EndWord = false;
-        CopyWord();
+        CopyWord();  // Salin kata baru jika ada
     }
 }
 
-void ADVWORD(){
-    IgnoreBlanks();
-    if (currentChar == '\n' || currentChar == MARK){
-        EndWord = true;
-    }
-    else{
-        CopyWord();
-    }
-}
 
 void ADVSENTENCE(){
     IgnoreBlanks();
-    if (currentChar == '\n'){
+    if (CurrentChar == '\n'){
         EndWord = true;
     }
     else{
         CopyWord();
     }
-}
+} // Ga surya pake
 
 void CopyWord(){
     int i=0;
-    while ((currentChar != BLANK) && (currentChar != '\n') && (currentChar != MARK) && (i<NMax)){
-        CurrentWord.TabWord[i] = currentChar;
-        ADV();
+    while (GetCC() != BLANK && GetCC() != LN && !IsEOP() && i<NMax){
+        CurrentWord.TabWord[i] = GetCC();
         i++;
+        ADV();
     }
     CurrentWord.Length=i;
-    if (CurrentWord.TabWord[CurrentWord.Length-1]=='\r');
+    if (CurrentWord.TabWord[i]=='\0');
 }
 
 void PrintCurrentWord() {
@@ -70,7 +75,7 @@ void PrintCurrentWord() {
         printf("%c", CurrentWord.TabWord[i]);
     }
     printf("\n");
-}
+} // surya gak pake
 
 Word GetWord (Word w1, int a){
     Word w2;
@@ -102,7 +107,7 @@ Word GetWord (Word w1, int a){
 
     w2.TabWord[w2.Length] = '\0'; 
     return w2;
-}
+} // surya gak pake
 
 /// @brief dapetin sentence
 /// @param w1 word masukan
@@ -139,7 +144,7 @@ Word GetSentence(Word w1, int idx){
     }
     w2.TabWord[w2.Length] = '\0';
     return w2;
-}
+} // surya gak pake
 
 boolean isEqual(Word w, const char *c){
     int i = 0;
@@ -163,7 +168,7 @@ boolean isEqual(Word w, const char *c){
 
 // CONVERTER //
 
-char * WordToString (Word word){
+char *WordToString (Word word){
     char* str = (char*)malloc((word.Length + 1) * sizeof(char));
     if (str == NULL) {
         return NULL; 
@@ -214,4 +219,80 @@ boolean WordCompare(const char *str1, const char *str2) {
         i++;
     }
     return (str1[i] == '\0' && str2[i] == '\0');
+}
+
+void GetLine(){
+    int i = 0;
+    START(NULL);
+    while(GetCC() != LN){
+        CurrentWord.TabWord[i] = GetCC();
+        ADVIgnoreLN();
+        i++;
+    }
+    CurrentWord.TabWord[i] = '\0';
+    CurrentWord.Length = i;
+}
+
+void StringCopy(char *str1, char *str2){
+    int i = 0;
+    while (str2[i] != '\0'){
+        str1[i] = str2[i];
+        i++;
+    }
+    str1[i] = '\0';
+}
+
+void StringConcat(char *str1, char *str2){
+    int i = 0;
+    while (str1[i] != '\0'){
+        i++;
+    }
+    int j = 0;
+    while (str2[j] != '\0'){
+        str1[i] = str2[j];
+        i++;
+        j++;
+    }
+    str1[i] = '\0';
+}
+
+
+
+void STARTINPUT() {
+    START(NULL);
+    IgnoreBlanks();
+    if (CurrentChar == '\n' || CurrentChar == MARK) {
+        EndWord = true;
+    } else {
+        EndWord = false;
+        CopyWord();
+    }
+}
+
+void ADVIgnoreLN() {
+    IgnoreBlanks();
+    if (CurrentChar == '\n') {
+        EndWord = true;
+    } else {
+        EndWord = false;
+        CopyWord();
+    }
+}
+
+boolean IsBlankExist(Word word) {
+    for (int i = 0; i < word.Length; i++) {
+        if (word.TabWord[i] == BLANK) {
+            return true;
+        }
+    }
+    return false;
+}
+
+boolean IsLetterOrDigit(Word word) {
+    for (int i = 0; i < word.Length; i++) {
+        if (!isalnum(word.TabWord[i])) {
+            return false;
+        }
+    }
+    return true;
 }

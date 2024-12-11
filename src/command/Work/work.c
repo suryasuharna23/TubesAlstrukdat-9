@@ -1,12 +1,6 @@
 #include <stdio.h>
 #include "work.h"
-// Cek  program dijalankan di Windows
-#ifdef _WIN32
-    #include <windows.h> // untuk fungsi Sleep di Windows
-    #define sleep(seconds) Sleep((seconds) * 1000) // konversi detik ke milidetik
-#else
-    #include <unistd.h> // untuk fungsi sleep di Linux/macOS
-#endif
+
 typedef struct {
     char jobName[50];
     int salary;
@@ -45,11 +39,26 @@ boolean compareJobName(Word input, char *jobName) {
     return true;
 }
 
-void work(User *user) {
-    printf("Daftar pekerjaan:\n");
-    for (int i = 0; i < jobCount; i++) {
-        printf("%d. %s (pendapatan=%d, durasi=%ds)\n", i + 1, jobs[i].jobName, jobs[i].salary, jobs[i].duration);
+void simulateSleep(int seconds) {
+    // Simulasi delay dalam detik
+    volatile long long i; // Gunakan volatile untuk mencegah optimisasi
+    for (i = 0; i < seconds * 1000000LL; i++) {
+        // Busy-wait loop untuk simulasi delay
+        // Tidak melakukan apa-apa, hanya untuk memperlambat
     }
+}
+
+void Work(User *user) {
+    printf("User %s now has %s as password.\n", user->name, user->password);
+    printf("User %s now has %d money.\n", user->name, user->money);
+    printf("Daftar pekerjaan:\n");
+    printf("+----+-----------------------------+-----------+---------+\n");
+    printf("| No | Job Name                    | Salary    | Duration|\n");
+    printf("+----+-----------------------------+-----------+---------+\n");
+    for (int i = 0; i < jobCount; i++) {
+        printf("| %-2d | %-27s | %-9d | %-7ds |\n", i + 1, jobs[i].jobName, jobs[i].salary, jobs[i].duration);
+    }
+    printf("+----+-----------------------------+-----------+---------+\n");
 
     printf("\nMasukkan nama pekerjaan yang dipilih: ");
     STARTINPUTWORD(); 
@@ -66,8 +75,13 @@ void work(User *user) {
         printf("Pilihan pekerjaan tidak valid!\n");
         return;
     }
-    printf("\nAnda sedang bekerja sebagai %s... harap tunggu.\n", selectedJob->jobName);
-    sleep(selectedJob->duration);
-    AddMoney(user, selectedJob->salary);
+
+    printf("\nAnda sedang bekerja sebagai %s... harap tunggu selama %d detik.\n", 
+           selectedJob->jobName, selectedJob->duration);
+    simulateSleep(selectedJob->duration); // Delay sesuai durasi pekerjaan
+    user->money += selectedJob->salary; // Tambahkan uang ke pengguna
     printf("Pekerjaan selesai, +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob->salary);
+
+    // Print the updated CurrentUser's money
+    printf("User %s now has %d money.\n", user->name, user->money);
 }

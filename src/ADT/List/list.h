@@ -2,8 +2,8 @@
 /* Berisi definisi dan semua primitif pemrosesan list integer */
 /* Penempatan elemen selalu rapat kiri */
 
-#ifndef ADTList1
-#define ADTList1
+#ifndef LIST_H
+#define LIST_H
 
 #include "../../Boolean/boolean.h"
 /* Kamus Umum */

@@ -6,6 +6,6 @@
 #include "../../ADT/Mesin/mesinkata.h"
 
 // fungsi untuk melakukan proses login
-void Login(ListUser *users, char *currentUser);
+void Login();
 
 #endif 

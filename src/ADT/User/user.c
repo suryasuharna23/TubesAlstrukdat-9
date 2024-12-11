@@ -1,136 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "user.h"
+#include "../Mesin/mesinkata.h"
 
-// buat list user kosong
-void InitializeListUser(ListUser *list){
-    list->count = 0;
+void CreateUser(User *CurrentUser){
+    StringCopy("", CurrentUser->name);
+    StringCopy("", CurrentUser->password);
+    CurrentUser->money = 0;
 }
 
-void InsertLastUser(ListUser *list, User u){
-    int i = list->count;
-	list->users[i] = u;
-	list->count++;
-}
-
-// buat user baru
-void CreateUser(User *user, const char *name, const char *password, int money) {
-    int i = 0;
-    while (name[i] != '\0' && i < MAX_LEN - 1) {
-        user->name[i] = name[i];
-        i++;
-    }
-    user->name[i] = '\0';
-
-    i = 0;
-    while (password[i] != '\0' && i < MAX_LEN - 1) {
-        user->password[i] = password[i];
-        i++;
-    }
-    user->password[i] = '\0';
-    user->money = money;
-}
-
-// print informasi user
-void PrintUser(const User *user) {
-    printf("Name: %s\n", user->name);
-    printf("Password: %s\n", user->password);
-    printf("Money: %d\n", user->money);
+void CreateListUser(ListUser *users){
+    users->count = 0;
 }
 
 void AddMoney(User *user, int amount) {
-    if (amount > 0) {
-        user->money += amount;
-    }
+    user->money += amount;
 }
 
 void TakeMoney(User *user, int amount) {
-    if (amount > 0) {
-        user->money -= amount;
-    }
+    user->money -= amount;
 }
 
-// buat array dinamis user
-void CreateArrayDinUser(ArrayDinUser *array, int capacity) {
-    if (capacity > 0) {
-        array->users = (User *)malloc((unsigned int)capacity * sizeof(User));
-        array->Neff = 0;
-        array->Capacity = capacity;
+void AddUser(ListUser *users, char *name, char *password, int money){
+    StringCopy(users->users[users->count].name, name);
+    StringCopy(users->users[users->count].password, password);
+    users->users[users->count].money = money;
+    users->count++;
+}
+
+void InsertUser(ListUser *users, User user) {
+    if (users->count < MAX_LEN) {
+        users->users[users->count] = user;
+        users->count++;
     } else {
-        array->users = NULL;
-        array->Neff = 0;
-        array->Capacity = 0;
+        printf("User list is full.\n");
     }
 }
 
-// hapus array dinamis user
-void DeallocateArrayDinUser(ArrayDinUser *array) {
-    free(array->users);
-    array->users = NULL;
-    array->Neff = 0;
-    array->Capacity = 0;
-}
-
-// tambah user ke array
-void InsertUser(ArrayDinUser *array, User user) {
-    if (array->Neff >= array->Capacity) {
-        ResizeArrayUser(array, array->Capacity * 2);
+int IndexUser(ListUser *users, char *name){
+    int i = 0;
+    while (i < users->count && !WordCompare(users->users[i].name, name)){
+        i++;
     }
-    U(*array)[array->Neff] = user;
-    array->Neff++;
+    return i;
 }
 
-// hapus user di indeks tertentu
-void DeleteUserAt(ArrayDinUser *array, int i) {
-    if (i >= 0 && i < array->Neff) {
-        for (int j = i; j < array->Neff - 1; j++) {
-            U(*array)[j] = U(*array)[j + 1];
-        }
-        array->Neff--;
-    } else {
-        printf("Indeks tidak valid.\n");
-    }
+int CountUser(ListUser *users){
+    return users->count;
 }
 
-// Menghapus User Terakhir
-void DeleteUserLast(ArrayDinUser *array) {
-    if (array->Neff > 0) {
-        array->Neff--;
-    } else {
-        printf("Array kosong, tidak ada yang dihapus.\n");
-    }
+boolean IsUserValid(ListUser *users, char *name, char *password){
+    int i = IndexUser(users, name);
+    return i < users->count && WordCompare(users->users[i].password, password);
 }
 
-// panjang array
-int LengthUser(ArrayDinUser array) {
-    return array.Neff;
+boolean IsUserExist(ListUser *users, char *name){
+    return IndexUser(users, name) < users->count;
 }
 
-// cek array kosong
-boolean IsEmptyArrayDinUser(ArrayDinUser array) {
-    return array.Neff == 0;
-}
 
-// ubah kapasitas array
-void ResizeArrayUser(ArrayDinUser *array, int newCapacity) {
-    if (newCapacity > 0) {
-        User *newUsers = (User *)malloc((unsigned int)newCapacity * sizeof(User));
-        for (int i = 0; i < array->Neff; i++) {
-            newUsers[i] = array->users[i];
-        }
-        free(array->users);
-        array->users = newUsers;
-        array->Capacity = newCapacity;
-    } else {
-        printf("Kapasitas baru tidak valid.\n");
-    }
-}
-
-// print semua user
-void PrintAllUsers(ArrayDinUser array) {
-    for (int i = 0; i < array.Neff; i++) {
-        printf("User #%d:\n", i + 1);
-        PrintUser(&U(array)[i]);
-        printf("\n");
-    }
-}

@@ -2,110 +2,67 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+ListBarang barangs;
+
 // KONSTRUKTOR STORE
-void CreateStore(ArrayDinStore *list, int capacity) {
-    if (capacity > 0) {
-        list->store = (Barang *)malloc((unsigned int)capacity * sizeof(Barang));
-        list->Neff = 0;
-        list->Capacity = capacity;
-    } else {
-        list->store = NULL;
-        list->Neff = 0;
-        list->Capacity = 0;
-    }
+void CreateListBarang(ListBarang *listbarang) {
+    listbarang->count = 0;
 }
 
-// KONSTRUKTOR LIST BARANG
-void InitializeListBarang(listBarang *list){
-    list->count = 0;
+int CountBarang(ListBarang *listbarang) {
+    return listbarang->count;
 }
 
-// KONSTRUKTOR BARANG
-Barang CreateBarang(const char *name, int price) { // membuat barang baru
-    Barang barang;
+int IndexBarang(ListBarang *listbarang, char *name){
     int i = 0;
-    while (name[i] != '\0' && i < MAX_LEN - 1) {
-        barang.name[i] = name[i];
+    while (i < listbarang->count && !WordCompare(listbarang->items[i].name, name)) {
         i++;
     }
-    barang.name[i] = '\0';
-    barang.price = price;
-    return barang;
-}
-
-void PrintBarang(const Barang *barang) {
-    printf("%s\n", barang->name);
-}
-
-// KONSTRUKTOR ARRAY DINAMIS
-
-void DeleteAt(ArrayDinStore *array, IdxType i) {
-    for (int j = i; j < Length(*array) - 1; j++) {
-        A(*array)[j] = A(*array)[j + 1];
+    if (i < listbarang->count) {
+        return i;
+    } else {
+        return -1;
     }
-    Neff(*array) -= 1;
 }
 
-void DeleteLast(ArrayDinStore *array) {
-    DeleteAt(array, Length(*array) - 1);
-}
-
-void DeleteFirst(ArrayDinStore *array) {
-    DeleteAt(array, 0);
-}
-
-void ResizeArray(ArrayDinStore *array, int newCapacity) {
-    Barang *newStore = (Barang *)malloc((unsigned int)newCapacity * sizeof(Barang));
-    for (int i = 0; i < array->Neff; i++) {
-        newStore[i] = array->store[i];
+void AddBarang(ListBarang *listbarang, char *name, int price) {
+    if (listbarang->count < MAX_LEN) {
+        listbarang->items[listbarang->count].price = price;
+        StringCopy(listbarang->items[listbarang->count].name, name);
+        listbarang->count++;
     }
-    free(array->store);
-    array->store = newStore;
-    array->Capacity = newCapacity;
 }
 
-void InsertLast(ArrayDinStore *array, Barang el, boolean isFromFile) {
-    // kalau barang sudah ada di toko
-    for (int i = 0; i < Neff(*array); i++) {
-        if (WordCompare(A(*array)[i].name, el.name)) {
-            if (!isFromFile){
-                printf("Barang %s sudah ada di toko!\n", el.name);
-            }
-            return;
+void TakeBarang(ListBarang *listbarang, char *name) {
+    int i = IndexBarang(listbarang, name);
+    if (i != -1) {
+        for (int j = i; j < listbarang->count - 1; j++) {
+            listbarang->items[j] = listbarang->items[j + 1];
         }
+        listbarang->count--;
     }
-    
-    // validasi jika harga barang valid
-    if (el.price <= 0) {
-        if (!isFromFile){
-            printf("Barang tidak valid! Harga harus lebih dari 0\n");
+}
+
+boolean IsBarangExist(ListBarang *listbarang, char *name) {
+    return IndexBarang(listbarang, name) != -1;
+}
+
+boolean IsEmptyListBarang(ListBarang list) {
+    return list.count == 0;
+}
+
+void PrintBarang(Barang *barang) {
+    printf("%s, %d\n", barang->name, barang->price);
+}
+
+
+boolean StringCompare(const char *str1, const char *str2) {
+    while (*str1 && *str2) {
+        if (*str1 != *str2) {
+            return false;
         }
-        return;
+        str1++;
+        str2++;
     }
-    
-    // kalau barang belum ada, maka akan ditambahkan
-    if (Neff(*array) >= array->Capacity) {
-        ResizeArray(array, array->Capacity * 2); 
-    }
-    A(*array)[Neff(*array)] = el;
-    Neff(*array)++;
-
-    if (!isFromFile){
-        printf("Barang %s berhasil ditambahkan ke toko!\n", el.name);
-    }
-}
-
-int Length(ArrayDinStore array) {
-    return Neff(array);
-}
-
-void DeallocateArrayDinStore(ArrayDinStore *array) {
-    free(array->store);
-    array->store = NULL;
-    array->Neff = 0;
-    array->Capacity = 0;
-}
-
-boolean IsEmptyArrayDin(ArrayDinStore array) {
-    return array.Neff == 0;
+    return *str1 == *str2;
 }

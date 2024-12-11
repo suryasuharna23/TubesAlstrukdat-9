@@ -12,7 +12,7 @@
 int getInt();
 // membaca masukan kata sebagai integer
 
-int tebak_angka();
+void tebak_angka();
 // program challenge tebak angka
 
 #endif

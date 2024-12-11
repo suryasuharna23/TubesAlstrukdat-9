@@ -7,6 +7,6 @@
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
 
-void work(User *user);
+void Work(User *user);
 
 #endif

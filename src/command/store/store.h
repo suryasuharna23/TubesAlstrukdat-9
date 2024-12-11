@@ -7,13 +7,9 @@
 #include "../../ADT/Barang/barang.h"
 #include "../../ADT/Queue/queue.h"
 
-
-void SList(ArrayDinStore *listStore); //menampilkan barang di list store
-
-void SRemove (ArrayDinStore *listStore); //mengahpus barang dari list store
-
-void SRequest(ArrayDinStore *listStore, Queue *req); //meminta barang ke list store
-
-void SSupply(ArrayDinStore *listStore, Queue *req); //menambahkan barang ke list store dari store request
+void SList(ListBarang *listbarang); //menampilkan barang di list store
+void SRemove(ListBarang *listbarang); //mengahpus barang dari list store
+void SRequest(Queue *req, ListBarang *listbarang); //meminta barang ke list store
+void SSupply(Queue *req, ListBarang *listbarang); //menambahkan barang ke list store dari store request
 
 #endif

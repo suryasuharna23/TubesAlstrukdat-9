@@ -1,35 +1,51 @@
 #include <stdio.h>
 #include "mesinkarakter.h"
 
-char currentChar;
+char CurrentChar; // Deklarasi dan definisi
 boolean EOP;
 
 static FILE *pita;
 static int retval; 
 
-void START(char *FILE){
-    pita = fopen(FILE, "r");
+void START(char *FILE) {
+    if (FILE != NULL) {
+        pita = fopen(FILE, "r");
+        if (pita == NULL) {
+            printf("File gagal dibuka '%s'.\n", FILE);
+            EOP = true;
+            return;
+        }
+    } else {
+        pita = stdin;
+    }
     ADV();
 }
 
-void STARTINPUT(){
-    pita = stdin;
-    ADV();
-}
-
-void ADV(){
-    retval = fscanf(pita, "%c", &currentChar);
-    EOP = (currentChar == MARK);
-    if (EOP){
+void ADV() {
+    retval = fscanf(pita, "%c", &CurrentChar);
+    if (retval == EOF) {
+        EOP = true;
+    } else {
+        EOP = (CurrentChar == MARK);
+    }
+    if (EOP) {
         fclose(pita);
     }
 }
 
-char GetCC(){
-    return currentChar;
+char GetCC() {
+    return CurrentChar;
 }
 
-boolean IsEOP(){
-    return (currentChar == MARK || feof(pita));
+boolean IsEOP() {
+    return EOP;
+}
+
+void ADVIgnoreNL() {
+    int result = fscanf(pita, "%c", &CurrentChar);
+    EOP = (result == EOF);
+    if (EOP) {
+        fclose(pita);
+    }
 }
 

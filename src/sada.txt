@@ -1,7 +1,0 @@
-3
-100 meja
-50 kursi
-1 fdd
-2
-50 surya password123
-40 nana pazzzzword

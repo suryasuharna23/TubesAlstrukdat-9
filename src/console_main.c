@@ -1,0 +1,164 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include "ADT/User/user.h"
+#include "ADT/Barang/barang.h"
+#include "ADT/Mesin/mesinkata.h"
+#include "ADT/Mesin/mesinkarakter.h"
+#include "command/Load/load.h"
+#include "command/Save/save.h"
+#include "command/Register/register.h"
+#include "command/Help/help.h"
+#include "command/Login/login.h"
+#include "command/Work/work.h"
+#include "command/Tebak_Angka/tebak_angka.h"
+#include "command/WORDL3/wordl3.h"
+#include "command/Store/store.h"
+#include "command/Profile/profile.h"
+
+// Deklarasi global
+ListUser users;
+ListBarang listbarang;
+ListBarang listStore;
+Queue requestQueue;
+User CurrentUser = {"", "", 0}; // Menyimpan data pengguna yang sedang login
+
+void STARTINPUTWORD();
+Word CurrentWord;
+
+int main() {
+    boolean running = true;
+    boolean loggedIn = false;
+    boolean IsStarted = false;  // Menandakan apakah program sudah dimulai
+
+    // Inisialisasi
+    CreateListUser(&users);
+    CreateListBarang(&listbarang);
+    CreateListBarang(&listStore);
+    CreateQueue(&requestQueue);
+
+    printf("****************************************\n");
+    printf("*      Selamat Datang di PURRMART      *\n");
+    printf("****************************************\n");
+
+    char *commandStr;
+
+    while (running) {
+        if (!IsStarted) {
+            // Menu Awal: START, LOAD, QUIT
+            printf("\n+----------------------------------------+\n");
+            printf("|           MENU AWAL PURRMART          |\n");
+            printf("+----------------------------------------+\n");
+            printf("| 1. START                               |\n");
+            printf("| 2. LOAD                                |\n");
+            printf("| 3. QUIT                                |\n");
+            printf("+----------------------------------------+\n");
+
+            printf(">>> ");
+            STARTINPUTWORD();
+            commandStr = WordToString(CurrentWord);
+
+            if (isEqual(CurrentWord, "START")) {
+                Load(NULL);  // Memuat data default jika ada
+                printf("Data dimuat menggunakan setelan default.\n");
+                SList(&listStore); // Tampilkan barang setelah mulai
+                IsStarted = true;  // Set IsStarted menjadi true
+            } else if (isEqual(CurrentWord, "LOAD")) {
+                printf("Masukkan nama file konfigurasi: ");
+                STARTINPUTWORD();
+                if (Load(WordToString(CurrentWord))) {
+                    printf("Konfigurasi berhasil dimuat.\n");
+                    SList(&listStore); // Tampilkan barang setelah load
+                    IsStarted = true;  // Set IsStarted menjadi true
+                } else {
+                    printf("Gagal memuat konfigurasi.\n");
+                }
+            } else if (isEqual(CurrentWord, "QUIT")) {
+                running = false; // Keluar dari game
+                printf("Terima kasih telah menggunakan PURRMART!\n");
+            } else {
+                printf("Perintah tidak dikenal: %s\n", commandStr);
+            }
+        } else {
+            // Menu Utama setelah IsStarted = true
+            if (!loggedIn) {
+                // Menu login atau register
+                printf("\n+----------------------------------------+\n");
+                printf("|         MENU LOGIN / REGISTER         |\n");
+                printf("+----------------------------------------+\n");
+                printf("| 1. LOGIN                               |\n");
+                printf("| 2. REGISTER                            |\n");
+                printf("+----------------------------------------+\n");
+
+                printf(">>> ");
+                STARTINPUTWORD();
+                commandStr = WordToString(CurrentWord);
+
+                if (isEqual(CurrentWord, "LOGIN")) {
+                    Login(&users, &CurrentUser);
+                    loggedIn = true; // Set status login
+                } else if (isEqual(CurrentWord, "REGISTER")) {
+                    boolean registrationSuccessful = false;
+                    RegisterUser(&users, &registrationSuccessful);
+                    if (registrationSuccessful) {
+                        loggedIn = true; // Set status login
+                    }
+                } else {
+                    printf("Perintah tidak dikenal: %s\n", commandStr);
+                }
+            } else {
+                // Menu Utama setelah login
+                printf("\n+----------------------------------------+\n");
+                printf("|          MENU UTAMA PURRMART          |\n");
+                printf("+----------------------------------------+\n");
+                printf("| 1. STORE SUPPLY - Pasok barang        |\n");
+                printf("| 2. STORE REMOVE - Hapus barang        |\n");
+                printf("| 3. SAVE - Simpan konfigurasi          |\n");
+                printf("| 4. LOGOUT - Keluar dari sesi pengguna |\n");
+                printf("| 5. WORK - Pekerjaan pengguna          |\n");
+                printf("| 6. TEBAK ANGGKA - Tebak Angka         |\n");
+                printf("| 7. WORDL3 - Challenge Wordl3          |\n");
+                printf("| 8. STORE LIST - Tampilkan barang      |\n");
+                printf("| 9. STORE REQUEST - Lihat request barang|\n");
+                printf("| 10. HELP - Tampilkan bantuan          |\n");
+                printf("| 11. PROFILE - Tampilkan profile          |\n");
+                printf("+----------------------------------------+\n");
+
+                printf(">>> ");
+                STARTINPUTWORD();
+                commandStr = WordToString(CurrentWord);
+
+                if (isEqual(CurrentWord, "LOGOUT")) {
+                    printf("Berhasil logout. Sampai jumpa, %s!\n", CurrentUser.name);
+                    loggedIn = false; // Logout
+                    CurrentUser = (User){"", "", 0}; // Reset CurrentUser
+                } else if (isEqual(CurrentWord, "WORK")) {
+                    Work(&CurrentUser);
+                } else if (isEqual(CurrentWord, "PROFILE")) {
+                    Profile(&CurrentUser);
+                } else if (isEqual(CurrentWord, "TEBAK_ANGKA")) {
+                    tebak_angka(&CurrentUser);
+                } else if (isEqual(CurrentWord, "WORDL3")) {
+                    wordl3_challenge(&CurrentUser);
+                } else if (isEqual(CurrentWord, "STORE LIST")) {
+                    SList(&listbarang);
+                } else if (isEqual(CurrentWord, "STORE REQUEST")) {
+                    SRequest(&requestQueue, &listbarang);
+                } else if (isEqual(CurrentWord, "STORE SUPPLY")) {
+                    SSupply(&requestQueue, &listbarang);
+                } else if (isEqual(CurrentWord, "STORE REMOVE")) {
+                    SRemove(&listbarang);
+                } else if (isEqual(CurrentWord, "SAVE")) {
+                    printf("Masukkan nama file untuk menyimpan: ");
+                    STARTINPUTWORD();  // Mengambil input dari pengguna
+                    Save(WordToString(CurrentWord));  // Menyimpan dengan nama file yang diinputkan
+                } else if (isEqual(CurrentWord, "HELP")) {
+                    help_main();
+                } else {
+                    printf("Perintah tidak dikenal. Silakan coba lagi.\n");
+                }
+            }
+        }
+    }
+
+    return 0;
+}

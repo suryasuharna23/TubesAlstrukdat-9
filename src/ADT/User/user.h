@@ -17,37 +17,19 @@ typedef struct {
     int count;
 } ListUser;
 
-typedef struct {
-    User *users;
-    int Neff;        
-    int Capacity;    
-} ArrayDinUser;
+extern ListUser users;
+extern boolean IsLogin;
 
-
-// Selektor
-#define U(array) (array).users
-#define Neff(array) (array).Neff
-
-// Konstruktor list user
-void InitializeListUser(ListUser *list);
-void InsertLastUser(ListUser *list, User u);
-
-// Fungsi dan Prosedur
-void CreateUser(User *user, const char *name, const char *password, int money);
-void CreateArrayDinUser(ArrayDinUser *array, int capacity);
-void DeallocateArrayDinUser(ArrayDinUser *array);
-
-void InsertUser(ArrayDinUser *array, User user);
-void DeleteUserAt(ArrayDinUser *array, IdxType i);
-void DeleteUserLast(ArrayDinUser *array);
-
-int LengthUser(ArrayDinUser array);
-boolean IsEmptyArrayDinUser(ArrayDinUser array);
-void ResizeArrayUser(ArrayDinUser *array, int newCapacity);
-void PrintAllUsers(ArrayDinUser array);
-
-// Fungsi untuk menambah atau mengurangi saldo pada user
+void CreateListUser(ListUser *users);
+void CreateUser(User *CurrentUser);
+void AddUser(ListUser *users, char *name, char *password, int money);
+void InsertUser(ListUser *users, User user);
 void AddMoney(User *user, int amount);
 void TakeMoney(User *user, int amount);
+boolean IsUserValid(ListUser *users, char *name, char *password);
+boolean IsUserExist(ListUser *users, char *name);
+int CountUser(ListUser *users);
+int IndexUser(ListUser *users, char *name);
+boolean WordCompare(const char *str1, const char *str2);
 
-#endif
+#endif // USER_H

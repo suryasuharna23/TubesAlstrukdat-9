@@ -1,34 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdlib.h>
 #include "save.h"
+#include "../../ADT/User/user.h"
+#include "../../ADT/Barang/barang.h"
+#include "../../ADT/Mesin/mesinkarakter.h"
+#include "../../ADT/Mesin/mesinkata.h"
 
-void save(const char *filename, ArrayDinUser *userArray, listBarang *barangList)
-{
-    FILE *file = fopen(filename, "w");
-    if (file == NULL)
-    {
-        printf("Gagal membuka file.\n");
+extern ListBarang listbarang;
+extern ListUser users;
+
+void Save(char *filename) {
+    FILE *file;
+    char filepath[256];
+
+    // Construct the full path to the config folder
+    StringCopy(filepath, "config/");
+    StringConcat(filepath, filename);
+    StringConcat(filepath, ".txt");
+
+    file = fopen(filepath, "w");
+    if (file == NULL) {
+        printf("Error opening file for writing: %s\n", filepath);
         return;
     }
 
-    // nyimpen info pengguna
-    fprintf(file, "Users:\n");
-    for (int i = 0; i < userArray->Neff; i++)
-    {
-        fprintf(file, "Username: %s\n", userArray->users[i].name);
-        fprintf(file, "Password: %s\n", userArray->users[i].password);
-        fprintf(file, "Uang: %d\n", userArray->users[i].money);
+    // Save Barang Data
+    fprintf(file, "%d\n", listbarang.count);
+    for (int i = 0; i < listbarang.count; i++) {
+        fprintf(file, "%d %s\n", listbarang.items[i].price, listbarang.items[i].name);
     }
 
-    // nyimpen info barang
-    fprintf(file, "Barang:\n");
-    for (int i = 0; i < barangList->count; i++)
-    {
-        fprintf(file, "Nama: %s\n", barangList->items[i].name);
-        fprintf(file, "Harga: %d\n", barangList->items[i].price);
+    // Save User Data
+    fprintf(file, "%d\n", users.count);
+    for (int i = 0; i < users.count; i++) {
+        fprintf(file, "%d %s %s\n", users.users[i].money, users.users[i].name, users.users[i].password);
     }
 
     fclose(file);
-    printf("Save file berhasil disimpan.\n");
+    printf("Data berhasil disimpan ke %s\n", filepath);
 }

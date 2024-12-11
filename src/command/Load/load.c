@@ -1,75 +1,101 @@
 #include "load.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "../../ADT/User/user.h"
+#include "../../ADT/Barang/barang.h"
+#include "../../ADT/Mesin/mesinkarakter.h"
+#include "../../ADT/Mesin/mesinkata.h"
+#include "../../command/Help/help.h"
 
-void LOAD(const char *filename, ArrayDinStore *store, ArrayDinUser *userList)
-{
-    FILE *file = fopen(filename, "r");
-    if (file == NULL)
-    {
-        printf("File konfigurasi tidak ditemukan: %s\n", filename);
-        return;
+ListBarang listbarang;
+ListUser users;
+
+void ConcatString(char *str1, char *str2, char *result) {
+    while (*str1) {
+        *result++ = *str1++;
+    }
+    while (*str2) {
+        *result++ = *str2++;
+    }
+    *result = '\0';
+}
+
+boolean Load(char* filename) {
+    char file_path[MAX_LEN], default_path[MAX_LEN] = "config/default.txt";
+    FILE *file;
+
+    if (filename == NULL) {
+        filename = default_path;
+    } else {
+        ConcatString("config/", filename, file_path);
+        filename = file_path;
     }
 
-    // Initialize arrays with proper size
-    store->store = (Barang *)malloc(100 * sizeof(Barang)); // Or appropriate size
-    store->Neff = 0;
-    store->Capacity = 100;
+    printf("Trying to open file: %s\n", filename); // Debug print
 
-    userList->users = (User *)malloc(100 * sizeof(User));
-    userList->Neff = 0;
-    userList->Capacity = 100;
+    while ((file = fopen(filename, "r")) == NULL) {
+        printf("Save file tidak ditemukan. \nSilakan masukkan nama file yang benar atau ketik 'BACK' untuk kembali: ");
+        while (1) {
+            STARTINPUTWORD();
+            if (isEqual(CurrentWord, "BACK")) {
+                help_welcome();
+                return false;
+            }
+            filename = WordToString(CurrentWord);
+            ConcatString("config/", filename, file_path);
+            printf("Trying to open file: %s\n", file_path); // Debug print
+            file = fopen(file_path, "r");
+            if (file != NULL) {
+                break;
+            }
+            printf("Save file tidak ditemukan. \nSilakan masukkan nama file yang benar atau ketik 'BACK' untuk kembali: ");
+        }
+    }
 
-    // Read number of items
-    int nBarang;
-    if (fscanf(file, "%d\n", &nBarang) != 1 || nBarang < 0 || nBarang > 100)
-    {
-        printf("Error: Jumlah barang tidak valid\n");
+    // Read Barang Data
+    int num_barang = 0;
+    if (fscanf(file, "%d\n", &num_barang) != 1) {
+        printf("Failed to read number of Barang.\n");
         fclose(file);
-        return;
+        return false;
     }
+    printf("Number of Barang: %d\n", num_barang); // Debug print
 
-    // Read items with better format handling
-    for (int i = 0; i < nBarang; i++)
-    {
+    for (int i = 0; i < num_barang; i++) {
         int price;
         char name[MAX_LEN];
-        if (fscanf(file, "%d %[^\n]", &price, name) != 2)
-        {
-            printf("Error: Format barang tidak valid\n");
+        if (fscanf(file, "%d %[^\n]\n", &price, name) != 2) {
+            printf("Failed to read Barang %d.\n", i + 1);
             fclose(file);
-            return;
+            return false;
         }
-        getc(file); // consume newline
-
-        Barang barang = CreateBarang(name, price);
-        InsertLast(store, barang, true);
+        printf("Read Barang: %s, %d\n", name, price); // Debug print
+        AddBarang(&listbarang, name, price); // Tambahkan ke listStore
     }
 
-    // Read users with similar checks
-    int nUser;
-    if (fscanf(file, "%d\n", &nUser) != 1 || nUser < 0 || nUser > 100)
-    {
-        printf("Error: Jumlah pengguna tidak valid\n");
+    // Read User Data
+    int num_user = 0;
+    if (fscanf(file, "%d\n", &num_user) != 1) {
+        printf("Failed to read number of Users.\n");
         fclose(file);
-        return;
+        return false;
     }
+    printf("Number of Users: %d\n", num_user); // Debug print
 
-    for (int i = 0; i < nUser; i++)
-    {
+    for (int i = 0; i < num_user; i++) {
         int money;
         char username[MAX_LEN], password[MAX_LEN];
-        if (fscanf(file, "%d %s %s", &money, username, password) != 3)
-        {
-            printf("Error: Format pengguna tidak valid\n");
+        if (fscanf(file, "%d %s %s\n", &money, username, password) != 3) {
+            printf("Failed to read User %d.\n", i + 1);
             fclose(file);
-            return;
+            return false;
         }
-        getc(file); // consume newline
-
-        User user;
-        CreateUser(&user, username, password, money);
-        InsertUser(userList, user);
+        printf("Read User: %d, %s, %s\n", money, username, password); // Debug print
+        AddUser(&users, username, password, money);
     }
 
     fclose(file);
-    printf("\nData berhasil dimuat dari %s\n", filename);
+    printf("Konfigurasi berhasil dimuat dari %s\n", filename);
+    help_login();
+    return true;
 }
