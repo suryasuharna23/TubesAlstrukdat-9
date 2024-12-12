@@ -5,9 +5,9 @@
 #include "../../ADT/LinkedList/listlinier.h"
 
 void wishlistAdd(List *L, ListBarang *listbarang);
-void wishlistSwap(List *L, int idx1, int idx2);
+void wishlistSwap(List *L);
 void wishlistRemove(List *L);
-void wishlistClear(List L, infotypes barang);
+void wishlistClear(List *L);
 void wishlistShow(List L);
 
 #endif

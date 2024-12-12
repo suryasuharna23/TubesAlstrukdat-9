@@ -134,10 +134,11 @@ int main() {
                 printf("| 14. CART SHOW - Tampilkan profile     |\n");
                 printf("| 15. CART PAY - Tampilkan profile      |\n");
                 printf("| 16. HISTORY - Tampilkan profile       |\n");
-                printf("| 17. WISHLIST ADD - Tampilkan profile  |\n");
-                printf("| 18. WISHLIST REMOVE - Tampilkan profi |\n");
-                printf("| 19. WISHLIST CLEAR - Tampilkan profile|\n");
-                printf("| 20. WISHLIST SHOW - Tampilkan profile |\n");
+                printf("| 17. WISHLIST ADD - Menambah barang wl |\n");
+                printf("| 18. WISHLIST REMOVE - Hapus barang wl |\n");
+                printf("| 19. WISHLIST CLEAR - Clear wishlist   |\n");
+                printf("| 20. WISHLIST SWAP - Menukar barang wl |\n");
+                printf("| 21. WISHLIST SHOW - Tampilkan wishlist|\n");
                 printf("+----------------------------------------+\n");
 
                 printf(">>> ");
@@ -182,6 +183,14 @@ int main() {
                     ShowPurchaseHistory(&purchaseHistory);
                 } else if (isEqual(CurrentWord, "WISHLIST ADD")) {
                     wishlistAdd(&wishlist, &listbarang);
+                } else if (isEqual(CurrentWord, "WISHLIST REMOVE")) {
+                    wishlistRemove(&wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST CLEAR")) {
+                    wishlistClear(&wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST SWAP")) {
+                    wishlistSwap(&wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST SHOW")) {
+                    wishlistShow(wishlist);
                 }
                 else {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");

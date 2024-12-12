@@ -1,74 +1,68 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "listlinier.h"
 
 int main() {
-    List L1, L2, L3;
-    infotype X;
+    List L;
+    infotypes item1 = "Ayam Geprek Bakar Crispy Besthal";
+    infotypes item2 = "Ayam Mangut Besthal";
+    infotypes item3 = "Karaage Don";
+    infotypes item4 = "Torikatsu Don";
+    address_list P;
 
-    CreateEmpty(&L1);
-    CreateEmpty(&L2);
-    CreateEmpty(&L3);
+    // Initialize the list
+    CreateEmptyList(&L);
 
-    if (IsEmpty(L1)){ // cek L1 kosong
-        printf("y\n");
-    }
+    // Add items to the list
+    InsVLast(&L, item1);
+    InsVLast(&L, item2);
+    InsVLast(&L, item3);
+    InsVLast(&L, item4);
 
-    InsVFirst(&L1, 10);
-    InsVLast(&L1, 20);
-    InsVFirst(&L1, 5);
-    PrintInfo(L1);
+    // Print the list
+    printf("Initial list:\n");
+    PrintInfo(L);
 
-
-    printf("Menghapus elemen pertama dari L1:\n");
-    DelVFirst(&L1, &X);
-    PrintInfo(L1);
-
-    printf("Menghapus elemen terakhir dari L1:\n");
-    DelVLast(&L1, &X);
-    PrintInfo(L1);
-
-    printf("Menambahkan elemen langsung dengan alamat:\n");
-    address P = Alokasi(30);
-    InsertFirst(&L1, P);
-    PrintInfo(L1);
-
-    P = Alokasi(40);
-    InsertLast(&L1, P);
-    PrintInfo(L1);
-
-
-    printf("Mencari elemen 30 di L1:\n");
-    address found = Search(L1, 30);
-    if (found != Nil) {
-        printf("Elemen ditemukan: %d\n", Info(found));
+    // Search for an item
+    P = Search(L, item2);
+    if (P != Nol) {
+        printf("\nItem '%s' found in the list.\n", Info(P));
     } else {
-        printf("Elemen tidak ditemukan.\n");
+        printf("\nItem '%s' not found in the list.\n", item2);
     }
 
+    // Remove an item by value
+    DelP(&L, item3);
+    printf("\nAfter removing '%s':\n", item3);
+    PrintInfo(L);
 
-    printf("Elemen maksimum: %d\n", Max(L1));
-    printf("Elemen minimum: %d\n", Min(L1));
-    printf("Rata-rata elemen: %.2f\n", Average(L1));
+    // Remove the first item
+    infotypes removedItem;
+    DelVFirst(&L, &removedItem);
+    printf("\nAfter removing the first item '%s':\n", removedItem);
+    PrintInfo(L);
 
+    // Get the number of elements
+    int count = NbElmt(L);
+    printf("\nNumber of elements in the list: %d\n", count);
 
-    printf("Invers L1:\n");
-    InversList(&L1);
-    PrintInfo(L1);
+    // Get the maximum element
+    infotypes maxItem = Max(L);
+    printf("\nMaximum element in the list: %s\n", maxItem);
 
-    printf("Membuat L2 dan menggabungkan L1 dan L2 ke L3:\n");
-    InsVFirst(&L2, 50);
-    InsVLast(&L2, 60);
-    PrintInfo(L2);
+    // Get the minimum element
+    infotypes minItem = Min(L);
+    printf("\nMinimum element in the list: %s\n", minItem);
 
-    Konkat1(&L1, &L2, &L3);
-    PrintInfo(L3);
+    // Inverse the list
+    InversList(&L);
+    printf("\nAfter inverting the list:\n");
+    PrintInfo(L);
 
-    printf("Menghapus semua elemen dari L3:\n");
-    while (!IsEmpty(L3)) {
-        DelVFirst(&L3, &X);
-        printf("Menghapus elemen: %d\n", X);
-    }
-    PrintInfo(L3);
+    // Clear the list
+    CreateEmptyList(&L);
+    printf("\nAfter clearing the list:\n");
+    PrintInfo(L);
 
     return 0;
 }
