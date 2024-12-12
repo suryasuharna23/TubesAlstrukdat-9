@@ -58,10 +58,9 @@ void wishlistSwap(List *L){
 }
 
 void wishlistRemove(List *L){
-    Word CurrentWord;
-
     if (IsEmptyList(*L)){
         wishlistShow(*L);
+        return;
     }
 
     else{
@@ -69,13 +68,27 @@ void wishlistRemove(List *L){
 
         printf("Pilih metode penghapusan (nomor/nama barang): ");
         STARTINPUTWORD();
-        char *commandStr = WordToString(CurrentWord);
 
         if (isEqual(CurrentWord, "nomor")){
             printf(">>WISHLIST REMOVE ");
             STARTINPUTWORD();
             char *idx = WordToString(CurrentWord);
-            int  nomor = *idx - '0';
+            
+            // cek input valid
+            int nomor = 0;
+            int isValidNumber = 1;
+            for (int i = 0; idx[i] != '\0'; i++) {
+                if (idx[i] < '0' || idx[i] > '9') {
+                    isValidNumber = 0;
+                    break;
+                }
+                nomor = nomor * 10 + (idx[i] - '0');
+            }
+
+            if (!isValidNumber) {
+                printf("Input tidak valid! Harap masukkan angka.\n");
+                return;
+            }
 
             if (IsEmptyList(*L)){
                 printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
@@ -83,16 +96,16 @@ void wishlistRemove(List *L){
 
             else{
                 if (nomor>0 && nomor<=NbElmt(*L)){
-                    DelP(L, idx);
-                    printf("Berhasil menghapus barang posisi ke-%s dari wishlist!", idx);
+                    address_list P = First(*L);
+                    for (int i = 1; i < nomor; i++) {
+                        P = Next(P);
+                    }
+                    DelP(L, Info(P));
+                    printf("Berhasil menghapus barang posisi ke-%s dari wishlist!\n", idx);
                 }
 
                 else if (nomor>NbElmt(*L)){
-                    printf("Penghapusan barang WISHLIST gagal dilakukan, tidak ada Barang di posisi ke-%s!", idx);
-                }
-        
-                else{
-                    printf("Penghapusan barang WISHLIST gagal dilakukan, input tidak valid!");
+                    printf("Penghapusan barang WISHLIST gagal dilakukan, tidak ada Barang di posisi ke-%s!\n", idx);
                 }
             }  
         }
@@ -110,7 +123,7 @@ void wishlistRemove(List *L){
             else{
                 DelP(L, barang);
                 printf("%s berhasil dihapus dari WISHLIST!", barang);
-            }
+            } 
         }
     }
 }

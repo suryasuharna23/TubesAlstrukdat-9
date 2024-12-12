@@ -78,17 +78,29 @@ void InsVLast(List *L, infotypes X) {
 void DelP(List *L, infotypes X) {
     address_list P = First(*L);
     address_list prev = Nol;
-    while (P != Nol && Info(P) != X) {
+    while (P != Nol) {
+        char *info = Info(P);
+        char *x = X;
+        int match = 1;
+        while (*info && *x) {
+            if (*info != *x) {
+                match = 0;
+                break;
+            }
+            info++;
+            x++;
+        }
+        if (match && *info == '\0' && *x == '\0') {
+            if (prev == Nol) {
+                First(*L) = Next(P);
+            } else {
+                Next(prev) = Next(P);
+            }
+            Dealokasi(&P);
+            return;
+        }
         prev = P;
         P = Next(P);
-    }
-    if (P != Nol) {
-        if (prev == Nol) {
-            First(*L) = Next(P);
-        } else {
-            Next(prev) = Next(P);
-        }
-        Dealokasi(&P);
     }
 }
 
