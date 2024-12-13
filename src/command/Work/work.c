@@ -20,13 +20,11 @@ int jobCount = sizeof(jobs) / sizeof(jobs[0]);
 // cocokin nama pekerjaan
 boolean compareJobName(Word input, char *jobName) {
     int i;
-    // panjang nama pekerjaan
     int jobNameLength = 0;
     while (jobName[jobNameLength] != '\0') {
         jobNameLength++;
     }
 
-    // panjang input dan nama pekerjaan harus sama untuk cocok
     if (input.Length != jobNameLength) {
         return false;
     }
@@ -40,11 +38,8 @@ boolean compareJobName(Word input, char *jobName) {
 }
 
 void simulateSleep(int seconds) {
-    // Simulasi delay dalam detik
-    volatile long long i; // Gunakan volatile untuk mencegah optimisasi
+    volatile long long i; 
     for (i = 0; i < seconds * 1000000LL; i++) {
-        // Busy-wait loop untuk simulasi delay
-        // Tidak melakukan apa-apa, hanya untuk memperlambat
     }
 }
 
@@ -60,7 +55,8 @@ void Work(User *user) {
     }
     printf("+----+-----------------------------+-----------+---------+\n");
 
-    printf("\nMasukkan nama pekerjaan yang dipilih: ");
+    printf("\nMasukkan nama pekerjaan yang dipilih: \n");
+    printf(">>> ");
     STARTINPUTWORD(); 
 
     Job *selectedJob = NULL; // pointer ke pekerjaan yang dipilih
@@ -78,10 +74,9 @@ void Work(User *user) {
 
     printf("\nAnda sedang bekerja sebagai %s... harap tunggu selama %d detik.\n", 
            selectedJob->jobName, selectedJob->duration);
-    simulateSleep(selectedJob->duration); // Delay sesuai durasi pekerjaan
-    user->money += selectedJob->salary; // Tambahkan uang ke pengguna
+    simulateSleep(selectedJob->duration); 
+    user->money += selectedJob->salary; 
     printf("Pekerjaan selesai, +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob->salary);
 
-    // Print the updated CurrentUser's money
     printf("User %s now has %d money.\n", user->name, user->money);
 }

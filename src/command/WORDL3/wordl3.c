@@ -81,11 +81,6 @@ void wordl3_challenge(User *user) {
 
     printf("WELCOME TO W0RDL3, YOU HAVE %d CHANCES TO ANSWER BEFORE YOU LOSE!\n", MAX_PLAYS);
 
-    // Debug: Tampilkan kata yang harus ditebak
-    printf("[DEBUG] Kata yang harus ditebak: ");
-    PrintCurrentWord();
-    printf("\n");
-
     while (try > 0 && !win) {
         int isLast = false;
 
@@ -180,7 +175,7 @@ void wordl3_challenge(User *user) {
     printf("Poin yang diperoleh: %d\n", poin);
     printf("Total uang Anda sekarang: %d\n", user->money);
 
-    // Update the user's money in the users list
+    // Update jumlah uang dari si user
     for (int i = 0; i < users.count; i++) {
         if (WordCompare(users.users[i].name, user->name)) {
             users.users[i].money = user->money;

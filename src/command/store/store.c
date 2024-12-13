@@ -11,19 +11,16 @@ int StringLength(const char *str) {
     return len;
 }
 
-
-// Konversi huruf kapital menjadi huruf kecil
 void ToLowerCase(char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
         if (str[i] >= 'A' && str[i] <= 'Z') {
-            str[i] += 32; // ASCII konversi
+            str[i] += 32; 
         }
     }
 }
 
 
 void SList(ListBarang *listbarang) {
-    // Print items in the store
     if (IsEmptyListBarang(*listbarang)) {
         printf("TOKO KOSONG\n");
     } else {
@@ -39,6 +36,7 @@ void SList(ListBarang *listbarang) {
 
 void SRemove(ListBarang *listbarang) {
     printf("Nama barang yang akan dihapus:\n");
+    printf(">>> ");
     STARTINPUTWORD();
     char *rem_input = WordToString(CurrentWord);
 
@@ -52,16 +50,15 @@ void SRemove(ListBarang *listbarang) {
 
 void SRequest(Queue *req, ListBarang *listbarang) {
     printf("Nama barang yang diminta: ");
+    printf(">>> ");
     STARTINPUTWORD();
     char *req_input = WordToString(CurrentWord);
 
-    // Cek apakah barang ada di toko
     if (IsBarangExist(listbarang, req_input)) {
         printf("Barang dengan nama yang sama sudah ada di toko!\n");
         return;
     }
 
-    // Cek apakah barang sudah ada di antrian
     int i = req->idxHead;
     while (i != ((req->idxTail + 1) % CAPACITY)) {
         if (StringCompare(req_input, req->buffer[i].name)) {
@@ -71,7 +68,6 @@ void SRequest(Queue *req, ListBarang *listbarang) {
         i = (i + 1) % CAPACITY;
     }
 
-    // Tambahkan ke antrian
     Barang newRequest;
     StringCopy(newRequest.name, req_input);
     newRequest.price = 0;
@@ -88,10 +84,10 @@ void SSupply(Queue *req, ListBarang *listbarang) {
 
     Barang frontItem = req->buffer[req->idxHead];
     printf("Apakah kamu ingin menambahkan barang %s (terima/tunda/tolak): ", frontItem.name);
+    printf(">>> ");
     STARTINPUTWORD();
     char *input = WordToString(CurrentWord);
 
-    // Konversi input menjadi huruf kecil
     for (int i = 0; input[i] != '\0'; i++) {
         if (input[i] >= 'A' && input[i] <= 'Z') {
             input[i] += 32;
@@ -108,7 +104,6 @@ void SSupply(Queue *req, ListBarang *listbarang) {
             return;
         }
 
-        // Tambahkan barang ke toko dan hapus dari antrian
         dequeue(req, &frontItem);
         frontItem.price = harga;
         AddBarang(listbarang, frontItem.name, frontItem.price);
@@ -116,7 +111,7 @@ void SSupply(Queue *req, ListBarang *listbarang) {
     } else if (StringCompare(input, "tunda")) {
         Barang temp;
         dequeue(req, &temp);
-        enqueue(req, temp); // Kembalikan ke antrean
+        enqueue(req, temp); 
         printf("\n%s dikembalikan ke antrian.\n", temp.name);
     } else if (StringCompare(input, "tolak")) {
         Barang temp;

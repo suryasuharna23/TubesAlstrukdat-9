@@ -5,6 +5,8 @@
 #include "ADT/Mesin/mesinkata.h"
 #include "ADT/Mesin/mesinkarakter.h"
 #include "ADT/Map/map.h"
+#include "ADT/Stack/stack.h"
+#include "ADT/LinkedList/listlinier.h"
 #include "command/Load/load.h"
 #include "command/Save/save.h"
 #include "command/Register/register.h"
@@ -16,13 +18,16 @@
 #include "command/Store/store.h"
 #include "command/Profile/profile.h"
 #include "command/Cart/cart.h"
-
+#include "command/History/history.h"
+#include "command/Wishlist/wishlist.h"
 
 // Deklarasi global
 ListUser users;
 ListBarang listbarang;
 Queue requestQueue;
 User CurrentUser = {"", "", 0}; // Menyimpan data pengguna yang sedang login
+Stack purchaseHistory;
+List wishlist;
 
 void STARTINPUTWORD();
 Word CurrentWord;
@@ -36,6 +41,8 @@ int main() {
     CreateListUser(&users);
     CreateListBarang(&listbarang);
     CreateQueue(&requestQueue);
+    CreateEmptyS(&purchaseHistory);
+    CreateEmptyList(&wishlist);
 
     printf("****************************************\n");
     printf("*      Selamat Datang di PURRMART      *\n");
@@ -47,7 +54,7 @@ int main() {
         if (!IsStarted) {
             // Menu Awal: START, LOAD, QUIT
             printf("\n+----------------------------------------+\n");
-            printf("|           MENU AWAL PURRMART          |\n");
+            printf("|           MENU AWAL PURRMART           |\n");
             printf("+----------------------------------------+\n");
             printf("| 1. START                               |\n");
             printf("| 2. LOAD                                |\n");
@@ -84,7 +91,7 @@ int main() {
             if (!loggedIn) {
                 // Menu login atau register
                 printf("\n+----------------------------------------+\n");
-                printf("|         MENU LOGIN / REGISTER         |\n");
+                printf("|         MENU LOGIN / REGISTER          |\n");
                 printf("+----------------------------------------+\n");
                 printf("| 1. LOGIN                               |\n");
                 printf("| 2. REGISTER                            |\n");
@@ -108,25 +115,30 @@ int main() {
                 }
             } else {
                 // Menu Utama setelah login
-                printf("\n+----------------------------------------+\n");
-                printf("|          MENU UTAMA PURRMART          |\n");
-                printf("+----------------------------------------+\n");
-                printf("| 1. STORE SUPPLY - Pasok barang        |\n");
-                printf("| 2. STORE REMOVE - Hapus barang        |\n");
-                printf("| 3. SAVE - Simpan konfigurasi          |\n");
-                printf("| 4. LOGOUT - Keluar dari sesi pengguna |\n");
-                printf("| 5. WORK - Pekerjaan pengguna          |\n");
-                printf("| 6. TEBAK ANGGKA - Tebak Angka         |\n");
-                printf("| 7. WORDL3 - Challenge Wordl3          |\n");
-                printf("| 8. STORE LIST - Tampilkan barang      |\n");
-                printf("| 9. STORE REQUEST - Lihat request barang|\n");
-                printf("| 10. HELP - Tampilkan bantuan          |\n");
-                printf("| 11. PROFILE - Tampilkan profile       |\n");
-                printf("| 12. CART ADD - Tampilkan profile      |\n");
-                printf("| 13. CART REMOVE - Tampilkan profile   |\n");
-                printf("| 14. CART SHOW - Tampilkan profile     |\n");
-                printf("| 15. CART PAY - Tampilkan profile      |\n");
-                printf("+----------------------------------------+\n");
+                printf("\n+----------------------------------------------------------+\n");
+                printf("|                  MENU UTAMA PURRMART                     |\n");
+                printf("+----------------------------------------------------------+\n");
+                printf("| 1.  PROFILE           - Tampilkan profile                |\n");
+                printf("| 2.  STORE SUPPLY      - Pasok barang ke toko             |\n");
+                printf("| 3.  STORE REMOVE      - Hapus barang ke toko             |\n");
+                printf("| 4.  STORE LIST        - Tampilkan barang                 |\n");
+                printf("| 5.  STORE REQUEST     - Lihat request barang             |\n");
+                printf("| 6.  WORK              - Bekerja                          |\n");
+                printf("| 7.  TEBAK ANGKA       - Tebak Angka                      |\n");
+                printf("| 8.  WORDL3            - Challenge Wordl3                 |\n");
+                printf("| 9.  CART ADD          - Tambah barang ke keranjang       |\n");
+                printf("| 10. CART REMOVE       - Hapus barang dari keranjang      |\n");
+                printf("| 11. CART SHOW         - Tampilkan barang di keranjang    |\n");
+                printf("| 12. CART PAY          - Beli barang di keranjang         |\n");
+                printf("| 13. HISTORY           - Tampilkan history pembelian      |\n");
+                printf("| 14. WISHLIST ADD      - Tambah barang ke wishlist        |\n");
+                printf("| 15. WISHLIST REMOVE   - Hapus barang dari wishlist       |\n");
+                printf("| 16. WISHLIST CLEAR    - Bersihkan wishlist               |\n");
+                printf("| 17. WISHLIST SHOW     - Tampilkan wishlist               |\n");
+                printf("| 18. HELP              - Tampilkan bantuan                |\n");
+                printf("| 19. SAVE              - Simpan konfigurasi               |\n");
+                printf("| 20. LOGOUT            - Keluar dari sesi pengguna        |\n");
+                printf("+----------------------------------------------------------+\n");
 
                 printf(">>> ");
                 STARTINPUTWORD();
@@ -166,6 +178,16 @@ int main() {
                     CartShow(&CurrentUser, &listbarang);
                 } else if (isEqual(CurrentWord, "CART PAY")) {
                     CartPay(&CurrentUser, &listbarang);
+                } else if (isEqual(CurrentWord, "HISTORY")) {
+                    ShowPurchaseHistory(&purchaseHistory);
+                } else if (isEqual(CurrentWord, "WISHLIST ADD")) {
+                    wishlistAdd(&wishlist, &listbarang);
+                } else if (isEqual(CurrentWord, "WISHLIST SHOW")) {
+                    wishlistShow(wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST REMOVE")) {
+                    wishlistRemove(&wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST CLEAR")) {
+                    wishlistClear(&wishlist);
                 } else {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
