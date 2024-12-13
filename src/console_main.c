@@ -22,15 +22,15 @@
 #include "command/Wishlist/wishlist.h"
 
 // Deklarasi global
-//ListUser users;
-//ListBarang listbarang;
+ListUser users;
+ListBarang listbarang;
 Queue requestQueue;
 User CurrentUser = {"", "", 0}; // Menyimpan data pengguna yang sedang login
 Stack purchaseHistory;
 List wishlist;
 
 void STARTINPUTWORD();
-//Word CurrentWord;
+Word CurrentWord;
 
 int main() {
     boolean running = true;
