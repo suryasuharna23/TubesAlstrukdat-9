@@ -28,6 +28,7 @@ boolean Load(char* filename) {
         filename = default_path;
     } else {
         ConcatString("config/", filename, file_path);
+        ConcatString(file_path, ".txt", file_path);
         filename = file_path;
     }
 
@@ -43,6 +44,7 @@ boolean Load(char* filename) {
             }
             filename = WordToString(CurrentWord);
             ConcatString("config/", filename, file_path);
+            ConcatString(file_path, ".txt", file_path);
             printf("Trying to open file: %s\n", file_path); // Debug print
             file = fopen(file_path, "r");
             if (file != NULL) {
