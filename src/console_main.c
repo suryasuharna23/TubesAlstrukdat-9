@@ -186,6 +186,8 @@ int main() {
                     wishlistShow(wishlist);
                 } else if (isEqual(CurrentWord, "WISHLIST REMOVE")) {
                     wishlistRemove(&wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST CLEAR")) {
+                    wishlistClear(&wishlist);
                 } else {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
