@@ -13,6 +13,7 @@ void ShowPurchaseHistory(Stack *history) {
     }
 
     printf("Masukkan jumlah riwayat pembelian yang ingin ditampilkan: ");
+    printf("\n>>> ");
     STARTINPUTWORD();
     int n = WordToInt(CurrentWord);
 

@@ -25,6 +25,7 @@ void wishlistAdd(List *L, ListBarang *listbarang) {
     while (true) {
         PrintWishlist(*L);
         printf("Masukkan nama barang (atau ketik 'BACK' untuk kembali): ");
+        printf("\n>>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
@@ -47,6 +48,7 @@ void wishlistAdd(List *L, ListBarang *listbarang) {
         }
 
         printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf("\n>>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");
@@ -59,6 +61,7 @@ void wishlistSwap(List *L) {
     while (true) {
         PrintWishlist(*L);
         printf("Masukkan 1 posisi barang (atau ketik 'BACK' untuk kembali): ");
+        printf("\n>>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu sebelumnya.\n");
@@ -68,6 +71,7 @@ void wishlistSwap(List *L) {
         int idx1 = *nomor1 - '0';
 
         printf("Masukkan posisi barang yang ingin ditukar dengan input sebelumnya (atau ketik 'BACK' untuk kembali): ");
+        printf("\n>>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu sebelumnya.\n");
@@ -94,6 +98,7 @@ void wishlistSwap(List *L) {
         }
 
         printf("Ketik 'SWAP' untuk menukar barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf("\n>>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");
@@ -111,6 +116,7 @@ void wishlistRemove(List *L) {
             wishlistShow(*L);
 
             printf("Pilih metode penghapusan (nomor/nama barang) (atau ketik 'BACK' untuk kembali): ");
+            printf("\n>>> ");
             STARTINPUTWORD();
 
             if (isEqual(CurrentWord, "BACK")) {
@@ -194,6 +200,7 @@ void wishlistClear(List *L) {
         printf("Wishlist telah dikosongkan.\n");
 
         printf("Ketik 'CLEAR' untuk mengosongkan wishlist lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf("\n>>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");

@@ -6,11 +6,10 @@
 #include "../../ADT/User/user.h"
 #include "../../command/Score/score.h"
 
-// Fungsi untuk memeriksa apakah input adalah angka valid
 boolean isValidNumber(Word word) {
     for (int i = 0; i < word.Length; i++) {
         if (word.TabWord[i] < '0' || word.TabWord[i] > '9') {
-            return false; // Jika ada karakter bukan digit
+            return false; // kalo ada karakter bukan digit
         }
     }
     return true;
@@ -20,12 +19,11 @@ int getInt() {
     int result = 0;
 
     STARTINPUTWORD();
-    if (!isValidNumber(CurrentWord)) { // Validasi input
+    if (!isValidNumber(CurrentWord)) { 
         printf("Input tidak valid! Masukkan angka.\n");
-        return -1; // Kembalikan nilai error
+        return -1; 
     }
 
-    // Konversi dari Word ke integer
     for (int i = 0; i < CurrentWord.Length; i++) {
         result = result * 10 + (CurrentWord.TabWord[i] - '0');
     }
@@ -39,22 +37,22 @@ void tebak_angka(User *user) {
     }
 
     int try = MAX_TRIES;
-    int poin = 0; // Skor pemain
+    int poin = 0; 
 
-    srand(time(NULL)); // Inisialisasi random seed
-    int digit = (rand() % 3) + 1; // Menentukan banyaknya digit angka yang akan ditebak
-    int key_value = rand() % (int)(pow(10, digit)); // Angka acak
+    srand(time(NULL)); 
+    int digit = (rand() % 3) + 1; 
+    int key_value = rand() % (int)(pow(10, digit)); 
 
-    // Debug: Tampilkan nilai yang harus ditebak
     printf("[DEBUG] Angka yang harus ditebak: %d\n", key_value);
 
     boolean win = false;
 
     while (try > 0 && !win) {
-        printf("Tebak angka: ");
+        printf("Tebak angka: \n");
+        printf(">>> ");
         int value = getInt();
 
-        if (value == -1) { // Input tidak valid
+        if (value == -1) { 
             printf("Input tidak valid, coba lagi!\n");
             continue;
         }
@@ -67,9 +65,9 @@ void tebak_angka(User *user) {
             printf("(Kesempatanmu %d kali lagi untuk mencoba)\n", (try - 1));
         } else {
             printf("Tebakanmu benar!\n");
-            poin = score(75, try); // Hitung skor
+            poin = score(75, try); 
             printf(" +%d rupiah telah ditambahkan ke akun anda.\n", poin);
-            user->money += poin; // Tambah uang ke akun pengguna
+            user->money += poin; 
             win = true;
         }
         try--;
@@ -83,7 +81,6 @@ void tebak_angka(User *user) {
     printf("Poin yang diperoleh: %d\n", poin);
     printf("Total uang Anda sekarang: %d\n", user->money);
 
-    // Update the user's money in the users list
     for (int i = 0; i < users.count; i++) {
         if (WordCompare(users.users[i].name, user->name)) {
             users.users[i].money = user->money;

@@ -43,7 +43,8 @@ void DisplayCartItems(User *CurrentUser, ListBarang *listbarang) {
 void CartAdd(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayAvailableItems(listbarang);
-        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): ");
+        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): \n");
+        printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
@@ -77,6 +78,7 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
 
         free(nama);
         printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf(">>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");
@@ -88,7 +90,8 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
 void CartRemove(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayCartItems(CurrentUser, listbarang);
-        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): ");
+        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): \n");
+        printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
@@ -125,6 +128,7 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
 
         free(nama);
         printf("Ketik 'REMOVE' untuk mengurangi barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf("\n>>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");
@@ -156,6 +160,8 @@ void CartShow(User *CurrentUser, ListBarang *listbarang) {
     printf("Total biaya yang harus dikeluarkan adalah %d.\n", totalBiaya);
 
     printf("Ketik 'BACK' untuk kembali ke menu utama: ");
+    printf("\n>>> ");
+
     STARTINPUTWORD();
     if (isEqual(CurrentWord, "BACK")) {
         printf("Kembali ke menu utama.\n");
@@ -184,7 +190,6 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
         printf("| %-10d | %-14s | %-10d | %-10d |\n", value, listbarang->items[key].name, harga, value * harga);
         totalBiaya += value * harga;
 
-        // Add to purchase items
         PurchaseItem item;
         StringCopy(item.name, listbarang->items[key].name);
         item.quantity = value;
@@ -195,6 +200,7 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
     purchase.totalCost = totalBiaya;
     printf("+------------+----------------+------------+------------+\n");
     printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): ", totalBiaya);
+    printf("\n>>> ");
 
     STARTINPUTWORD();
     if (isEqual(CurrentWord, "Ya")) {
@@ -211,6 +217,7 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
     }
 
     printf("Ketik 'BACK' untuk kembali ke menu utama: ");
+    printf("\n>>> ");
     STARTINPUTWORD();
     if (isEqual(CurrentWord, "BACK")) {
         printf("Kembali ke menu utama.\n");
