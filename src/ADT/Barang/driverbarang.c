@@ -1,40 +1,32 @@
-#include "barang.h"
 #include <stdio.h>
+#include "barang.h"
 
 int main() {
-    ArrayDinStore list;
-    CreateStore(&list, 5);
+    ListBarang listbarang;
+    CreateListBarang(&listbarang);
 
-    Barang b1 = CreateBarang("Floppy Disk Drive", 500000);
-    Barang b2 = CreateBarang("Lego", 1000000);
-    Barang b3 = CreateBarang("Mouse", 150000);
-    Barang b4 = CreateBarang("Keyboard", 300000);
-    Barang b5 = CreateBarang("Monitor", 2000000);
-    Barang b6 = CreateBarang("Printer", 1000000);
+    AddBarang(&listbarang, "Floppy Disk Drive", 500000);
+    AddBarang(&listbarang, "Lego", 1000000);
+    AddBarang(&listbarang, "Mouse", 150000);
+    AddBarang(&listbarang, "Keyboard", 300000);
+    AddBarang(&listbarang, "Monitor", 2000000);
+    AddBarang(&listbarang, "Printer", 1000000); 
 
-    printf("%d\n", list.Capacity); // capacity bernilai 5
-
-    InsertLast(&list, b1, false);
-    InsertLast(&list, b2, false);
-    InsertLast(&list, b3, false);
-    InsertLast(&list, b4, false);
-    InsertLast(&list, b5, false);
-    InsertLast(&list, b6, false); // tambah kapasitas list dari 5 menjadi 10
-    printf("%d\n", list.Capacity);
+    printf("Jumlah barang: %d\n", CountBarang(&listbarang));
 
     printf("Sebelum dihapus:\n");
-    for (int i = 0; i < list.Neff; i++) {
-        PrintBarang(&list.store[i]);
+    for (int i = 0; i < CountBarang(&listbarang); i++) {
+        PrintBarang(&listbarang.items[i]);
     }
 
-    DeleteFirst(&list);
+    TakeBarang(&listbarang, "Floppy Disk Drive");
 
     printf("Setelah dihapus:\n");
-    for (int i = 0; i < list.Neff; i++) {
-        PrintBarang(&list.store[i]);
+    for (int i = 0; i < CountBarang(&listbarang); i++) {
+        PrintBarang(&listbarang.items[i]);
     }
 
-    printf("%d\n", list.Capacity);
+    printf("Jumlah barang setelah penghapusan: %d\n", CountBarang(&listbarang));
 
     return 0;
 }
