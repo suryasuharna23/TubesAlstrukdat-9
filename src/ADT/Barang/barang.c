@@ -4,6 +4,21 @@
 
 ListBarang barangs;
 
+void Stringcopy(char *dest, const char *src) {
+    while ((*dest++ = *src++));
+}
+
+boolean Wordcompare(const char *str1, const char *str2) {
+    while (*str1 && *str2) {
+        if (*str1 != *str2) {
+            return false;
+        }
+        str1++;
+        str2++;
+    }
+    return *str1 == *str2;
+}
+
 // KONSTRUKTOR STORE
 void CreateListBarang(ListBarang *listbarang) {
     listbarang->count = 0;
@@ -15,7 +30,7 @@ int CountBarang(ListBarang *listbarang) {
 
 int IndexBarang(ListBarang *listbarang, char *name){
     int i = 0;
-    while (i < listbarang->count && !WordCompare(listbarang->items[i].name, name)) {
+    while (i < listbarang->count && !Wordcompare(listbarang->items[i].name, name)) {
         i++;
     }
     if (i < listbarang->count) {
@@ -28,7 +43,7 @@ int IndexBarang(ListBarang *listbarang, char *name){
 void AddBarang(ListBarang *listbarang, char *name, int price) {
     if (listbarang->count < MAX_LEN) {
         listbarang->items[listbarang->count].price = price;
-        StringCopy(listbarang->items[listbarang->count].name, name);
+        Stringcopy(listbarang->items[listbarang->count].name, name);
         listbarang->count++;
     }
 }
