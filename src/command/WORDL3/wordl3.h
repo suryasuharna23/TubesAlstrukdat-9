@@ -6,6 +6,7 @@
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../command/Random_Number/random_number.h"
 #include "../../command/Score/score.h"
+#include "../../ADT/User/user.h"
 
 #define MAX_PLAYS 6
 

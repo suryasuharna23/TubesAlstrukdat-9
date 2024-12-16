@@ -4,6 +4,7 @@
 #include "ADT/Barang/barang.h"
 #include "ADT/Mesin/mesinkata.h"
 #include "ADT/Mesin/mesinkarakter.h"
+#include "ADT/Queue/queue.h"
 #include "ADT/Map/map.h"
 #include "ADT/Stack/stack.h"
 #include "ADT/LinkedList/listlinier.h"
@@ -20,6 +21,8 @@
 #include "command/Cart/cart.h"
 #include "command/History/history.h"
 #include "command/Wishlist/wishlist.h"
+#include "ASCII/ASCII.h"
+#include "Loading/Loadingscreen.h"
 
 // Deklarasi global
 ListUser users;
@@ -66,6 +69,8 @@ int main() {
             commandStr = WordToString(CurrentWord);
 
             if (isEqual(CurrentWord, "START")) {
+                displayLoadingDots(3);
+                printASCII();
                 Load("default");  // Memuat data default jika ada
                 printf("Data dimuat menggunakan setelan default.\n");
                 SList(&listbarang); // Tampilkan barang setelah mulai

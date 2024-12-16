@@ -46,7 +46,7 @@ void InsertLastListStatic(ListStatic *L, ElType X)
 /* I.S. L terdefinisi, mungkin kosong. */
 /* F.S. v menjadi elemen terakhir L. */
 {
-    int i = LengthListStatis(*L);
+    int i = LengthListStatic(*L);
 	L->A[i] = X;
 	L->Neff ++;
 }

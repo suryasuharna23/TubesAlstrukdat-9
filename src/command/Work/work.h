@@ -6,6 +6,7 @@
 #include "work.h"
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
+#include "../../Loading/Loadingscreen.h"
 
 void Work(User *user);
 

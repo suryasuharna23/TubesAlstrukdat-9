@@ -37,11 +37,6 @@ boolean compareJobName(Word input, char *jobName) {
     return true;
 }
 
-void simulateSleep(int seconds) {
-    volatile long long i; 
-    for (i = 0; i < seconds * 1000000LL; i++) {
-    }
-}
 
 void Work(User *user) {
     printf("User %s now has %s as password.\n", user->name, user->password);
@@ -73,8 +68,8 @@ void Work(User *user) {
     }
 
     printf("\nAnda sedang bekerja sebagai %s... harap tunggu selama %d detik.\n", 
-           selectedJob->jobName, selectedJob->duration);
-    simulateSleep(selectedJob->duration); 
+            selectedJob->jobName, selectedJob->duration);
+    displayLoadingScreen(selectedJob->duration);
     user->money += selectedJob->salary; 
     printf("Pekerjaan selesai, +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob->salary);
 

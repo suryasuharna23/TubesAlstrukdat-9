@@ -33,7 +33,7 @@ ListStatic MakeListStatic();
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
-boolean IsEmptyListStatic(ListStatic L);
+boolean IsListStaticEmpty(ListStatic L);
 /* Mengirimkan true jika list L kosong, mengirimkan false jika tidak */
 
 /* *** Menghasilkan sebuah elemen *** */
