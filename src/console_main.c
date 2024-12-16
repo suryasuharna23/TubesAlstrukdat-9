@@ -66,7 +66,7 @@ int main() {
             commandStr = WordToString(CurrentWord);
 
             if (isEqual(CurrentWord, "START")) {
-                Load(NULL);  // Memuat data default jika ada
+                Load("default");  // Memuat data default jika ada
                 printf("Data dimuat menggunakan setelan default.\n");
                 SList(&listbarang); // Tampilkan barang setelah mulai
                 IsStarted = true;  // Set IsStarted menjadi true
@@ -179,15 +179,15 @@ int main() {
                 } else if (isEqual(CurrentWord, "CART PAY")) {
                     CartPay(&CurrentUser, &listbarang);
                 } else if (isEqual(CurrentWord, "HISTORY")) {
-                    ShowPurchaseHistory(&purchaseHistory);
+                    ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
                 } else if (isEqual(CurrentWord, "WISHLIST ADD")) {
-                    wishlistAdd(&wishlist, &listbarang);
+                    wishlistAdd(&CurrentUser.wishlist, &listbarang);
                 } else if (isEqual(CurrentWord, "WISHLIST SHOW")) {
-                    wishlistShow(wishlist);
+                    wishlistShow(CurrentUser.wishlist);
                 } else if (isEqual(CurrentWord, "WISHLIST REMOVE")) {
-                    wishlistRemove(&wishlist);
+                    wishlistRemove(&CurrentUser.wishlist);
                 } else if (isEqual(CurrentWord, "WISHLIST CLEAR")) {
-                    wishlistClear(&wishlist);
+                    wishlistClear(&CurrentUser.wishlist);
                 } else {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }

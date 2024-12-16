@@ -61,17 +61,22 @@ address_list Search(List L, infotypes X) {
 
 
 void InsVLast(List *L, infotypes X) {
-    address_list P = Alokasi(X);
+    // Alokasi node baru
+    address_list P = Alokasi(X); 
     if (P != Nol) {
-        if (IsEmptyList(*L)) {
-            First(*L) = P;
-        } else {
-            address_list last = First(*L);
-            while (Next(last) != Nol) {
-                last = Next(last);
-            }
-            Next(last) = P;
+        InsertLast(L, P); // Masukkan node baru ke akhir list
+    }
+}
+
+void InsertLast(List *L, address_list P) {
+    if (IsEmptyList(*L)) {
+        First(*L) = P;
+    } else {
+        address_list last = First(*L);
+        while (Next(last) != Nol) {
+            last = Next(last);
         }
+        Next(last) = P;
     }
 }
 

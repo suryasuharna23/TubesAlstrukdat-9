@@ -6,14 +6,16 @@
 #include "../../Boolean/boolean.h"
 #include "../List/list.h"
 #include "../Map/map.h"
+#include "../Stack/stack.h"
+#include "../LinkedList/listlinier.h"
 
 typedef struct {
     char name[MAX_LEN];
     char password[MAX_LEN];
     int money;
     Map keranjang;
-    // Stack riwayat_pembelian;
-    // Linkedlist wishlist;
+    Stack riwayat_pembelian;
+    List wishlist;
 } User;
 
 typedef struct {
@@ -35,5 +37,6 @@ boolean IsUserExist(ListUser *users, char *name);
 int CountUser(ListUser *users);
 int IndexUser(ListUser *users, char *name);
 boolean WordCompare(const char *str1, const char *str2);
+void InitCurrentUser(User *U);
 
 #endif // USER_H
