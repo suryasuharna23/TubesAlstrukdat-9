@@ -7,7 +7,7 @@ void displayLoadingScreen(int durationInSeconds)
     int barWidth = 50;
     time_t startTime, currentTime;
 
-    printf("Loading...\n");
+    printf("Work In Progress...\n");
 
     // Get the start time
     time(&startTime);
