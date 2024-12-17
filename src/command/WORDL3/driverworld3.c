@@ -10,7 +10,9 @@ int main(){
     int game = 2;
 
     if (game == 2){
-        wordl3_challenge();
+        User user; 
+        
+        wordl3_challenge(user);
     }
 
     return 0;

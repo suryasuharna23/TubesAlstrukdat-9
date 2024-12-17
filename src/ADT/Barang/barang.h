@@ -27,5 +27,6 @@ boolean IsBarangExist(ListBarang *listbarang, char *name);
 boolean IsEmptyListBarang(ListBarang list);
 void PrintBarang(Barang *barang);
 boolean StringCompare(const char *str1, const char *str2);
+int GetBarangPrice(ListBarang listbarang, char *name);
 
 #endif /* BARANG_H */

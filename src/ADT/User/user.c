@@ -59,4 +59,12 @@ boolean IsUserExist(ListUser *users, char *name){
     return IndexUser(users, name) < users->count;
 }
 
+void InitCurrentUser(User *U) {
+    U->name[0] = '\0'; // Kosongkan nama
+    U->password[0] = '\0'; // Kosongkan password
+    U->money = 0; // Set saldo awal
+    CreateEmptyS(&U->riwayat_pembelian); // Inisialisasi stack kosong
+    CreateEmptyList(&U->wishlist); // Inisialisasi list kosong
+}
+
 

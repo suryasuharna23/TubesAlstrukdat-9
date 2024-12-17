@@ -75,8 +75,12 @@ int main()
             {
                 displayLoadingDots(3);
                 printASCII();
+<<<<<<< HEAD
                 printf("\n");
                 Load(NULL); // Memuat data default jika ada
+=======
+                Load("default");  // Memuat data default jika ada
+>>>>>>> 65f934598cfb01760054751eaeb137641fa6011a
                 printf("Data dimuat menggunakan setelan default.\n");
                 SList(&listbarang); // Tampilkan barang setelah mulai
                 IsStarted = true;   // Set IsStarted menjadi true
@@ -254,6 +258,7 @@ int main()
                 else if (isEqual(CurrentWord, "CART PAY"))
                 {
                     CartPay(&CurrentUser, &listbarang);
+<<<<<<< HEAD
                 }
                 else if (isEqual(CurrentWord, "HISTORY"))
                 {
@@ -277,6 +282,19 @@ int main()
                 }
                 else
                 {
+=======
+                } else if (isEqual(CurrentWord, "HISTORY")) {
+                    ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
+                } else if (isEqual(CurrentWord, "WISHLIST ADD")) {
+                    wishlistAdd(&CurrentUser.wishlist, &listbarang);
+                } else if (isEqual(CurrentWord, "WISHLIST SHOW")) {
+                    wishlistShow(CurrentUser.wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST REMOVE")) {
+                    wishlistRemove(&CurrentUser.wishlist);
+                } else if (isEqual(CurrentWord, "WISHLIST CLEAR")) {
+                    wishlistClear(&CurrentUser.wishlist);
+                } else {
+>>>>>>> 65f934598cfb01760054751eaeb137641fa6011a
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
             }

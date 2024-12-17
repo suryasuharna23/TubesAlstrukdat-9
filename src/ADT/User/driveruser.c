@@ -1,20 +1,28 @@
 #include <stdio.h>
 #include "user.h"
-#include "user.c"
+
+void PrintUser(User *user) {
+    printf("Name: %s\n", user->name);
+    printf("Password: %s\n", user->password);
+    printf("Money: %d\n", user->money);
+}
 
 int main() {
-    // Contoh penggunaan
-    User user1;
-    User user2;
-    User user3;
-    CreateUser(&user1, "surya", "securepass", 500);
-    CreateUser(&user2, "suharna", "securepass", 400);
-    CreateUser(&user3, "surya suharna", "securepassssssssssssssssssssssssssssssssssssssssssssssssssssss", 100);
+    ListUser users;
+    CreateListUser(&users);
 
-    printf("User created successfully:\n");
-    PrintUser(&user1); //ngecek
-    PrintUser(&user2); 
-    PrintUser(&user3); 
+    User user1, user2, user3;
+
+    AddUser(&users, "surya", "securepass", 500);
+    AddUser(&users, "suharna", "securepass", 400);
+    AddUser(&users, "surya suharna", "securepassssssssssssssssssssssssssssssssssssssssssssssssssssss", 100);
+
+    printf("Users created successfully:\n");
+    
+    for (int i = 0; i < CountUser(&users); i++) {
+        PrintUser(&users.users[i]);
+        printf("\n");
+    }
 
     return 0;
 }

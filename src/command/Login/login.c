@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "login.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
 #include "../../ADT/Mesin/mesinkata.h"
@@ -16,6 +17,8 @@ void Login(ListUser *users, User *CurrentUser) {
         printf("Anda masih tercatat sebagai %s. Silakan LOGOUT terlebih dahulu.\n", CurrentUser->name);
         return;
     }
+
+    InitCurrentUser(CurrentUser);
 
     printf("Username: ");
     while (true) {
@@ -41,39 +44,35 @@ void Login(ListUser *users, User *CurrentUser) {
 
     // Cari username dalam daftar pengguna
     for (int i = 0; i < users->count; i++) {
-        int match = 1;
-        for (int j = 0; j < username.Length; j++) {
-            if (users->users[i].name[j] != username.TabWord[j]) {
-                match = 0;
-                break;
-            }
-        }
-        if (match && users->users[i].name[username.Length] == '\0') {
+        if (strncmp(users->users[i].name, username.TabWord, username.Length) == 0 && users->users[i].name[username.Length] == '\0') {
             userIdx = i;
             break;
         }
     }
 
     if (userIdx != -1) {
-        int match = 1;
-        for (int j = 0; j < password.Length; j++) {
-            if (users->users[userIdx].password[j] != password.TabWord[j]) {
-                match = 0;
-                break;
-            }
-        }
-        if (match && users->users[userIdx].password[password.Length] == '\0') {
+        if (strncmp(users->users[userIdx].password, password.TabWord, password.Length) == 0 && users->users[userIdx].password[password.Length] == '\0') {
             // Salin data pengguna ke CurrentUser
-            for (int j = 0; j < username.Length; j++) {
-                CurrentUser->name[j] = users->users[userIdx].name[j];
-            }
-            CurrentUser->name[username.Length] = '\0';
-            for (int j = 0; j < password.Length; j++) {
-                CurrentUser->password[j] = users->users[userIdx].password[j];
-            }
-            CurrentUser->password[password.Length] = '\0';
+            strcpy(CurrentUser->name, users->users[userIdx].name);
+            strcpy(CurrentUser->password, users->users[userIdx].password);
             CurrentUser->money = users->users[userIdx].money;
+
+            // Salin riwayat pembelian
+            CreateEmptyS(&CurrentUser->riwayat_pembelian);
+            for (int j = 0; j <= users->users[userIdx].riwayat_pembelian.top; j++) {
+                Push(&CurrentUser->riwayat_pembelian, users->users[userIdx].riwayat_pembelian.purchases[j]);
+            }
+
+            // Salin wishlist
+            CreateEmptyList(&CurrentUser->wishlist);
+            address_list P = First(users->users[userIdx].wishlist);
+            while (P != Nol) {
+                InsVLast(&CurrentUser->wishlist, Info(P));
+                P = Next(P);
+            }
+
             printf("Anda telah login ke PURRMART sebagai %s.\n", CurrentUser->name);
+            return; // Pastikan fungsi keluar setelah login berhasil
         } else {
             printf("Login gagal. Password salah.\n");
         }

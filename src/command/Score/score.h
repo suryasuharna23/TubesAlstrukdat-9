@@ -7,6 +7,4 @@ int score(int m, int A);
 // menentukan score yang didapatkan oleh player
 // m adalah multiplier tergantung dengan gamenya, A adalah banyak sisa percobaan yang dimiliki player
 
-int randomNumber(int max);
-
 #endif

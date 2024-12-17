@@ -1,7 +1,0 @@
-0
-5
-1000 Alice password123
-1500 Bob securepass
-1500 Persada securepass
-1500 Allen cantik
-0  ok

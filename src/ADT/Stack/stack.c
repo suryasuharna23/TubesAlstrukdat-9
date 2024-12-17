@@ -5,7 +5,7 @@
 
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyS(Stack *S) {
-    S->top = NilStack;
+    S->top = -1;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */

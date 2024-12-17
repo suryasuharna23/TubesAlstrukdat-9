@@ -34,5 +34,6 @@ address_list AdrMax(List L);
 infotypes Min(List L);
 void InversList(List *L);
 void Konkat1(List *L1, List *L2, List *L3);
+void InsertLast(List *L, address_list P);
 
 #endif
