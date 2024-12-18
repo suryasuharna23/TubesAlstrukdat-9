@@ -4,10 +4,13 @@
 
 void READLINE(char *filename, int IdxLine){
     START(filename);
+    printf("[DEBUG] readline 1");
     int currentLine = 0;
 
     while ((currentLine < IdxLine) && (!IsEOP())){
+        printf("[DEBUG] readline 2");
         while ((CurrentChar != '\n') && (!IsEOP())){
+            printf("[DEBUG] readline 3");
             ADV();
         }
         if (CurrentChar == '\n'){
@@ -25,7 +28,7 @@ void READLINE(char *filename, int IdxLine){
     }
 }
 
-void wordl3_challenge(User* user){
+void wordl3_challenge(User *user){
     if (user == NULL){
         printf("Error user tidak diinisialisasi\n");
         return;
@@ -36,6 +39,7 @@ void wordl3_challenge(User* user){
         char flag;
         int poin = 0; //score pemain
         ListUser users;
+        printf("[DEBUG] wordl3 1");
 
         // implementasi random number untuk menentukan keyword dan poin secara acak
         int line = randomNumber(3) % 100;
@@ -44,14 +48,17 @@ void wordl3_challenge(User* user){
         char *keyword = "../../command/WORDL3/word_list.txt";
 
         READLINE(keyword, line);
+        printf("[DEBUG] wordl3 2");
         Word key_word = CurrentWord;
 
         char *history = "../../command/WORDL3/history.txt";
         clearHist(history);
+        printf("[DEBUG] wordl3 3");
 
         printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
 
         while (try > 0 && !win){
+            printf("[DEBUG] wordl3 4");
             int isLast = false;
 
             // print kata yang ada di file history, alias kata-kata hasil tebakan sebelumnya
@@ -179,6 +186,7 @@ void wordl3_challenge(User* user){
 
 void saveChar(char flag, char letter, boolean isLast){
     FILE *history;
+    printf("[DEBUG] savechar 1");
 
     history = fopen("../../command/WORDL3/history.txt", "a"); //  membuka file history tebakan kata
 
@@ -199,6 +207,7 @@ void saveChar(char flag, char letter, boolean isLast){
 
 void clearHist(char *filename){
     STARTWORD(filename);
+    printf("[DEBUG] sclerhist 1");
 
     FILE *clear_hist = fopen("../../command/WORDL3/history.txt", "w");
     fclose(clear_hist);
