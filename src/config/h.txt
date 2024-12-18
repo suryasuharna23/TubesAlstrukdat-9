@@ -1,0 +1,14 @@
+3
+0 user1 alstrukdatkeren
+1
+0 0
+0
+25 user2 kerenbangetkak
+0
+2
+Meong
+Domb
+100 sada cuki
+1
+0 0
+0
