@@ -28,7 +28,7 @@
 ListUser users;
 ListBarang listbarang;
 Queue requestQueue;
-User CurrentUser = {"", "", 0}; // Menyimpan data pengguna yang sedang login
+User CurrentUser; // Menyimpan data pengguna yang sedang login
 Stack purchaseHistory;
 List wishlist;
 
@@ -44,6 +44,7 @@ int main()
     // Inisialisasi
     CreateListUser(&users);
     CreateListBarang(&listbarang);
+    CreateUser(&CurrentUser);
     CreateQueue(&requestQueue);
     CreateEmptyS(&purchaseHistory);
     CreateEmptyList(&wishlist);
@@ -75,12 +76,7 @@ int main()
             {
                 displayLoadingDots(3);
                 printASCII();
-<<<<<<< HEAD
-                printf("\n");
-                Load(NULL); // Memuat data default jika ada
-=======
-                Load("default");  // Memuat data default jika ada
->>>>>>> 65f934598cfb01760054751eaeb137641fa6011a
+                Load("default"); // Memuat data default jika ada
                 printf("Data dimuat menggunakan setelan default.\n");
                 SList(&listbarang); // Tampilkan barang setelah mulai
                 IsStarted = true;   // Set IsStarted menjadi true
@@ -160,7 +156,6 @@ int main()
                 if (CurrentUser.name[0] == '\0')
                 {
                     loggedIn = false;
-                    printf("Error: User tidak terautentikasi!\n");
                     continue;
                 }
                 // Menu Utama setelah login
@@ -258,43 +253,29 @@ int main()
                 else if (isEqual(CurrentWord, "CART PAY"))
                 {
                     CartPay(&CurrentUser, &listbarang);
-<<<<<<< HEAD
                 }
                 else if (isEqual(CurrentWord, "HISTORY"))
                 {
-                    ShowPurchaseHistory(&purchaseHistory);
+                    ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
                 }
                 else if (isEqual(CurrentWord, "WISHLIST ADD"))
                 {
-                    wishlistAdd(&wishlist, &listbarang);
+                    wishlistAdd(&CurrentUser.wishlist, &listbarang);
                 }
                 else if (isEqual(CurrentWord, "WISHLIST SHOW"))
                 {
-                    wishlistShow(wishlist);
+                    wishlistShow(CurrentUser.wishlist);
                 }
                 else if (isEqual(CurrentWord, "WISHLIST REMOVE"))
                 {
-                    wishlistRemove(&wishlist);
+                    wishlistRemove(&CurrentUser.wishlist);
                 }
                 else if (isEqual(CurrentWord, "WISHLIST CLEAR"))
                 {
-                    wishlistClear(&wishlist);
+                    wishlistClear(&CurrentUser.wishlist);
                 }
                 else
                 {
-=======
-                } else if (isEqual(CurrentWord, "HISTORY")) {
-                    ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
-                } else if (isEqual(CurrentWord, "WISHLIST ADD")) {
-                    wishlistAdd(&CurrentUser.wishlist, &listbarang);
-                } else if (isEqual(CurrentWord, "WISHLIST SHOW")) {
-                    wishlistShow(CurrentUser.wishlist);
-                } else if (isEqual(CurrentWord, "WISHLIST REMOVE")) {
-                    wishlistRemove(&CurrentUser.wishlist);
-                } else if (isEqual(CurrentWord, "WISHLIST CLEAR")) {
-                    wishlistClear(&CurrentUser.wishlist);
-                } else {
->>>>>>> 65f934598cfb01760054751eaeb137641fa6011a
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
             }

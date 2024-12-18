@@ -2,6 +2,7 @@
 #define LISTLINIER_H
 
 #include "../../Boolean/boolean.h"
+#include "../mesin/mesinkata.h"
 
 #define Nol NULL
 

@@ -203,16 +203,26 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
     printf("\n>>> ");
 
     STARTINPUTWORD();
-    if (isEqual(CurrentWord, "Ya")) {
-        if (CurrentUser->money >= totalBiaya) {
+    if (isEqual(CurrentWord, "Ya"))
+    {
+        if (CurrentUser->money >= totalBiaya)
+        {
             CurrentUser->money -= totalBiaya;
             printf("Selamat kamu telah membeli barang-barang tersebut!\n");
-            CreateEmpty(&CurrentUser->keranjang); // Kosongkan keranjang setelah pembayaran
-            AddPurchaseHistory(&purchaseHistory, purchase); // Tambahkan ke riwayat pembelian
-        } else {
+
+            // Store in user's history instead of global history
+            Push(&CurrentUser->riwayat_pembelian, purchase);
+
+            // Clear cart
+            CreateEmpty(&CurrentUser->keranjang);
+        }
+        else
+        {
             printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", CurrentUser->money);
         }
-    } else {
+    }
+    else
+    {
         printf("Pembelian dibatalkan.\n");
     }
 
@@ -222,4 +232,5 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
     if (isEqual(CurrentWord, "BACK")) {
         printf("Kembali ke menu utama.\n");
     }
+    
 }

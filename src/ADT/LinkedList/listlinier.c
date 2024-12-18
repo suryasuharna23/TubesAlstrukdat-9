@@ -27,7 +27,8 @@ void PrintInfo(List L) {
 address_list Alokasi(infotypes X) {
     address_list P = (address_list) malloc(sizeof(ElmtList));
     if (P != Nol) {
-        Info(P) = X;
+        Info(P)=(char*)malloc (100*sizeof(char));
+        StringCopy(Info(P),X);
         Next(P) = Nol;
     }
     return P;

@@ -1,23 +1,52 @@
 #include <stdio.h>
 #include "wishlist.h"
 #include "../../ADT/Mesin/mesinkata.h"
+#include "../../ADT/User/user.h"
 
-void PrintWishlist(List L) {
-    if (IsEmptyList(L)) {
+extern ListUser users;
+
+void PrintWishlist(List L)
+{
+    if (IsEmptyList(L))
+    {
         printf("Wishlist kosong.\n");
-    } else {
-        printf("Berikut adalah isi wishlist-mu:\n");
-        printf("+------------+----------------+\n");
-        printf("| No         | Nama Barang    |\n");
-        printf("+------------+----------------+\n");
-        int i = 1;
-        address_list P = First(L);
-        while (P != Nol) {
-            printf("| %-10d | %-14s |\n", i, Info(P));
-            P = Next(P);
-            i++;
+        return;
+    }
+
+    address_list P = First(L);
+    while (P != Nol)
+    {
+        printf("Item: %s\n", Info(P));
+        P = Next(P);
+    }
+
+    for (int i = 0; i < users.count; i++)
+    {
+        address_list P1 = First(users.users[i].wishlist);
+        address_list P2 = First(L);
+        boolean match = true;
+
+        while (P1 != Nol && P2 != Nol)
+        {
+            if (StringCompare(Info(P1), Info(P2)) != 0)
+            {
+                match = false;
+                break;
+            }
+            P1 = Next(P1);
+            P2 = Next(P2);
         }
-        printf("+------------+----------------+\n");
+
+        if (match && P1 == Nol && P2 == Nol)
+        {
+            address_list P = First(L);
+            while (P != Nol)
+            {
+                printf("%s\n", Info(P));
+                P = Next(P);
+            }
+            return;
+        }
     }
 }
 
