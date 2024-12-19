@@ -10,6 +10,16 @@ void PrintWishlist(List L)
     if (IsEmptyList(L))
     {
         printf("Wishlist kosong.\n");
+        while(1){
+            printf("Ketik 'BACK' untuk kembali: \n");
+            printf(">>> ");
+            STARTINPUTWORD();
+            if (isEqual(CurrentWord, "BACK")){
+                break;
+            } else {
+                printf("Input tidak valid. \n");
+            }
+        }
         return;
     }
 

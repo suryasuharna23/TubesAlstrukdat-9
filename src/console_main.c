@@ -42,6 +42,7 @@ int main()
     boolean IsStarted = false; // Menandakan apakah program sudah dimulai
 
     // Inisialisasi
+    int user_id=-1;
     CreateListUser(&users);
     CreateListBarang(&listbarang);
     CreateUser(&CurrentUser);
@@ -77,8 +78,6 @@ int main()
                 displayLoadingDots(3);
                 printASCII();
                 Load("default"); // Memuat data default jika ada
-                printf("Data dimuat menggunakan setelan default.\n");
-                SList(&listbarang); // Tampilkan barang setelah mulai
                 IsStarted = true;   // Set IsStarted menjadi true
             }
             else if (isEqual(CurrentWord, "LOAD"))
@@ -126,7 +125,7 @@ int main()
 
                 if (isEqual(CurrentWord, "LOGIN"))
                 {
-                    Login(&users, &CurrentUser);
+                    Login(&users, &CurrentUser, &user_id);
                     loggedIn = true; // Set status login
                 }
                 else if (isEqual(CurrentWord, "REGISTER"))
@@ -204,7 +203,7 @@ int main()
                 {
                     Profile(&CurrentUser);
                 }
-                else if (isEqual(CurrentWord, "TEBAK_ANGKA"))
+                else if (isEqual(CurrentWord, "TEBAK ANGKA"))
                 {
                     tebak_angka(&CurrentUser);
                 }
@@ -278,6 +277,7 @@ int main()
                 {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
+                users.users[user_id] = CurrentUser;
             }
         }
     }

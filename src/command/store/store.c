@@ -35,21 +35,64 @@ void SList(ListBarang *listbarang) {
 
 
 void SRemove(ListBarang *listbarang) {
-    printf("Nama barang yang akan dihapus:\n");
-    printf(">>> ");
-    STARTINPUTWORD();
-    char *rem_input = WordToString(CurrentWord);
+    char *rem_input;
+    boolean barangExist = false;
 
-    if (IsBarangExist(listbarang, rem_input)) {
-        TakeBarang(listbarang, rem_input);
-        printf("Barang %s berhasil dihapus.\n", rem_input);
-    } else {
-        printf("Toko tidak menjual %s\n", rem_input);
+    while (!barangExist) {
+        printf("Daftar barang yang ada di toko:\n");
+        for (int i = 0; i < listbarang->count; i++) {
+            printf("%d. %s - %d\n", i + 1, listbarang->items[i].name, listbarang->items[i].price);
+        }
+        printf("Nama barang yang akan dihapus:\n");
+        printf(">>> ");
+        STARTINPUTWORD();
+        rem_input = WordToString(CurrentWord);
+
+        if (IsBarangExist(listbarang, rem_input)) {
+            TakeBarang(listbarang, rem_input);
+            printf("Barang %s berhasil dihapus.\n", rem_input);
+            barangExist = true;
+        } else {
+            printf("Toko tidak menjual %s. Silakan masukkan nama barang yang valid.\n", rem_input);
+        }
+    }
+
+    while (1) {
+        printf("Apakah kamu ingin menghapus barang lain? (YES/BACK): \n");
+        printf(">>> ");
+        STARTINPUTWORD();
+        char *response = WordToString(CurrentWord);
+
+        if (CurrentWord.Length == 3 && CurrentWord.TabWord[0] == 'Y' && CurrentWord.TabWord[1] == 'E' && CurrentWord.TabWord[2] == 'S') {
+            barangExist = false;
+            while (!barangExist) {
+                printf("Daftar barang yang ada di toko:\n");
+                for (int i = 0; i < listbarang->count; i++) {
+                    printf("%d. %s - %d\n", i + 1, listbarang->items[i].name, listbarang->items[i].price);
+                }
+                printf("Nama barang yang akan dihapus:\n");
+                printf(">>> ");
+                STARTINPUTWORD();
+                rem_input = WordToString(CurrentWord);
+
+                if (IsBarangExist(listbarang, rem_input)) {
+                    TakeBarang(listbarang, rem_input);
+                    printf("Barang %s berhasil dihapus.\n", rem_input);
+                    barangExist = true;
+                } else {
+                    printf("Toko tidak menjual %s. Silakan masukkan nama barang yang valid.\n", rem_input);
+                }
+            }
+        } else if (CurrentWord.Length == 4 && CurrentWord.TabWord[0] == 'B' && CurrentWord.TabWord[1] == 'A' && CurrentWord.TabWord[2] == 'C' && CurrentWord.TabWord[3] == 'K') {
+            break;
+        } else {
+            printf("Perintah tidak dikenal. Silakan masukkan YES atau BACK.\n");
+        }
     }
 }
 
 void SRequest(Queue *req, ListBarang *listbarang) {
-    printf("Nama barang yang diminta: ");
+    printf("Nama barang yang diminta: \n");
     printf(">>> ");
     STARTINPUTWORD();
     char *req_input = WordToString(CurrentWord);
@@ -74,11 +117,34 @@ void SRequest(Queue *req, ListBarang *listbarang) {
 
     enqueue(req, newRequest);
     printf("\nBarang %s berhasil ditambahkan ke dalam antrian!\n", req_input);
+    printf("Apakah kamu ingin menambahkan barang lain? (YES/BACK): \n");
+    printf(">>> ");
+    STARTINPUTWORD();
+    char *response = WordToString(CurrentWord);
+
+    if (StringCompare(response, "YES")) {
+        SRequest(req, listbarang);
+    } else if (StringCompare(response, "BACK")) {
+        printf("Kembali ke menu utama.\n");
+    } else {
+        printf("Input tidak valid.\n");
+    }
 }
 
 void SSupply(Queue *req, ListBarang *listbarang) {
     if (isEmpty(*req)) {
         printf("Tidak ada barang dalam antrian!\n");
+        while (1) {
+            printf("Ketik 'BACK' untuk kembali: \n");
+            printf(">>> ");
+            STARTINPUTWORD();
+
+            if (isEqual(CurrentWord, "BACK")) {
+                break;
+            } else {
+                printf("Input tidak valid. \n");
+            }
+        }
         return;
     }
 
@@ -119,5 +185,16 @@ void SSupply(Queue *req, ListBarang *listbarang) {
         printf("\n%s dihapuskan dari antrian.\n", temp.name);
     } else {
         printf("\n< Balik ke menu >\n");
+    }
+    while(1) {
+        printf("Ketik 'BACK' untuk kembali: \n");
+        printf(">>> ");
+        STARTINPUTWORD();
+
+        if (isEqual(CurrentWord, "BACK")) {
+            break;
+        } else {
+            printf("Input tidak valid. \n");
+        }
     }
 }

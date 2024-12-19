@@ -43,12 +43,10 @@ void tebak_angka(User *user) {
     int digit = (rand() % 3) + 1; 
     int key_value = rand() % (int)(pow(10, digit)); 
 
-    printf("[DEBUG] Angka yang harus ditebak: %d\n", key_value);
-
     boolean win = false;
 
     while (try > 0 && !win) {
-        printf("Tebak angka: \n");
+        printf("Masukkan angka tebakanmu: \n");
         printf(">>> ");
         int value = getInt();
 
@@ -74,10 +72,11 @@ void tebak_angka(User *user) {
     }
 
     if (!win) {
-        printf("Yahh kamu kalah \\(>A<)/\n");
+        printf("--------------------------------------------\n");
+        printf("Yahh kamu kalah :(\n");
         printf("Angka yang benar adalah %d\n", key_value);
     }
-
+    printf("-------------------------------------------------\n");
     printf("Poin yang diperoleh: %d\n", poin);
     printf("Total uang Anda sekarang: %d\n", user->money);
 
@@ -86,5 +85,16 @@ void tebak_angka(User *user) {
             users.users[i].money = user->money;
             break;
         }
+    }
+    printf("Apakah kamu ingin bermian lagi? (YES/BACK)\n");
+    printf(">>> ");
+    STARTINPUTWORD();
+    char *response = WordToString(CurrentWord);
+    if (WordCompare(response, "YES")) {
+        tebak_angka(user);
+    } else if (WordCompare(response, "BACK")) {
+        return;
+    } else {
+        printf("Input tidak valid.\n");
     }
 }

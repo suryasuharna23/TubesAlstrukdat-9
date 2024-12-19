@@ -1,0 +1,34 @@
+5
+10 AK47
+20 Lalabu
+20 Ayam Goreng Crisbar
+500 Meong
+100 Domba
+3
+100 user1 alstrukdatkeren
+5
+1 20
+1 37742092 alstrukdatkeren
+1 500
+1 37742092 alstrukdatkeren
+1 10
+1 37742092 alstrukdatkeren
+2 100
+8 37742092 alstrukdatkeren
+1 37742152 alstrukdatkeren
+2 40
+2 37742092 alstrukdatkeren
+1 37742152 alstrukdatkeren
+2
+Ayam Goreng Crisbar
+AK47
+25 user2 kerenbangetkak
+0
+2
+Meong
+Domba
+7000 zidni 123
+1
+1 3000
+30 37742092 123
+0
