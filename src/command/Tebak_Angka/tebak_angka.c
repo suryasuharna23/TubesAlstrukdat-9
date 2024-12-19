@@ -43,7 +43,7 @@ void tebak_angka(User *user) {
     int digit = (rand() % 3) + 1; 
     int key_value = rand() % (int)(pow(10, digit)); 
 
-    printf("[DEBUG] Angka yang harus ditebak: %d\n", key_value);
+    // printf("[DEBUG] Angka yang harus ditebak: %d\n", key_value);
 
     boolean win = false;
 
@@ -65,7 +65,7 @@ void tebak_angka(User *user) {
             printf("(Kesempatanmu %d kali lagi untuk mencoba)\n", (try - 1));
         } else {
             printf("Tebakanmu benar!\n");
-            poin = score(75, try); 
+            poin = score(75, try);
             printf(" +%d rupiah telah ditambahkan ke akun anda.\n", poin);
             user->money += poin; 
             win = true;
