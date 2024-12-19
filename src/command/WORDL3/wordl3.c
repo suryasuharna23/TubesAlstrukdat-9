@@ -4,13 +4,13 @@
 
 void READLINE(char *filename, int IdxLine){
     START(filename);
-    printf("[DEBUG] readline 1");
+    // printf("[DEBUG] readline 1");
     int currentLine = 0;
 
     while ((currentLine < IdxLine) && (!IsEOP())){
-        printf("[DEBUG] readline 2");
+        // printf("[DEBUG] readline 2");
         while ((CurrentChar != '\n') && (!IsEOP())){
-            printf("[DEBUG] readline 3");
+            // printf("[DEBUG] readline 3");
             ADV();
         }
         if (CurrentChar == '\n'){
@@ -28,32 +28,35 @@ void READLINE(char *filename, int IdxLine){
     }
 }
 
-void wordl3_challenge(){
+void wordl3_challenge(User *user){
     int try = MAX_PLAYS; // banyak kesempatan mencoba
     boolean win = false; // menentukan apakah pemain menang atau kalah
     char flag;
     int poin = 0; //score pemain
-    ListUser users;
-    printf("[DEBUG] wordl3 1");
+    // printf("[DEBUG] wordl3 1");
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
     int line = randomNumber(3) % 100;
 
     // mengambil keyword
-    char *keyword = "../../command/WORDL3/word_list.txt";
+    char *keyword = "../src/command/WORDL3/word_list.txt";
 
     READLINE(keyword, line);
-    printf("[DEBUG] wordl3 2");
+    // printf("[DEBUG] wordl3 2");
     Word key_word = CurrentWord;
 
-    char *history = "../../command/WORDL3/history.txt";
+    char *history = "../src/command/WORDL3/history.txt";
     clearHist(history);
-    printf("[DEBUG] wordl3 3");
+    // printf("[DEBUG] wordl3 3");
 
     printf("WELCOME TO W0RDL3, YOU HAVE 5 CHANCES TO ANSWER BEFORE YOU LOSE!\n");
 
     while (try > 0 && !win){
-        printf("[DEBUG] wordl3 4");
+        if (user == NULL) {
+            printf("Error: User tidak diinisialisasi!\n");
+            return;
+        }
+        // printf("[DEBUG] wordl3 4");
         int isLast = false;
 
         // print kata yang ada di file history, alias kata-kata hasil tebakan sebelumnya
@@ -137,8 +140,9 @@ void wordl3_challenge(){
                     }
                 }
                 printf("Selamat anda menang!\n");
-                int poin = score(150, try) % 1000;
+                poin = score(150, try) % 1000;
                 printf("+%d rupiah telah ditambahkan ke akun Anda.\n", poin);
+                user->money += user->money + poin;
             }
 
             free(keyString);
@@ -165,13 +169,23 @@ void wordl3_challenge(){
         printf("Kata yang benar adalah ");
         PrintCurrentWord();
     }
+
+    printf("Poin yang diperoleh: %d\n", poin);
+    printf("Total uang Anda sekarang: %d\n", user->money);
+
+    for (int i = 0; i < users.count; i++) {
+        if (WordCompare(users.users[i].name, user->name)) {
+            users.users[i].money = user->money;
+            break;
+        }
+    }
 }
 
 void saveChar(char flag, char letter, boolean isLast){
     FILE *history;
-    printf("[DEBUG] savechar 1");
+    // printf("[DEBUG] savechar 1");
 
-    history = fopen("../../command/WORDL3/history.txt", "a"); //  membuka file history tebakan kata
+    history = fopen("../src/command/WORDL3/history.txt", "a"); //  membuka file history tebakan kata
 
     // masukin karaketr ke file history
     fputc(letter, history);
@@ -190,8 +204,16 @@ void saveChar(char flag, char letter, boolean isLast){
 
 void clearHist(char *filename){
     STARTWORD(filename);
-    printf("[DEBUG] sclerhist 1");
+    // printf("[DEBUG] sclerhist 1");
 
-    FILE *clear_hist = fopen("../../command/WORDL3/history.txt", "w");
+    FILE *clear_hist = fopen("../src/command/WORDL3/history.txt", "w");
     fclose(clear_hist);
 }
+
+/*
+int main(){
+    User user; 
+
+    wordl3_challenge(&user);
+    return 0;
+}*/
