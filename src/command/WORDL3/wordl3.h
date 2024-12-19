@@ -13,7 +13,7 @@
 void READLINE(char *filename, int lineIDX);
 // membaca kata pada baris tertentu
 
-void wordl3_challenge(User *user);
+void wordl3_challenge();
 // memulai Work Challenge WORLD3
 
 void saveChar(char flag, char letter, boolean isLast);

@@ -9,10 +9,8 @@ gcc driverworld3.c wordl3.c ../../ADT/Mesin/mesinkarakter.c ../../ADT/Mesin/mesi
 int main(){
     int game = 2;
 
-    if (game == 2){
-        User user; 
-        
-        wordl3_challenge(user);
+    if (game == 2){    
+        wordl3_challenge();
     }
 
     return 0;

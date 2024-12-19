@@ -204,12 +204,13 @@ int main()
                 {
                     Profile(&CurrentUser);
                 }
-                else if (isEqual(CurrentWord, "TEBAK_ANGKA"))
+                else if (isEqual(CurrentWord, "TEBAK ANGKA"))
                 {
                     tebak_angka(&CurrentUser);
                 }
                 else if (isEqual(CurrentWord, "WORDL3"))
                 {
+                    // printf("DEBUG");
                     wordl3_challenge(&CurrentUser);
                 }
                 else if (isEqual(CurrentWord, "STORE LIST"))
