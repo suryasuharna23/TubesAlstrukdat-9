@@ -209,6 +209,7 @@ int main()
                 }
                 else if (isEqual(CurrentWord, "WORDL3"))
                 {
+                    // printf("DEBUG");
                     wordl3_challenge(&CurrentUser);
                 }
                 else if (isEqual(CurrentWord, "STORE LIST"))

@@ -63,7 +63,7 @@ void tebak_angka(User *user) {
             printf("(Kesempatanmu %d kali lagi untuk mencoba)\n", (try - 1));
         } else {
             printf("Tebakanmu benar!\n");
-            poin = score(75, try); 
+            poin = score(75, try);
             printf(" +%d rupiah telah ditambahkan ke akun anda.\n", poin);
             user->money += poin; 
             win = true;
