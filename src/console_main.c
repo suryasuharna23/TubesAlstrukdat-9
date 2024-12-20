@@ -21,6 +21,7 @@
 #include "command/Cart/cart.h"
 #include "command/History/history.h"
 #include "command/Wishlist/wishlist.h"
+#include "command/Graph/graph.h"
 #include "ASCII/ASCII.h"
 #include "Loading/Loadingscreen.h"
 
@@ -268,6 +269,10 @@ int main()
                 else if (isEqual(CurrentWord, "WISHLIST CLEAR"))
                 {
                     wishlistClear(&CurrentUser.wishlist);
+                }
+                else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
+                {
+                    mulaiTSP();
                 }
                 else
                 {
