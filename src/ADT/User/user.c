@@ -86,3 +86,14 @@ void InitCurrentUser(User *U)
     CreateEmptyList(&U->wishlist);       // Inisialisasi list kosong
 }
 
+int searchUserIndex(ListUser users, char *username)
+{
+    for (int i = 0; i < users.count; i++)
+    {
+        if (WordCompare(users.users[i].name, username) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}

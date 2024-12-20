@@ -9,9 +9,6 @@
 #define MAX_USER_COUNT 100
 #define MAX_BARANG_COUNT 100
 
-void Save(char *filename);
-
-extern ListUser users;
-extern ListBarang barangs;
+void Save(char *filename, ListBarang *listbarang, ListUser *users);
 
 #endif

@@ -68,26 +68,14 @@ void wishlistAdd(List *L, ListBarang *listbarang) {
 
 void wishlistSwap(List *L) {
     while (true) {
-        PrintWishlist(*L);
-        printf("Masukkan 1 posisi barang (atau ketik 'BACK' untuk kembali): ");
-        printf("\n>>> ");
+        printf("Masukkan perintah: WISHLIST SWAP <indeks barang 1> <indeks barang 2>\n");
+        printf(">> ");
         STARTINPUTWORD();
-        if (isEqual(CurrentWord, "BACK")) {
-            printf("Kembali ke menu sebelumnya.\n");
-            return;
-        }
-        char *nomor1 = WordToString(CurrentWord);
-        int idx1 = *nomor1 - '0';
+        Word num1Word = GetWord(CurrentWord, 3);
+        Word num2Word = GetWord(CurrentWord, 4);
 
-        printf("Masukkan posisi barang yang ingin ditukar dengan input sebelumnya (atau ketik 'BACK' untuk kembali): ");
-        printf("\n>>> ");
-        STARTINPUTWORD();
-        if (isEqual(CurrentWord, "BACK")) {
-            printf("Kembali ke menu sebelumnya.\n");
-            return;
-        }
-        char *nomor2 = WordToString(CurrentWord);
-        int idx2 = *nomor2 - '0';
+        int idx1 = WordToInt(num1Word);
+        int idx2 = WordToInt(num2Word);
 
         if (idx1 > 0 && idx2 > 0 && idx1 <= NbElmt(*L) && idx2 <= NbElmt(*L)) {
             address_list P1 = First(*L);
@@ -102,6 +90,7 @@ void wishlistSwap(List *L) {
             Info(P1) = Info(P2);
             Info(P2) = temp;
             printf("Berhasil menukar posisi %d dan %d di wishlist!\n", idx1, idx2);
+            PrintWishlist(*L);
         } else {
             printf("Indeks tidak valid!\n");
         }

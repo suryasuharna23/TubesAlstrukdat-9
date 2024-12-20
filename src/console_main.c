@@ -21,6 +21,7 @@
 #include "command/Cart/cart.h"
 #include "command/History/history.h"
 #include "command/Wishlist/wishlist.h"
+#include "command/Graph/graph.h"
 #include "ASCII/ASCII.h"
 #include "Loading/Loadingscreen.h"
 
@@ -222,8 +223,12 @@ int main()
                 else if (isEqual(CurrentWord, "SAVE"))
                 {
                     printf("Masukkan nama file untuk menyimpan: ");
-                    STARTINPUTWORD();                // Mengambil input dari pengguna
-                    Save(WordToString(CurrentWord)); // Menyimpan dengan nama file yang diinputkan
+                    STARTINPUTWORD(); // Mengambil input dari pengguna
+                    for (int i = 0; i < users.count; i++)
+                    {
+                        printf("%s %d\n", users.users[i].name, users.users[i].money);
+                    }
+                    Save(WordToString(CurrentWord), &listbarang, &users); // Menyimpan dengan nama file yang diinputkan
                 }
                 else if (isEqual(CurrentWord, "HELP"))
                 {
@@ -269,12 +274,52 @@ int main()
                 {
                     wishlistClear(&CurrentUser.wishlist);
                 }
+                else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
+                {
+                    mulaiTSP();
+                }
                 else
                 {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
                 }
                 users.users[user_id] = CurrentUser;
             }
+        }
+        // Before the loop ends
+        // Cari tahu index user sekarang di userlist
+        // Kalo udah ketemu, set di userlist[index].atribut sesuai yang di currentuser
+        /*
+            Misal:
+            int idxuser = searchidx(userlist,namacurrentuser);
+
+            userlist[idxuser].money = currentuser.money;
+            userlist[idxuser].wishlist = currentuser.wishlist;
+            ubah atribut lain;
+         */
+        // Before exiting loop, update user data
+        if (IsStarted && loggedIn)
+        {
+            int useridx;
+            printf("Ini di sinkronisasi\nAda %d user di user list.\n", users.count);
+            for (int i = 0; i < users.count; i++)
+            {
+                printf("masuk %d\n", i + 1);
+                char *namauser = malloc(50);
+                StringCopy(namauser, users.users[i].name);
+                printf("%s\n", namauser);
+                if (StringCompare(namauser, CurrentUser.name))
+                {
+                    useridx = i;
+                }
+                free(namauser);
+                printf("keluar %d\n", i + 1);
+            }
+
+            users.users[useridx].money = CurrentUser.money;
+            users.users[useridx].keranjang = CurrentUser.keranjang;
+            users.users[useridx].riwayat_pembelian = CurrentUser.riwayat_pembelian;
+            users.users[useridx].wishlist = CurrentUser.wishlist;
+            printf("CurrentUser name: %s\nCurrentUser money: %d", CurrentUser.name, CurrentUser.money);
         }
     }
 
