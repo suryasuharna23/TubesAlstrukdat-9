@@ -43,17 +43,17 @@ void DisplayCartItems(User *CurrentUser, ListBarang *listbarang) {
 void CartAdd(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayAvailableItems(listbarang);
-        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): \n");
+        printf("Masukkan perintah: CART ADD <nama barang> <jumlah barang>\n");
         printf(">>> ");
         STARTINPUTWORD();
 
-        if (isEqual(CurrentWord, "BACK")) {
+        /*if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu sebelumnya.\n");
             return;
-        }
+        }*/
 
-        Word namaBarang = GetWord(CurrentWord, 1);
-        Word jumlahBarangWord = GetWord(CurrentWord, 2);
+        Word namaBarang = GetWord(CurrentWord, 3);
+        Word jumlahBarangWord = GetWord(CurrentWord, 4);
         int jumlahBarang = WordToInt(jumlahBarangWord);
 
         char *nama = WordToString(namaBarang);
@@ -90,7 +90,7 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
 void CartRemove(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayCartItems(CurrentUser, listbarang);
-        printf("Masukkan nama barang dan jumlah (atau ketik 'BACK' untuk kembali): \n");
+        printf("Masukkan perintah: CART REMOVE <nama barang> <jumlah barang>\n");
         printf(">>> ");
         STARTINPUTWORD();
 
@@ -99,8 +99,8 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
             return;
         }
 
-        Word namaBarang = GetWord(CurrentWord, 1);
-        Word jumlahBarangWord = GetWord(CurrentWord, 2);
+        Word namaBarang = GetWord(CurrentWord, 3);
+        Word jumlahBarangWord = GetWord(CurrentWord, 4);
         int jumlahBarang = WordToInt(jumlahBarangWord);
 
         char *nama = WordToString(namaBarang);
