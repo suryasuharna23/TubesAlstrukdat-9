@@ -11,7 +11,16 @@ void ShowPurchaseHistory(Stack *history)
     if (IsEmptyS(*history))
     {
         printf("Tidak ada riwayat pembelian.\n");
-        return;
+        while(1){
+            printf("Ketik 'BACK' untuk kembali: \n");
+            printf(">>> ");
+            STARTINPUTWORD();
+            if (isEqual(CurrentWord, "BACK")){
+                break;
+            } else {
+                printf("Input tidak valid. \n");
+            }
+        }
     }
 
     printf("Riwayat Pembelian:\n");

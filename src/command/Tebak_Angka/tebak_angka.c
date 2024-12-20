@@ -44,7 +44,6 @@ void tebak_angka(User *user) {
     int key_value = rand() % (int)(pow(10, digit)); 
 
     boolean win = false;
-
     while (try > 0 && !win) {
         printf("Masukkan angka tebakanmu: \n");
         printf(">>> ");

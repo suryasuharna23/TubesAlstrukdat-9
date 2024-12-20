@@ -2,6 +2,7 @@
 #include "wishlist.h"
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/User/user.h"
+#include "../../command/Store/store.h"
 
 extern ListUser users;
 
@@ -10,59 +11,28 @@ void PrintWishlist(List L)
     if (IsEmptyList(L))
     {
         printf("Wishlist kosong.\n");
-        while(1){
-            printf("Ketik 'BACK' untuk kembali: \n");
-            printf(">>> ");
-            STARTINPUTWORD();
-            if (isEqual(CurrentWord, "BACK")){
-                break;
-            } else {
-                printf("Input tidak valid. \n");
-            }
-        }
         return;
     }
 
+    printf("+----+-----------------------------+\n");
+    printf("| No | Nama Barang                 |\n");
+    printf("+----+-----------------------------+\n");
+
     address_list P = First(L);
-    while (P != Nol)
-    {
-        printf("Item: %s\n", Info(P));
+    int no = 1;
+    while (P != Nol) {
+        printf("| %-2d | %-27s |\n", no, Info(P));
         P = Next(P);
+        no++;
     }
 
-    for (int i = 0; i < users.count; i++)
-    {
-        address_list P1 = First(users.users[i].wishlist);
-        address_list P2 = First(L);
-        boolean match = true;
-
-        while (P1 != Nol && P2 != Nol)
-        {
-            if (StringCompare(Info(P1), Info(P2)) != 0)
-            {
-                match = false;
-                break;
-            }
-            P1 = Next(P1);
-            P2 = Next(P2);
-        }
-
-        if (match && P1 == Nol && P2 == Nol)
-        {
-            address_list P = First(L);
-            while (P != Nol)
-            {
-                printf("%s\n", Info(P));
-                P = Next(P);
-            }
-            return;
-        }
-    }
+    printf("+----+-----------------------------+\n");
+    printf("\n");
 }
 
 void wishlistAdd(List *L, ListBarang *listbarang) {
     while (true) {
-        PrintWishlist(*L);
+        DisplayBarang(listbarang);
         printf("Masukkan nama barang (atau ketik 'BACK' untuk kembali): ");
         printf("\n>>> ");
         STARTINPUTWORD();
@@ -149,10 +119,10 @@ void wishlistSwap(List *L) {
 void wishlistRemove(List *L) {
     while (true) {
         if (IsEmptyList(*L)) {
-            wishlistShow(*L);
+            PrintWishlist(*L);
             return;
         } else {
-            wishlistShow(*L);
+            PrintWishlist(*L);
 
             printf("Pilih metode penghapusan (nomor/nama barang) (atau ketik 'BACK' untuk kembali): ");
             printf("\n>>> ");
@@ -164,7 +134,8 @@ void wishlistRemove(List *L) {
             }
 
             if (isEqual(CurrentWord, "nomor")) {
-                printf(">>WISHLIST REMOVE ");
+                printf("Masukkan nomor barang yang akan dihapus (atau ketik 'BACK' untuk kembali): \n");
+                printf(">>> ");
                 STARTINPUTWORD();
                 if (isEqual(CurrentWord, "BACK")) {
                     printf("Kembali ke menu sebelumnya.\n");
@@ -231,23 +202,53 @@ void wishlistRemove(List *L) {
 }
 
 void wishlistClear(List *L) {
-    while (true) {
-        infotypes barang;
-        while (!IsEmptyList(*L)) {
-            DelVFirst(L, &barang);
-        }
-        printf("Wishlist telah dikosongkan.\n");
+    PrintWishlist(*L);
 
-        printf("Ketik 'CLEAR' untuk mengosongkan wishlist lagi atau 'BACK' untuk kembali ke menu utama: ");
-        printf("\n>>> ");
-        STARTINPUTWORD();
+    printf("Apakah anda yakin ingin menghapus semua barang di wishlist? (YES/BACK): \n");
+    boolean validInput = false; 
+    while (!validInput) { 
+        printf(">>> ");
+        STARTINPUTWORD(); 
+
+        if (isEqual(CurrentWord, "YES")) {
+            infotypes barang;
+            while (!IsEmptyList(*L)) {
+                DelVFirst(L, &barang);
+            }
+            printf("Wishlist telah dikosongkan.\n");
+            validInput = true; 
+        } else if (isEqual(CurrentWord, "BACK")) {
+            printf("Penghapusan wishlist dibatalkan.\n");
+            validInput = true; 
+        } else {
+            printf("Input tidak valid. Harap masukkan YES atau BACK.\n");
+        }
+    }
+
+    while (true) {
+        printf("Ketik 'BACK' untuk kembali ke menu utama: \n");
+        printf(">>> ");
+        STARTINPUTWORD(); 
+
         if (isEqual(CurrentWord, "BACK")) {
             printf("Kembali ke menu utama.\n");
-            return;
+            return; 
+        } else {
+            printf("Input tidak valid. Harap ketik 'BACK'.\n");
         }
     }
 }
 
 void wishlistShow(List L) {
     PrintWishlist(L);
+    while(1){
+        printf("Ketik 'BACK' untuk kembali: \n");
+        printf(">>> ");
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "BACK")){
+            break;
+        } else {
+            printf("Input tidak valid. \n");
+        }
+    }
 }

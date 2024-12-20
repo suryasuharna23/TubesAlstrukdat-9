@@ -2,6 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+// Fungsi untuk menampilkan daftar barang dalam bentuk tabel
+void DisplayBarang(ListBarang *listbarang) {
+    printf("+----+-----------------------------+-----------+\n");
+    printf("| No | Nama Barang                 | Harga     |\n");
+    printf("+----+-----------------------------+-----------+\n");
+
+    for (int i = 0; i < listbarang->count; i++) {
+        printf("| %-2d | %-27s | %-9d |\n", i + 1, listbarang->items[i].name, listbarang->items[i].price);
+    }
+
+    printf("+----+-----------------------------+-----------+\n");
+}
+
 // Menghitung panjang string
 int StringLength(const char *str) {
     int len = 0;
@@ -21,13 +35,22 @@ void ToLowerCase(char *str) {
 
 
 void SList(ListBarang *listbarang) {
-    if (IsEmptyListBarang(*listbarang)) {
-        printf("TOKO KOSONG\n");
-    } else {
-        printf("List barang yang ada di toko:\n");
-        for (int i = 0; i < listbarang->count; i++) {
-            printf("- ");
-            PrintBarang(&listbarang->items[i]);
+    while (1) {
+        if (IsEmptyListBarang(*listbarang)) {
+            printf("TOKO KOSONG\n");
+        } else {
+            DisplayBarang(listbarang);
+        }
+
+        printf("Ketik 'BACK' untuk kembali: \n");
+        printf(">>> ");
+        STARTINPUTWORD();
+
+        if (isEqual(CurrentWord, "BACK")) {
+            printf("Kembali ke menu utama.\n");
+            break;
+        } else {
+            printf("Input tidak valid. \n");
         }
     }
 }
@@ -40,9 +63,7 @@ void SRemove(ListBarang *listbarang) {
 
     while (!barangExist) {
         printf("Daftar barang yang ada di toko:\n");
-        for (int i = 0; i < listbarang->count; i++) {
-            printf("%d. %s - %d\n", i + 1, listbarang->items[i].name, listbarang->items[i].price);
-        }
+        DisplayBarang(listbarang);
         printf("Nama barang yang akan dihapus:\n");
         printf(">>> ");
         STARTINPUTWORD();

@@ -37,7 +37,7 @@ void wordl3_challenge(User *user){
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
     int line = randomNumber(3) % 100;
-
+    
     // mengambil keyword
     char *keyword = "../src/command/WORDL3/word_list.txt";
 
@@ -76,7 +76,7 @@ void wordl3_challenge(User *user){
         for (int i = 0; i < try; i++){
             printf("_ _ _ _ _\n");
         }
-
+    
         // menerima input kata yang ditebak
         printf("Masukkan kata tebakan Anda: ");
         STARTINPUTWORD();

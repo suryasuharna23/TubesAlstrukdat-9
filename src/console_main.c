@@ -24,11 +24,10 @@
 #include "ASCII/ASCII.h"
 #include "Loading/Loadingscreen.h"
 
-// Deklarasi global
 ListUser users;
 ListBarang listbarang;
 Queue requestQueue;
-User CurrentUser; // Menyimpan data pengguna yang sedang login
+User CurrentUser; 
 Stack purchaseHistory;
 List wishlist;
 
@@ -39,9 +38,8 @@ int main()
 {
     boolean running = true;
     boolean loggedIn = false;
-    boolean IsStarted = false; // Menandakan apakah program sudah dimulai
+    boolean IsStarted = false; 
 
-    // Inisialisasi
     int user_id=-1;
     CreateListUser(&users);
     CreateListBarang(&listbarang);
@@ -60,7 +58,6 @@ int main()
     {
         if (!IsStarted)
         {
-            // Menu Awal: START, LOAD, QUIT
             printf("\n+----------------------------------------+\n");
             printf("|           MENU AWAL PURRMART           |\n");
             printf("+----------------------------------------+\n");
@@ -77,8 +74,8 @@ int main()
             {
                 displayLoadingDots(3);
                 printASCII();
-                Load("default"); // Memuat data default jika ada
-                IsStarted = true;   // Set IsStarted menjadi true
+                Load("default"); 
+                IsStarted = true;   
             }
             else if (isEqual(CurrentWord, "LOAD"))
             {
@@ -87,8 +84,7 @@ int main()
                 if (Load(WordToString(CurrentWord)))
                 {
                     printf("Konfigurasi berhasil dimuat.\n");
-                    SList(&listbarang); // Tampilkan barang setelah load
-                    IsStarted = true;   // Set IsStarted menjadi true
+                    IsStarted = true;   
                 }
                 else
                 {
@@ -97,7 +93,7 @@ int main()
             }
             else if (isEqual(CurrentWord, "QUIT"))
             {
-                running = false; // Keluar dari game
+                running = false; 
                 printf("Terima kasih telah menggunakan PURRMART!\n");
             }
             else
@@ -107,10 +103,8 @@ int main()
         }
         else
         {
-            // Menu Utama setelah IsStarted = true
             if (!loggedIn)
             {
-                // Menu login atau register
                 printf("\n+----------------------------------------+\n");
                 printf("|         MENU LOGIN / REGISTER          |\n");
                 printf("+----------------------------------------+\n");
@@ -126,7 +120,7 @@ int main()
                 if (isEqual(CurrentWord, "LOGIN"))
                 {
                     Login(&users, &CurrentUser, &user_id);
-                    loggedIn = true; // Set status login
+                    loggedIn = true; 
                 }
                 else if (isEqual(CurrentWord, "REGISTER"))
                 {
@@ -134,13 +128,13 @@ int main()
                     RegisterUser(&users, &registrationSuccessful);
                     if (registrationSuccessful)
                     {
-                        loggedIn = true; // Set status login
+                        loggedIn = true; 
                     }
                 }
 
                 else if (isEqual(CurrentWord, "QUIT"))
                 {
-                    running = false; // Keluar dari game
+                    running = false; 
                     printf("Terima kasih telah menggunakan PURRMART!\n");
                 }
 
@@ -151,15 +145,11 @@ int main()
             }
             else if (loggedIn)
             {
-                // Check if user is actually logged in
                 if (CurrentUser.name[0] == '\0')
                 {
                     loggedIn = false;
                     continue;
                 }
-                // Menu Utama setelah login
-                printf("\n+----------------------------------------------------------+\n");
-                // Menu Utama setelah login
                 printf("\n+----------------------------------------------------------+\n");
                 printf("|                  MENU UTAMA PURRMART                     |\n");
                 printf("+----------------------------------------------------------+\n");
@@ -178,11 +168,12 @@ int main()
                 printf("| 13. HISTORY           - Tampilkan history pembelian      |\n");
                 printf("| 14. WISHLIST ADD      - Tambah barang ke wishlist        |\n");
                 printf("| 15. WISHLIST REMOVE   - Hapus barang dari wishlist       |\n");
-                printf("| 16. WISHLIST CLEAR    - Bersihkan wishlist               |\n");
-                printf("| 17. WISHLIST SHOW     - Tampilkan wishlist               |\n");
-                printf("| 18. HELP              - Tampilkan bantuan                |\n");
-                printf("| 19. SAVE              - Simpan konfigurasi               |\n");
-                printf("| 20. LOGOUT            - Keluar dari sesi pengguna        |\n");
+                printf("| 16. WISHLIST SWAP     - Menukar posisi barang wishlist   |\n");
+                printf("| 17. WISHLIST CLEAR    - Bersihkan wishlist               |\n");
+                printf("| 18. WISHLIST SHOW     - Tampilkan wishlist               |\n");
+                printf("| 19. HELP              - Tampilkan bantuan                |\n");
+                printf("| 20. SAVE              - Simpan konfigurasi               |\n");
+                printf("| 21. LOGOUT            - Keluar dari sesi pengguna        |\n");
                 printf("+----------------------------------------------------------+\n");
 
                 printf(">>> ");
@@ -265,6 +256,10 @@ int main()
                 else if (isEqual(CurrentWord, "WISHLIST SHOW"))
                 {
                     wishlistShow(CurrentUser.wishlist);
+                }
+                else if (isEqual(CurrentWord, "WISHLIST SWAP"))
+                {
+                    wishlistSwap(&CurrentUser.wishlist);
                 }
                 else if (isEqual(CurrentWord, "WISHLIST REMOVE"))
                 {
