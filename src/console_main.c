@@ -28,7 +28,7 @@
 ListUser users;
 ListBarang listbarang;
 Queue requestQueue;
-User CurrentUser; 
+User CurrentUser;
 Stack purchaseHistory;
 List wishlist;
 
@@ -39,8 +39,8 @@ int main()
 {
     boolean running = true;
     boolean loggedIn = false;
-    boolean IsStarted = false; 
-    int user_id=-1;
+    boolean IsStarted = false;
+    int user_id = -1;
     CreateListUser(&users);
     CreateListBarang(&listbarang);
     CreateUser(&CurrentUser);
@@ -74,8 +74,8 @@ int main()
             {
                 displayLoadingDots(3);
                 printASCII();
-                Load("default"); 
-                IsStarted = true;   
+                Load("default");
+                IsStarted = true;
             }
             else if (isEqual(CurrentWord, "LOAD"))
             {
@@ -84,7 +84,7 @@ int main()
                 if (Load(WordToString(CurrentWord)))
                 {
                     printf("Konfigurasi berhasil dimuat.\n");
-                    IsStarted = true;   
+                    IsStarted = true;
                 }
                 else
                 {
@@ -93,7 +93,7 @@ int main()
             }
             else if (isEqual(CurrentWord, "QUIT"))
             {
-                running = false; 
+                running = false;
                 printf("Terima kasih telah menggunakan PURRMART!\n");
             }
             else
@@ -120,7 +120,7 @@ int main()
                 if (isEqual(CurrentWord, "LOGIN"))
                 {
                     Login(&users, &CurrentUser, &user_id);
-                    loggedIn = true; 
+                    loggedIn = true;
                 }
                 else if (isEqual(CurrentWord, "REGISTER"))
                 {
@@ -128,13 +128,13 @@ int main()
                     RegisterUser(&users, &registrationSuccessful);
                     if (registrationSuccessful)
                     {
-                        loggedIn = true; 
+                        loggedIn = true;
                     }
                 }
 
                 else if (isEqual(CurrentWord, "QUIT"))
                 {
-                    running = false; 
+                    running = false;
                     printf("Terima kasih telah menggunakan PURRMART!\n");
                 }
 
@@ -222,8 +222,7 @@ int main()
                 else if (isEqual(CurrentWord, "SAVE"))
                 {
                     printf("Masukkan nama file untuk menyimpan: ");
-                    STARTINPUTWORD();                // Mengambil input dari pengguna
-
+                    STARTINPUTWORD(); // Mengambil input dari pengguna
                     Save(WordToString(CurrentWord), &listbarang, &users); // Menyimpan dengan nama file yang diinputkan
                 }
                 else if (isEqual(CurrentWord, "HELP"))
@@ -270,10 +269,10 @@ int main()
                 {
                     wishlistClear(&CurrentUser.wishlist);
                 }
-                else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
-                {
-                    prosesRute();
-                }
+                // else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
+                // {
+                //     prosesRute();
+                // }
                 else
                 {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");

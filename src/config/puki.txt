@@ -1,4 +1,4 @@
-3
+2
 100 user1 alstrukdatkeren
 5
 2 40
@@ -16,9 +16,8 @@
 2
 Ayam Goreng Crisbar
 AK47
-7000 user2 kerenbangetkak
+25 user2 kerenbangetkak
 0
-0
-0 faiz cukimayleyley
-0
-0
+2
+Meong
+Domb

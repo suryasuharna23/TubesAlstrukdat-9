@@ -7,8 +7,8 @@
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../command/Help/help.h"
 
-ListBarang listbarang;
-ListUser users;
+extern ListBarang listbarang;
+extern ListUser users;
 
 void ConcatString(const char *str1, const char *str2, char *result) {
     while (*str1) {
