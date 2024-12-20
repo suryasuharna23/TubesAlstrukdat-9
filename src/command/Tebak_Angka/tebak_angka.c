@@ -37,7 +37,17 @@ void tebak_angka(User *user) {
     }
 
     int try = MAX_TRIES;
-    int poin = 0; 
+    int poin = 0;
+
+    if (user->money < 200)
+    {
+        printf("Saldo kamu kurang nih!\n");
+        return;
+    }
+    else
+    {
+        user->money -= 200; // mengurangi uang user untuk bermain
+    }
 
     srand(time(NULL)); 
     int digit = (rand() % 3) + 1; 
@@ -76,7 +86,7 @@ void tebak_angka(User *user) {
         printf("Angka yang benar adalah %d\n", key_value);
     }
     printf("-------------------------------------------------\n");
-    printf("Poin yang diperoleh: %d\n", poin);
+    // printf("Poin yang diperoleh: %d\n", poin);
     printf("Total uang Anda sekarang: %d\n", user->money);
 
     for (int i = 0; i < users.count; i++) {
@@ -85,7 +95,7 @@ void tebak_angka(User *user) {
             break;
         }
     }
-    printf("Apakah kamu ingin bermian lagi? (YES/BACK)\n");
+    printf("Apakah kamu ingin bermain lagi? (YES/BACK)\n");
     printf(">>> ");
     STARTINPUTWORD();
     char *response = WordToString(CurrentWord);

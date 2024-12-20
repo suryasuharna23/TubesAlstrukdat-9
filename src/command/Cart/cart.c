@@ -40,6 +40,7 @@ void DisplayCartItems(User *CurrentUser, ListBarang *listbarang) {
     printf("+------------+----------------+------------+------------+\n");
 }
 
+
 void CartAdd(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayAvailableItems(listbarang);
@@ -47,31 +48,35 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
         printf(">>> ");
         STARTINPUTWORD();
 
-        /*if (isEqual(CurrentWord, "BACK")) {
-            printf("Kembali ke menu sebelumnya.\n");
-            return;
-        }*/
-
         Word namaBarang = GetWord(CurrentWord, 3);
         Word jumlahBarangWord = GetWord(CurrentWord, 4);
         int jumlahBarang = WordToInt(jumlahBarangWord);
-
+        int i;
         char *nama = WordToString(namaBarang);
 
-        int i;
-        for (i = 0; i < listbarang->count; i++) {
-            if (WordCompare(listbarang->items[i].name, nama)) {
-                if (IsMember(CurrentUser->keranjang, i)) {
-                    Insert(&CurrentUser->keranjang, i, Value(CurrentUser->keranjang, i) + jumlahBarang);
-                } else {
-                    Insert(&CurrentUser->keranjang, i, jumlahBarang);
-                }
-                printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", jumlahBarang, nama);
-                free(nama);
-                break;
-            }
+        if (jumlahBarang < 1){
+            printf("Masukkan jumlah barang yang Valid!\n");
         }
 
+        else{
+            for (i = 0; i < listbarang->count; i++)
+            {
+                if (WordCompare(listbarang->items[i].name, nama))
+                {
+                    if (IsMember(CurrentUser->keranjang, i))
+                    {
+                        Insert(&CurrentUser->keranjang, i, Value(CurrentUser->keranjang, i) + jumlahBarang);
+                    }
+                    else
+                    {
+                        Insert(&CurrentUser->keranjang, i, jumlahBarang);
+                    }
+                    printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", jumlahBarang, nama);
+                    free(nama);
+                    break;
+                }
+            }
+        }
         if (i == listbarang->count) {
             printf("Barang tidak ada di toko!\n");
         }
@@ -91,7 +96,7 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayCartItems(CurrentUser, listbarang);
         printf("Masukkan perintah: CART REMOVE <nama barang> <jumlah barang>\n");
-        printf(">>> ");
+        printf(">>>");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {

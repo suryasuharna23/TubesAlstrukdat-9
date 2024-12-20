@@ -1,11 +1,11 @@
-2
-9700 user1 alstrukdatkeren
-6
+3
+100 user1 alstrukdatkeren
+5
 2 40
-2 2 AK47
+10 2 AK47
 20 1 Lalabu
 2 100
-0 8 AK47
+10 8 AK47
 20 1 Lalabu
 1 10
 10 1 AK47
@@ -13,8 +13,6 @@
 500 1 Meong
 1 20
 20 1 Ayam Goreng Crisbar
-1 500
-4 5 Domba
 2
 Ayam Goreng Crisbar
 AK47
@@ -23,3 +21,8 @@ AK47
 2
 Meong
 Domb
+0 faiz 123
+0
+2
+Meong
+AK47
