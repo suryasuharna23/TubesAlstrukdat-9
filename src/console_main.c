@@ -40,7 +40,6 @@ int main()
     boolean running = true;
     boolean loggedIn = false;
     boolean IsStarted = false; 
-
     int user_id=-1;
     CreateListUser(&users);
     CreateListBarang(&listbarang);
@@ -273,7 +272,7 @@ int main()
                 }
                 else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
                 {
-                    mulaiTSP();
+                    prosesRute();
                 }
                 else
                 {
