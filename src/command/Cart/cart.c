@@ -173,7 +173,7 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayCartItems(CurrentUser, listbarang);
         printf("Masukkan perintah: CART REMOVE <nama barang> <jumlah barang>\n");
-        printf(">>> ");
+        printf(">>>");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
