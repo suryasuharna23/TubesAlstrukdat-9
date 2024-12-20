@@ -40,7 +40,6 @@ int main()
     boolean running = true;
     boolean loggedIn = false;
     boolean IsStarted = false; 
-
     int user_id=-1;
     CreateListUser(&users);
     CreateListBarang(&listbarang);
@@ -224,8 +223,7 @@ int main()
                 {
                     printf("Masukkan nama file untuk menyimpan: ");
                     STARTINPUTWORD();                // Mengambil input dari pengguna
-
-                    Save(WordToString(CurrentWord)); // Menyimpan dengan nama file yang diinputkan
+                    Save(WordToString(CurrentWord), &listbarang, &users); // Menyimpan dengan nama file yang diinputkan
                 }
                 else if (isEqual(CurrentWord, "HELP"))
                 {
@@ -273,7 +271,7 @@ int main()
                 }
                 else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
                 {
-                    mulaiTSP();
+                    prosesRute();
                 }
                 else
                 {
