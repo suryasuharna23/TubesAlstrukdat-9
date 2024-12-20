@@ -9,6 +9,78 @@
 
 extern Stack purchaseHistory;
 
+Word GetLastWord(Word command)
+{
+    Word result;
+    result.Length = 0;
+    int i = command.Length - 1;
+
+    // Skip trailing spaces
+    while (i >= 0 && command.TabWord[i] == ' ')
+    {
+        i--;
+    }
+
+    // Find start of last word
+    int end = i;
+    while (i >= 0 && command.TabWord[i] != ' ')
+    {
+        i--;
+    }
+
+    // Copy last word
+    for (int j = i + 1; j <= end; j++)
+    {
+        result.TabWord[result.Length] = command.TabWord[j];
+        result.Length++;
+    }
+
+    return result;
+}
+
+Word GetItemNameFromCommand(Word command)
+{
+    Word result;
+    result.Length = 0;
+    int i = 0;
+    boolean found_add = false;
+
+    // Skip until after "ADD "
+    while (i < command.Length - 3)
+    {
+        if (command.TabWord[i] == 'A' &&
+            command.TabWord[i + 1] == 'D' &&
+            command.TabWord[i + 2] == 'D' &&
+            command.TabWord[i + 3] == ' ')
+        {
+            i += 4;
+            found_add = true;
+            break;
+        }
+        i++;
+    }
+
+    if (!found_add)
+        return result;
+
+    // Find last space (before quantity)
+    int end = command.Length - 1;
+    while (end >= 0 && command.TabWord[end] != ' ')
+    {
+        end--;
+    }
+
+    // Copy item name (including spaces and numbers)
+    while (i < end)
+    {
+        result.TabWord[result.Length] = command.TabWord[i];
+        result.Length++;
+        i++;
+    }
+
+    return result;
+}
+
 void DisplayAvailableItems(ListBarang *listbarang) {
     printf("Barang yang tersedia di toko:\n");
     printf("+----------------------------+------------+\n");
@@ -40,33 +112,42 @@ void DisplayCartItems(User *CurrentUser, ListBarang *listbarang) {
     printf("+------------+----------------+------------+------------+\n");
 }
 
-void CartAdd(User *CurrentUser, ListBarang *listbarang) {
-    while (true) {
+void CartAdd(User *CurrentUser, ListBarang *listbarang)
+{
+    while (true)
+    {
         DisplayAvailableItems(listbarang);
         printf("Masukkan perintah: CART ADD <nama barang> <jumlah barang>\n");
         printf(">>> ");
         STARTINPUTWORD();
 
-        /*if (isEqual(CurrentWord, "BACK")) {
-            printf("Kembali ke menu sebelumnya.\n");
+        if (isEqual(CurrentWord, "BACK"))
+        {
             return;
-        }*/
-
-        Word namaBarang = GetWord(CurrentWord, 3);
-        Word jumlahBarangWord = GetWord(CurrentWord, 4);
-        int jumlahBarang = WordToInt(jumlahBarangWord);
-        int i;
-        char *nama = WordToString(namaBarang);
-
-        if (jumlahBarang < 1){
-            printf("Masukkan jumlah barang yang Valid!\n");
         }
 
-        else{
-            for (i = 0; i < listbarang->count; i++)
+        Word namaBarang = GetItemNameFromCommand(CurrentWord);
+        if (namaBarang.Length == 0)
+        {
+            printf("Format perintah salah!\n");
+            continue;
+        }
+
+        Word jumlahBarangWord = GetLastWord(CurrentWord);
+        int jumlahBarang = WordToInt(jumlahBarangWord);
+
+        if (jumlahBarang < 1)
+        {
+            printf("Masukkan jumlah barang yang Valid!\n");
+        }
+        else
+        {
+            boolean found = false;
+            for (int i = 0; i < listbarang->count; i++)
             {
-                if (WordCompare(listbarang->items[i].name, nama))
+                if (StringCompare(listbarang->items[i].name, WordToString(namaBarang)))
                 {
+                    found = true;
                     if (IsMember(CurrentUser->keranjang, i))
                     {
                         Insert(&CurrentUser->keranjang, i, Value(CurrentUser->keranjang, i) + jumlahBarang);
@@ -75,24 +156,16 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
                     {
                         Insert(&CurrentUser->keranjang, i, jumlahBarang);
                     }
-                    printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", jumlahBarang, nama);
-                    free(nama);
+                    printf("Berhasil menambahkan %d %s ke keranjang belanja!\n", jumlahBarang, WordToString(namaBarang));
                     break;
                 }
             }
+            if (!found)
+            {
+                printf("Barang tidak ada di toko!\n");
+            }
         }
-        if (i == listbarang->count) {
-            printf("Barang tidak ada di toko!\n");
-        }
-
-        free(nama);
-        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama: \n");
-        printf(">>> ");
-        STARTINPUTWORD();
-        if (isEqual(CurrentWord, "BACK")) {
-            printf("Kembali ke menu utama.\n");
-            return;
-        }
+        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama:\n");
     }
 }
 
