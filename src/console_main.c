@@ -22,6 +22,7 @@
 #include "command/History/history.h"
 #include "command/Wishlist/wishlist.h"
 #include "command/Graph/graph.h"
+#include "command/Clear/clear.h"
 #include "ASCII/ASCII.h"
 #include "Loading/Loadingscreen.h"
 
@@ -76,7 +77,8 @@ int main()
                 displayLoadingDots(3);
                 printASCII();
                 Load("default"); 
-                IsStarted = true;   
+                IsStarted = true;  
+                clear(); 
             }
             else if (isEqual(CurrentWord, "LOAD"))
             {
@@ -91,6 +93,7 @@ int main()
                 {
                     printf("Gagal memuat konfigurasi.\n");
                 }
+                clear(); 
             }
             else if (isEqual(CurrentWord, "QUIT"))
             {
@@ -101,6 +104,8 @@ int main()
             {
                 printf("Perintah tidak dikenal: %s\n", commandStr);
             }
+            clear(); 
+
         }
         else
         {
@@ -121,7 +126,8 @@ int main()
                 if (isEqual(CurrentWord, "LOGIN"))
                 {
                     Login(&users, &CurrentUser, &user_id);
-                    loggedIn = true; 
+                    loggedIn = true;
+                    clear(); 
                 }
                 else if (isEqual(CurrentWord, "REGISTER"))
                 {
@@ -131,18 +137,23 @@ int main()
                     {
                         loggedIn = true; 
                     }
+                    clear(); 
                 }
 
                 else if (isEqual(CurrentWord, "QUIT"))
                 {
                     running = false; 
                     printf("Terima kasih telah menggunakan PURRMART!\n");
+                    clear();
                 }
 
                 else
                 {
                     printf("Perintah tidak dikenal: %s\n", commandStr);
+                    clear();
                 }
+                 
+
             }
             else if (loggedIn)
             {
@@ -180,104 +191,125 @@ int main()
                 printf(">>> ");
                 STARTINPUTWORD();
                 commandStr = WordToString(CurrentWord);
-
+                clear();
                 if (isEqual(CurrentWord, "LOGOUT"))
                 {
                     printf("Berhasil logout. Sampai jumpa, %s!\n", CurrentUser.name);
                     loggedIn = false;                // Logout
                     CurrentUser = (User){"", "", 0}; // Reset CurrentUser
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WORK"))
                 {
                     Work(&CurrentUser);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "PROFILE"))
                 {
                     Profile(&CurrentUser);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "TEBAK ANGKA"))
                 {
                     tebak_angka(&CurrentUser);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WORDL3"))
                 {
-                    // printf("DEBUG");
                     wordl3_challenge(&CurrentUser);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "STORE LIST"))
                 {
                     SList(&listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "STORE REQUEST"))
                 {
                     SRequest(&requestQueue, &listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "STORE SUPPLY"))
                 {
                     SSupply(&requestQueue, &listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "STORE REMOVE"))
                 {
                     SRemove(&listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "SAVE"))
                 {
                     printf("Masukkan nama file untuk menyimpan: ");
                     STARTINPUTWORD();                // Mengambil input dari pengguna
-
-                    Save(WordToString(CurrentWord)); // Menyimpan dengan nama file yang diinputkan
+                    Save(WordToString(CurrentWord), &listbarang, &users); // Menyimpan dengan nama file yang diinputkan
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "HELP"))
                 {
                     help_main();
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "CART ADD"))
                 {
                     CartAdd(&CurrentUser, &listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "CART REMOVE"))
                 {
                     CartRemove(&CurrentUser, &listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "CART SHOW"))
                 {
                     CartShow(&CurrentUser, &listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "CART PAY"))
                 {
                     CartPay(&CurrentUser, &listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "HISTORY"))
                 {
                     ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST ADD"))
                 {
                     wishlistAdd(&CurrentUser.wishlist, &listbarang);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST SHOW"))
                 {
                     wishlistShow(CurrentUser.wishlist);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST SWAP"))
                 {
                     wishlistSwap(&CurrentUser.wishlist);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST REMOVE"))
                 {
                     wishlistRemove(&CurrentUser.wishlist);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST CLEAR"))
                 {
                     wishlistClear(&CurrentUser.wishlist);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
                 {
                     mulaiTSP();
+                    clear();
                 }
                 else
                 {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
+                    clear();
                 }
                 users.users[user_id] = CurrentUser;
             }
