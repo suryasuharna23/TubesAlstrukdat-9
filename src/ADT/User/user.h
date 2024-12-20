@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#define MAX_LEN 50 
+#define MAX_LEN 50
 
 #include "../../Boolean/boolean.h"
 #include "../List/list.h"
@@ -9,7 +9,8 @@
 #include "../Stack/stack.h"
 #include "../LinkedList/listlinier.h"
 
-typedef struct {
+typedef struct
+{
     char name[MAX_LEN];
     char password[MAX_LEN];
     int money;
@@ -18,7 +19,8 @@ typedef struct {
     List wishlist;
 } User;
 
-typedef struct {
+typedef struct
+{
     User users[MAX_LEN];
     int count;
 } ListUser;
@@ -38,5 +40,7 @@ int CountUser(ListUser *users);
 int IndexUser(ListUser *users, char *name);
 boolean WordCompare(const char *str1, const char *str2);
 void InitCurrentUser(User *U);
+
+int searchUserIndex(ListUser users, char *username);
 
 #endif // USER_H

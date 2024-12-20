@@ -6,14 +6,12 @@
 #include "../../ADT/Mesin/mesinkarakter.h"
 #include "../../ADT/Mesin/mesinkata.h"
 
-extern ListBarang listbarang;
-extern ListUser users;
-
-void Save(char *filename)
+void Save(char *filename, ListBarang *listbarang, ListUser *users)
 {
     FILE *file;
     char filepath[256];
 
+    // Use StringCopy and StringConcat for filepath
     StringCopy(filepath, "config/");
     StringConcat(filepath, filename);
     StringConcat(filepath, ".txt");
@@ -26,42 +24,40 @@ void Save(char *filename)
     }
 
     // Save Barang Data
-    fprintf(file, "%d\n", listbarang.count);
-    for (int i = 0; i < listbarang.count; i++)
+    fprintf(file, "%d\n", users->count);
+    for (int i = 0; i < users->count; i++)
     {
-        fprintf(file, "%d %s\n", listbarang.items[i].price, listbarang.items[i].name);
-    }
+        fprintf(stdout, "%d %s %s\n", users->users[i].money, users->users[i].name, users->users[i].password);
+        fprintf(file, "%d %s %s\n", users->users[i].money, users->users[i].name, users->users[i].password);
 
-    // Save User Data
-    fprintf(file, "%d\n", users.count);
-    for (int i = 0; i < users.count; i++)
-    {
-        // Basic user info
-        fprintf(file, "%d %s %s\n", users.users[i].money, users.users[i].name, users.users[i].password);
-
-        // Purchase History
-        Stack *history = &users.users[i].riwayat_pembelian;
+        // Save Purchase History
+        Stack *history = &users->users[i].riwayat_pembelian;
         int history_count = history->top + 1;
-        fprintf(file, "%d\n", history_count);
-
-        // Save each purchase
-        for (int j = history_count - 1; j >= 0; j--)
+        if (history_count <= 0)
         {
-            Purchase purchase = history->purchases[j];
-            fprintf(file, "%d %d\n", purchase.count, purchase.totalCost);
-
-            for (int k = 0; k < purchase.count; k++)
+            fprintf(file, "0\n"); // No purchases
+        }
+        else
+        {
+            fprintf(file, "%d\n", history_count);
+            for (int j = 0; j < history_count; j++)
             {
-                int price_per_item = purchase.items[k].total / purchase.items[k].quantity;
-                fprintf(file, "%d %d %s\n",
-                        price_per_item,
-                        purchase.items[k].quantity,
-                        purchase.items[k].name);
+                Purchase purchase = history->purchases[j];
+                fprintf(file, "%d %d\n", purchase.count, purchase.totalCost);
+
+                for (int k = 0; k < purchase.count; k++)
+                {
+                    int price = purchase.items[k].total / purchase.items[k].quantity;
+                    fprintf(file, "%d %d %s\n",
+                            price,
+                            purchase.items[k].quantity,
+                            purchase.items[k].name);
+                }
             }
         }
 
         // Save Wishlist
-        List *wishlist = &users.users[i].wishlist;
+        List *wishlist = &users->users[i].wishlist;
         int wishlist_count = 0;
         address_list P = First(*wishlist);
         while (P != Nol)
@@ -71,11 +67,14 @@ void Save(char *filename)
         }
         fprintf(file, "%d\n", wishlist_count);
 
-        P = First(*wishlist);
-        while (P != Nol)
+        if (wishlist_count > 0)
         {
-            fprintf(file, "%s\n", Info(P));
-            P = Next(P);
+            P = First(*wishlist);
+            while (P != Nol)
+            {
+                fprintf(file, "%s\n", Info(P));
+                P = Next(P);
+            }
         }
     }
 

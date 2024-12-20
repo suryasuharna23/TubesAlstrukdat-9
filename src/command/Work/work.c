@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "work.h"
 
-typedef struct {
+typedef struct
+{
     char jobName[50];
     int salary;
-    int duration; 
+    int duration;
 } Job;
 
 Job jobs[] = {
@@ -12,26 +13,30 @@ Job jobs[] = {
     {"OWCA Hiring Manager", 4200, 21},
     {"Cikapundunginator Caretaker", 7000, 30},
     {"Mewing Specialist", 10000, 22},
-    {"Inator Connoisseur", 997, 15}
-};
+    {"Inator Connoisseur", 997, 15}};
 
 int jobCount = sizeof(jobs) / sizeof(jobs[0]);
 
 // cocokin nama pekerjaan
-boolean compareJobName(Word input, char *jobName) {
+boolean compareJobName(Word input, char *jobName)
+{
     int i;
     int jobNameLength = 0;
-    while (jobName[jobNameLength] != '\0') {
+    while (jobName[jobNameLength] != '\0')
+    {
         jobNameLength++;
     }
 
-    if (input.Length != jobNameLength) {
+    if (input.Length != jobNameLength)
+    {
         return false;
     }
 
-    for (i = 0; i < input.Length; i++) {
-        if (input.TabWord[i] != jobName[i]) {
-            return false; 
+    for (i = 0; i < input.Length; i++)
+    {
+        if (input.TabWord[i] != jobName[i])
+        {
+            return false;
         }
     }
     return true;
@@ -44,7 +49,8 @@ void Work(User *user) {
     printf("+----+-----------------------------+-----------+---------+\n");
     printf("| No | Job Name                    | Salary    | Duration|\n");
     printf("+----+-----------------------------+-----------+---------+\n");
-    for (int i = 0; i < jobCount; i++) {
+    for (int i = 0; i < jobCount; i++)
+    {
         printf("| %-2d | %-27s | %-9d | %-7ds |\n", i + 1, jobs[i].jobName, jobs[i].salary, jobs[i].duration);
     }
     printf("+----+-----------------------------+-----------+---------+\n");
