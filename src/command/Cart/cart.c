@@ -77,7 +77,7 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang) {
         }
 
         free(nama);
-        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama: \n");
         printf(">>> ");
         STARTINPUTWORD();
         if (isEqual(CurrentWord, "BACK")) {
@@ -140,6 +140,17 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
 void CartShow(User *CurrentUser, ListBarang *listbarang) {
     if (IsEmpty(CurrentUser->keranjang)) {
         printf("Keranjang kamu kosong!\n");
+        while (1) {
+            printf("Ketik 'BACK' untuk kembali: \n");
+            printf(">>> ");
+            STARTINPUTWORD();
+            char *response = WordToString(CurrentWord);
+            if (WordCompare(response, "BACK")) {
+                break;
+            } else {    
+                printf("Input tidak valid. \n");
+            }
+        }
         return;
     }
 

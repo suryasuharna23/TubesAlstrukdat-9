@@ -16,13 +16,14 @@ void Profile(User *CurrentUser) {
     }
 
     while (1) {
-        printf("Ketik 'BACK' untuk kembali: ");
+        printf("Ketik 'BACK' untuk kembali: \n");
+        printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
             break;
         } else {
-            printf("Input tidak valid. ");
+            printf("Input tidak valid. \n");
         }
     }
 }

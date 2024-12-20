@@ -47,7 +47,15 @@ void RegisterUser(ListUser *users, boolean *flag) {
     }
 
     // Add new user with money set to 0
-    AddUser(users, WordToString(username), WordToString(password), 0);
+    User newUser;
+    CreateUser(&newUser);
+    newUser.money = 0;
+    StringCopy(newUser.name, WordToString(username));
+    StringCopy(newUser.password, WordToString(password));
+    CreateEmpty(&newUser.keranjang);
+    CreateEmptyList(&newUser.wishlist);
+    CreateEmptyS(&newUser.riwayat_pembelian);
+    InsertUser(users, newUser);
     printf("User %s registered.\n", WordToString(username));
     *flag = true;
 }

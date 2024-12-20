@@ -42,10 +42,9 @@ boolean compareJobName(Word input, char *jobName)
     return true;
 }
 
-void Work(User *user)
-{
-    printf("User %s now has %s as password.\n", user->name, user->password);
-    printf("User %s now has %d money.\n", user->name, user->money);
+
+void Work(User *user) {
+    printf("You has %d money.\n", user->money);
     printf("Daftar pekerjaan:\n");
     printf("+----+-----------------------------+-----------+---------+\n");
     printf("| No | Job Name                    | Salary    | Duration|\n");
@@ -55,32 +54,30 @@ void Work(User *user)
         printf("| %-2d | %-27s | %-9d | %-7ds |\n", i + 1, jobs[i].jobName, jobs[i].salary, jobs[i].duration);
     }
     printf("+----+-----------------------------+-----------+---------+\n");
+    while (1) {
+        printf("Masukkan nama pekerjaan yang dipilih: \n");
+        printf(">>> ");
+        STARTINPUTWORD(); 
 
-    printf("\nMasukkan nama pekerjaan yang dipilih: \n");
-    printf(">>> ");
-    STARTINPUTWORD();
-
-    Job *selectedJob = NULL; // pointer ke pekerjaan yang dipilih
-    for (int i = 0; i < jobCount; i++)
-    {
-        if (compareJobName(CurrentWord, jobs[i].jobName))
-        {
-            selectedJob = &jobs[i];
-            break;
+        Job *selectedJob = NULL; // pointer ke pekerjaan yang dipilih
+        for (int i = 0; i < jobCount; i++) {
+            if (compareJobName(CurrentWord, jobs[i].jobName)) {
+                selectedJob = &jobs[i];
+                break;
+            }
         }
+
+        if (selectedJob == NULL) {
+            printf("Pilihan pekerjaan tidak valid!\n");
+            continue;
+        }
+
+        printf("Anda sedang bekerja sebagai %s... harap tunggu selama %d detik.\n", 
+                selectedJob->jobName, selectedJob->duration);
+        displayLoadingScreen(selectedJob->duration);
+        user->money += selectedJob->salary; 
+        printf("Pekerjaan selesai, +%d telah ditambahkan ke akun Anda.\n", selectedJob->salary);
+        printf("User %s sekarang memiliki %d.\n", user->name, user->money);
+        break;
     }
-
-    if (selectedJob == NULL)
-    {
-        printf("Pilihan pekerjaan tidak valid!\n");
-        return;
-    }
-
-    printf("\nAnda sedang bekerja sebagai %s... harap tunggu selama %d detik.\n",
-           selectedJob->jobName, selectedJob->duration);
-    displayLoadingScreen(selectedJob->duration);
-    user->money += selectedJob->salary;
-    printf("Pekerjaan selesai, +%d rupiah telah ditambahkan ke akun Anda.\n", selectedJob->salary);
-
-    printf("User %s now has %d money.\n", user->name, user->money);
 }

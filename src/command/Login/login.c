@@ -5,7 +5,7 @@
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/User/user.h"
 
-void Login(ListUser *users, User *CurrentUser) {
+void Login(ListUser *users, User *CurrentUser, int *user_id) {
     Word username;
     Word password;
     int userIdx = -1;
@@ -53,6 +53,7 @@ void Login(ListUser *users, User *CurrentUser) {
     if (userIdx != -1) {
         if (strncmp(users->users[userIdx].password, password.TabWord, password.Length) == 0 && users->users[userIdx].password[password.Length] == '\0') {
             // Salin data pengguna ke CurrentUser
+            *user_id = userIdx;
             strcpy(CurrentUser->name, users->users[userIdx].name);
             strcpy(CurrentUser->password, users->users[userIdx].password);
             CurrentUser->money = users->users[userIdx].money;

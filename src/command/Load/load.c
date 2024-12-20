@@ -35,7 +35,6 @@ boolean Load(char *filename) {
         return false;
     }
 
-    printf("File opened successfully: %s\n", filepath);
 
     // Read Barang Data
     int num_barang = 0;
@@ -44,7 +43,6 @@ boolean Load(char *filename) {
         fclose(file);
         return false;
     }
-    printf("Number of Barang: %d\n", num_barang); // Debug print
 
     listbarang.count = 0; // Initialize listbarang
     for (int i = 0; i < num_barang; i++) {
@@ -64,7 +62,6 @@ boolean Load(char *filename) {
         }
         barang.name[j] = '\0';
         listbarang.items[listbarang.count++] = barang; // Add barang to listbarang
-        printf("Barang %d: %s, %d\n", i + 1, barang.name, barang.price); // Debug print
     }
 
     // Read User Data
@@ -74,7 +71,6 @@ boolean Load(char *filename) {
         fclose(file);
         return false;
     }
-    printf("Number of Users: %d\n", num_users); // Debug print
 
     users.count = 0; // Initialize users
     for (int i = 0; i < num_users; i++) {
@@ -104,7 +100,6 @@ boolean Load(char *filename) {
 
         CreateEmptyS(&user.riwayat_pembelian);
         CreateEmptyList(&user.wishlist);
-        printf("User %d: %s, %s, %d\n", i + 1, user.name, user.password, user.money); // Debug print
 
         // Read Purchase History
         int num_history;
@@ -114,7 +109,6 @@ boolean Load(char *filename) {
             fclose(file);
             return false;
         }
-        printf("Reading %d purchase histories\n", num_history);
 
         for (int j = 0; j < num_history; j++)
         {
@@ -125,7 +119,6 @@ boolean Load(char *filename) {
                 fclose(file);
                 return false;
             }
-            printf("Purchase %d: %d items, total cost %d\n", j + 1, purchase.count, purchase.totalCost);
 
             for (int k = 0; k < purchase.count; k++)
             {
@@ -140,7 +133,6 @@ boolean Load(char *filename) {
                     return false;
                 }
                 purchase.items[k].total = price;
-                printf("  Item %d: %d %d %s\n", k + 1, price, purchase.items[k].quantity, purchase.items[k].name);
             }
             Push(&user.riwayat_pembelian, purchase);
         }
@@ -153,7 +145,6 @@ boolean Load(char *filename) {
             fclose(file);
             return false;
         }
-        printf("Reading %d wishlist items for User %d\n", num_wishlist, i + 1);
 
         CreateEmptyList(&user.wishlist);
         for (int j = 0; j < num_wishlist; j++)
@@ -166,13 +157,11 @@ boolean Load(char *filename) {
                 return false;
             }
             InsVLast(&user.wishlist, wishlist_item);
-            printf("Wishlist item %d for User %d: %s\n", j + 1, i + 1, wishlist_item);
         }
     
         InsertUser(&users,user);
     }
 
     fclose(file);
-    printf("Data successfully loaded from %s\n", filepath);
     return true;
 }
