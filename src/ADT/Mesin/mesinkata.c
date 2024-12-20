@@ -48,7 +48,6 @@ void ADVWORD() {
     }
 }
 
-
 void ADVSENTENCE(){
     IgnoreBlanks();
     if (CurrentChar == '\n'){
