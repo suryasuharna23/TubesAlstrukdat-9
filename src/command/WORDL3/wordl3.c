@@ -33,6 +33,14 @@ void wordl3_challenge(User *user){
     boolean win = false; // menentukan apakah pemain menang atau kalah
     char flag;
     int poin = 0; //score pemain
+
+    if (user->money < 500){
+        printf("Saldo kamu kurang nih!\n");
+        return;
+    }
+    else {
+        user->money -= 500; // mengurangi uang user untuk bermain
+    }
     // printf("[DEBUG] wordl3 1");
 
     // implementasi random number untuk menentukan keyword dan poin secara acak
@@ -142,7 +150,7 @@ void wordl3_challenge(User *user){
                 printf("Selamat anda menang!\n");
                 poin = score(150, try) % 1000;
                 printf("+%d rupiah telah ditambahkan ke akun Anda.\n", poin);
-                user->money += user->money + poin;
+                user->money += poin;
             }
 
             free(keyString);
@@ -169,8 +177,8 @@ void wordl3_challenge(User *user){
         printf("Kata yang benar adalah ");
         PrintCurrentWord();
     }
-
-    printf("Poin yang diperoleh: %d\n", poin);
+    printf("-------------------------------------------------\n");
+    // printf("Poin yang diperoleh: %d\n", poin);
     printf("Total uang Anda sekarang: %d\n", user->money);
 
     for (int i = 0; i < users.count; i++) {
@@ -178,6 +186,22 @@ void wordl3_challenge(User *user){
             users.users[i].money = user->money;
             break;
         }
+    }
+    printf("Apakah kamu ingin bermain lagi? (YES/BACK)\n");
+    printf(">>> ");
+    STARTINPUTWORD();
+    char *response = WordToString(CurrentWord);
+    if (WordCompare(response, "YES"))
+    {
+        wordl3_challenge(user);
+    }
+    else if (WordCompare(response, "BACK"))
+    {
+        return;
+    }
+    else
+    {
+        printf("Input tidak valid.\n");
     }
 }
 

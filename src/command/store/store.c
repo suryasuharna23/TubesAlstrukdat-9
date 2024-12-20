@@ -73,7 +73,11 @@ void SRemove(ListBarang *listbarang) {
             TakeBarang(listbarang, rem_input);
             printf("Barang %s berhasil dihapus.\n", rem_input);
             barangExist = true;
-        } else {
+        } else if (isEqual(CurrentWord, "BACK")){
+            printf("Kembali ke menu utama.\n");
+            return;
+        }
+        else {
             printf("Toko tidak menjual %s. Silakan masukkan nama barang yang valid.\n", rem_input);
         }
     }
@@ -82,15 +86,15 @@ void SRemove(ListBarang *listbarang) {
         printf("Apakah kamu ingin menghapus barang lain? (YES/BACK): \n");
         printf(">>> ");
         STARTINPUTWORD();
-        char *response = WordToString(CurrentWord);
 
-        if (CurrentWord.Length == 3 && CurrentWord.TabWord[0] == 'Y' && CurrentWord.TabWord[1] == 'E' && CurrentWord.TabWord[2] == 'S') {
+        if (isEqual(CurrentWord, "YES")) {
             barangExist = false;
             while (!barangExist) {
                 printf("Daftar barang yang ada di toko:\n");
-                for (int i = 0; i < listbarang->count; i++) {
-                    printf("%d. %s - %d\n", i + 1, listbarang->items[i].name, listbarang->items[i].price);
-                }
+                DisplayBarang(listbarang);
+                // for (int i = 0; i < listbarang->count; i++) {
+                //     printf("%d. %s - %d\n", i + 1, listbarang->items[i].name, listbarang->items[i].price);
+                // }
                 printf("Nama barang yang akan dihapus:\n");
                 printf(">>> ");
                 STARTINPUTWORD();
@@ -100,13 +104,23 @@ void SRemove(ListBarang *listbarang) {
                     TakeBarang(listbarang, rem_input);
                     printf("Barang %s berhasil dihapus.\n", rem_input);
                     barangExist = true;
-                } else {
+                }
+                else if (isEqual(CurrentWord, "BACK"))
+                {
+                    printf("Kembali ke menu utama.\n");
+                    return;
+                }
+                else {
                     printf("Toko tidak menjual %s. Silakan masukkan nama barang yang valid.\n", rem_input);
                 }
             }
-        } else if (CurrentWord.Length == 4 && CurrentWord.TabWord[0] == 'B' && CurrentWord.TabWord[1] == 'A' && CurrentWord.TabWord[2] == 'C' && CurrentWord.TabWord[3] == 'K') {
+        }
+        else if (isEqual(CurrentWord, "BACK"))
+        {
             break;
-        } else {
+        }
+        else
+        {
             printf("Perintah tidak dikenal. Silakan masukkan YES atau BACK.\n");
         }
     }

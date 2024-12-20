@@ -159,8 +159,7 @@ int main()
                 printf("| 4.  STORE LIST        - Tampilkan barang                 |\n");
                 printf("| 5.  STORE REQUEST     - Lihat request barang             |\n");
                 printf("| 6.  WORK              - Bekerja                          |\n");
-                printf("| 7.  TEBAK ANGKA       - Tebak Angka                      |\n");
-                printf("| 8.  WORDL3            - Challenge Wordl3                 |\n");
+                printf("| 7.  WORK CHALLENGE    - Challenges                       |\n");
                 printf("| 9.  CART ADD          - Tambah barang ke keranjang       |\n");
                 printf("| 10. CART REMOVE       - Hapus barang dari keranjang      |\n");
                 printf("| 11. CART SHOW         - Tampilkan barang di keranjang    |\n");
@@ -194,14 +193,20 @@ int main()
                 {
                     Profile(&CurrentUser);
                 }
-                else if (isEqual(CurrentWord, "TEBAK ANGKA"))
-                {
-                    tebak_angka(&CurrentUser);
-                }
-                else if (isEqual(CurrentWord, "WORDL3"))
-                {
-                    // printf("DEBUG");
-                    wordl3_challenge(&CurrentUser);
+                else if (isEqual(CurrentWord, "WORK CHALLENGE")){
+                    printf("Daftar challenge yang tersedia: \n");
+                    printf("1. Tebak Angka (biaya main = 200)\n");
+                    printf("2. WORDL399 (biaya main = 500)\n");
+                    printf(">>> ");
+                    STARTINPUTWORD();
+                    if (isEqual(CurrentWord, "Tebak Angka"))
+                    {
+                        tebak_angka(&CurrentUser);
+                    }
+                    else if (isEqual(CurrentWord, "WORDL399"))
+                    {
+                        wordl3_challenge(&CurrentUser);
+                    }
                 }
                 else if (isEqual(CurrentWord, "STORE LIST"))
                 {

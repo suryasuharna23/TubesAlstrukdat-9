@@ -1,9 +1,10 @@
-5
+6
 10 AK47
 20 Lalabu
 20 Ayam Goreng Crisbar
 500 Meong
 100 Domba
+5 HAPE FAIZ
 3
 100 user1 alstrukdatkeren
 5
@@ -27,6 +28,10 @@ AK47
 2
 Meong
 Domb
-19002 nanana 12345
-0
-0
+9600 sada 123
+1
+2 400
+100 10 AK47
+300 3 Domba
+1
+HAPE FAIZ
