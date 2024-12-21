@@ -43,24 +43,31 @@ Word GetItemNameFromCommand(Word command)
     Word result;
     result.Length = 0;
     int i = 0;
-    boolean found_add = false;
+    boolean found_command = false;
 
-    // Skip until after "ADD "
-    while (i < command.Length - 3)
+    // Skip until after "ADD " or "REMOVE "
+    while (i < command.Length - 6)
     {
-        if (command.TabWord[i] == 'A' &&
-            command.TabWord[i + 1] == 'D' &&
-            command.TabWord[i + 2] == 'D' &&
-            command.TabWord[i + 3] == ' ')
+        if ((command.TabWord[i] == 'A' &&
+             command.TabWord[i + 1] == 'D' &&
+             command.TabWord[i + 2] == 'D' &&
+             command.TabWord[i + 3] == ' ') ||
+            (command.TabWord[i] == 'R' &&
+             command.TabWord[i + 1] == 'E' &&
+             command.TabWord[i + 2] == 'M' &&
+             command.TabWord[i + 3] == 'O' &&
+             command.TabWord[i + 4] == 'V' &&
+             command.TabWord[i + 5] == 'E' &&
+             command.TabWord[i + 6] == ' '))
         {
-            i += 4;
-            found_add = true;
+            i += (command.TabWord[i] == 'A') ? 4 : 7;
+            found_command = true;
             break;
         }
         i++;
     }
 
-    if (!found_add)
+    if (!found_command)
         return result;
 
     // Find last space (before quantity)
@@ -117,19 +124,20 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang)
     while (true)
     {
         DisplayAvailableItems(listbarang);
-        printf("Masukkan perintah: CART ADD <nama barang> <jumlah barang>\n");
+        printf("\nMasukkan perintah: CART ADD <nama barang> <jumlah barang>\n");
         printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK"))
         {
+            printf("Kembali ke menu utama.\n");
             return;
         }
 
         Word namaBarang = GetItemNameFromCommand(CurrentWord);
         if (namaBarang.Length == 0)
         {
-            printf("Format perintah salah!\n");
+            printf("Format perintah salah! Silakan coba lagi.\n");
             continue;
         }
 
@@ -138,7 +146,7 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang)
 
         if (jumlahBarang < 1)
         {
-            printf("Masukkan jumlah barang yang Valid!\n");
+            printf("Masukkan jumlah barang yang valid!\n");
         }
         else
         {
@@ -165,7 +173,14 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang)
                 printf("Barang tidak ada di toko!\n");
             }
         }
-        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama:\n");
+        printf("\nKetik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama:\n");
+        printf(">>> ");
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "BACK"))
+        {
+            printf("Kembali ke menu utama.\n");
+            return;
+        }
     }
 }
 
@@ -173,67 +188,64 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
     while (true) {
         DisplayCartItems(CurrentUser, listbarang);
         printf("Masukkan perintah: CART REMOVE <nama barang> <jumlah barang>\n");
-        printf(">>>");
+        printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK")) {
-            printf("Kembali ke menu sebelumnya.\n");
             return;
         }
 
-        Word namaBarang = GetWord(CurrentWord, 3);
-        Word jumlahBarangWord = GetWord(CurrentWord, 4);
+        Word namaBarang = GetItemNameFromCommand(CurrentWord);
+        if (namaBarang.Length == 0) {
+            printf("Format perintah salah!\n");
+            continue;
+        }
+
+        Word jumlahBarangWord = GetLastWord(CurrentWord);
         int jumlahBarang = WordToInt(jumlahBarangWord);
 
-        char *nama = WordToString(namaBarang);
-
-        int i;
-        for (i = 0; i < CurrentUser->keranjang.Count; i++) {
-            int key = CurrentUser->keranjang.Elements[i].Key;
-            if (WordCompare(listbarang->items[key].name, nama)) {
-                if (CurrentUser->keranjang.Elements[i].Value >= jumlahBarang) {
-                    CurrentUser->keranjang.Elements[i].Value -= jumlahBarang;
-                    if (CurrentUser->keranjang.Elements[i].Value == 0) {
-                        Delete(&CurrentUser->keranjang, key);
+        if (jumlahBarang < 1) {
+            printf("Masukkan jumlah barang yang Valid!\n");
+        } else {
+            boolean found = false;
+            for (int i = 0; i < CurrentUser->keranjang.Count; i++) {
+                int key = CurrentUser->keranjang.Elements[i].Key;
+                if (StringCompare(listbarang->items[key].name, WordToString(namaBarang))) {
+                    found = true;
+                    if (CurrentUser->keranjang.Elements[i].Value >= jumlahBarang) {
+                        CurrentUser->keranjang.Elements[i].Value -= jumlahBarang;
+                        if (CurrentUser->keranjang.Elements[i].Value == 0) {
+                            Delete(&CurrentUser->keranjang, key);
+                        }
+                        printf("Berhasil mengurangi %d %s dari keranjang belanja!\n", jumlahBarang, WordToString(namaBarang));
+                    } else {
+                        printf("Tidak cukup jumlah %s di keranjang untuk mengurangi!\n", WordToString(namaBarang));
                     }
-                    printf("Berhasil mengurangi %d %s dari keranjang belanja!\n", jumlahBarang, nama);
-                } else {
-                    printf("Tidak cukup jumlah %s di keranjang untuk mengurangi!\n", nama);
+                    break;
                 }
-                break;
+            }
+            if (!found) {
+                printf("Barang tidak ada di keranjang belanja!\n");
             }
         }
-
-        if (i == CurrentUser->keranjang.Count) {
-            printf("Barang tidak ada di keranjang belanja!\n");
-        }
-
-        free(nama);
-        printf("Ketik 'REMOVE' untuk mengurangi barang lagi atau 'BACK' untuk kembali ke menu utama: ");
-        printf("\n>>> ");
-        STARTINPUTWORD();
-        if (isEqual(CurrentWord, "BACK")) {
-            printf("Kembali ke menu utama.\n");
-            return;
-        }
+        printf("Ketik 'REMOVE' untuk mengurangi barang lagi atau 'BACK' untuk kembali ke menu utama:\n");
     }
 }
 
 void CartShow(User *CurrentUser, ListBarang *listbarang) {
     if (IsEmpty(CurrentUser->keranjang)) {
         printf("Keranjang kamu kosong!\n");
-        while (1) {
-            printf("Ketik 'BACK' untuk kembali: \n");
+        while (true) {
+            printf("Ketik 'BACK' untuk kembali ke menu utama: \n");
             printf(">>> ");
             STARTINPUTWORD();
-            char *response = WordToString(CurrentWord);
-            if (WordCompare(response, "BACK")) {
-                break;
-            } else {    
-                printf("Input tidak valid. \n");
+            if (isEqual(CurrentWord, "BACK")) {
+                printf("Kembali ke menu utama.\n");
+                return;
+            } else {
+                printf("Input tidak valid. Harap ketik 'BACK'.\n");
             }
         }
-        return;
     }
 
     printf("Berikut adalah isi keranjangmu:\n");
@@ -264,7 +276,17 @@ void CartShow(User *CurrentUser, ListBarang *listbarang) {
 void CartPay(User *CurrentUser, ListBarang *listbarang) {
     if (IsEmpty(CurrentUser->keranjang)) {
         printf("Keranjang kamu kosong!\n");
-        return;
+        while (true) {
+            printf("Ketik 'BACK' untuk kembali ke menu utama: \n");
+            printf(">>> ");
+            STARTINPUTWORD();
+            if (isEqual(CurrentWord, "BACK")) {
+                printf("Kembali ke menu utama.\n");
+                return;
+            } else {
+                printf("Input tidak valid. Harap ketik 'BACK'.\n");
+            }
+        }
     }
 
     printf("Kamu akan membeli barang-barang berikut:\n");
@@ -319,35 +341,40 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
     printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): ", totalBiaya);
     printf("\n>>> ");
 
-    STARTINPUTWORD();
-    if (isEqual(CurrentWord, "Ya"))
-    {
-        if (CurrentUser->money >= totalBiaya)
-        {
-            CurrentUser->money -= totalBiaya;
-            printf("Selamat kamu telah membeli barang-barang tersebut!\n");
+    while (true) {
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "Ya")) {
+            if (CurrentUser->money >= totalBiaya) {
+                CurrentUser->money -= totalBiaya;
+                printf("Selamat kamu telah membeli barang-barang tersebut!\n");
 
-            // Store in user's history instead of global history
-            Push(&CurrentUser->riwayat_pembelian, purchase);
+                // Store in user's history instead of global history
+                Push(&CurrentUser->riwayat_pembelian, purchase);
 
-            // Clear cart
-            CreateEmpty(&CurrentUser->keranjang);
+                // Clear cart
+                CreateEmpty(&CurrentUser->keranjang);
+            } else {
+                printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", CurrentUser->money);
+            }
+            break;
+        } else if (isEqual(CurrentWord, "Tidak")) {
+            printf("Pembelian dibatalkan.\n");
+            break;
+        } else {
+            printf("Input tidak valid. Silakan masukkan 'Ya' atau 'Tidak': ");
+            printf("\n>>> ");
         }
-        else
-        {
-            printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", CurrentUser->money);
-        }
-    }
-    else
-    {
-        printf("Pembelian dibatalkan.\n");
     }
 
     printf("Ketik 'BACK' untuk kembali ke menu utama: ");
     printf("\n>>> ");
-    STARTINPUTWORD();
-    if (isEqual(CurrentWord, "BACK")) {
-        printf("Kembali ke menu utama.\n");
+    while (true) {
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "BACK")) {
+            printf("Kembali ke menu utama.\n");
+            return;
+        } else {
+            printf("Input tidak valid. Harap ketik 'BACK'.\n");
+        }
     }
-    
 }

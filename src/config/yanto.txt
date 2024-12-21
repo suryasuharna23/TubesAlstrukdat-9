@@ -1,10 +1,11 @@
-6
+7
 10 AK47
 20 Lalabu
 20 Ayam Goreng Crisbar
 500 Meong
 100 Domba
 5 HAPE FAIZ
+20 Iphone 15
 3
 100 user1 alstrukdatkeren
 5
@@ -28,10 +29,13 @@ AK47
 2
 Meong
 Domb
-9600 sada 123
-1
+9520 sada 123
+2
 2 400
 100 10 AK47
 300 3 Domba
+2 80
+60 3 Iphone 15
+20 1 Ayam Goreng Crisbar
 1
 HAPE FAIZ
