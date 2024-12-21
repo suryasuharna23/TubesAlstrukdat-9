@@ -110,6 +110,8 @@ int main()
         {
             if (!loggedIn)
             {
+                printf("\nSelamat karena kamu sudah berhasil memulai sesi game.\n");
+                printf("Sekarang silakan untuk memasuki game menggunakan suatu akun pengguna :)\n");
                 printf("\n+----------------------------------------+\n");
                 printf("|         MENU LOGIN / REGISTER          |\n");
                 printf("+----------------------------------------+\n");
@@ -161,7 +163,10 @@ int main()
                     loggedIn = false;
                     continue;
                 }
-                printf("\n+----------------------------------------------------------+\n");
+                printf("Selamat datang di PURRMART, pusat lengkap untuk semua kebutuhan Anda!\n");
+                printf("Bayangkan sebuah tempat di mana apa pun yang Anda cari ada dalam satu genggaman—praktis, cepat, dan terpercaya.\n");
+                printf("Jelajahi koleksi terbaik kami dan temukan produk yang dirancang untuk memenuhi kebutuhan Anda.");
+                    printf("\n+----------------------------------------------------------+\n");
                 printf("|                  MENU UTAMA PURRMART                     |\n");
                 printf("+----------------------------------------------------------+\n");
                 printf("| 1.  PROFILE           - Tampilkan profile                |\n");
@@ -181,9 +186,10 @@ int main()
                 printf("| 16. WISHLIST SWAP     - Menukar posisi barang wishlist   |\n");
                 printf("| 17. WISHLIST CLEAR    - Bersihkan wishlist               |\n");
                 printf("| 18. WISHLIST SHOW     - Tampilkan wishlist               |\n");
-                printf("| 19. HELP              - Tampilkan bantuan                |\n");
-                printf("| 20. SAVE              - Simpan konfigurasi               |\n");
-                printf("| 21. LOGOUT            - Keluar dari sesi pengguna        |\n");
+                printf("| 19. OPTIMASIRUTE      - Analisis rute paling optimal     |\n");
+                printf("| 20. HELP              - Tampilkan bantuan                |\n");
+                printf("| 21. SAVE              - Simpan konfigurasi               |\n");
+                printf("| 22. LOGOUT            - Keluar dari sesi pengguna        |\n");
                 printf("+----------------------------------------------------------+\n");
 
                 printf(">>> ");
