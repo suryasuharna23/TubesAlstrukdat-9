@@ -108,8 +108,18 @@ void wishlistSwap(List *L) {
 void wishlistRemove(List *L) {
     while (true) {
         if (IsEmptyList(*L)) {
-            PrintWishlist(*L);
-            return;
+            printf("Wishlist kosong.\n");
+            while (true) {
+                printf("Ketik 'BACK' untuk kembali ke menu utama: \n");
+                printf(">>> ");
+                STARTINPUTWORD();
+                if (isEqual(CurrentWord, "BACK")) {
+                    printf("Kembali ke menu utama.\n");
+                    return;
+                } else {
+                    printf("Input tidak valid. Harap ketik 'BACK'.\n");
+                }
+            }
         } else {
             PrintWishlist(*L);
 

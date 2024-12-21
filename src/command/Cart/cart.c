@@ -235,18 +235,17 @@ void CartRemove(User *CurrentUser, ListBarang *listbarang) {
 void CartShow(User *CurrentUser, ListBarang *listbarang) {
     if (IsEmpty(CurrentUser->keranjang)) {
         printf("Keranjang kamu kosong!\n");
-        while (1) {
-            printf("Ketik 'BACK' untuk kembali: \n");
+        while (true) {
+            printf("Ketik 'BACK' untuk kembali ke menu utama: \n");
             printf(">>> ");
             STARTINPUTWORD();
-            char *response = WordToString(CurrentWord);
-            if (WordCompare(response, "BACK")) {
-                break;
-            } else {    
-                printf("Input tidak valid. \n");
+            if (isEqual(CurrentWord, "BACK")) {
+                printf("Kembali ke menu utama.\n");
+                return;
+            } else {
+                printf("Input tidak valid. Harap ketik 'BACK'.\n");
             }
         }
-        return;
     }
 
     printf("Berikut adalah isi keranjangmu:\n");
@@ -277,7 +276,17 @@ void CartShow(User *CurrentUser, ListBarang *listbarang) {
 void CartPay(User *CurrentUser, ListBarang *listbarang) {
     if (IsEmpty(CurrentUser->keranjang)) {
         printf("Keranjang kamu kosong!\n");
-        return;
+        while (true) {
+            printf("Ketik 'BACK' untuk kembali ke menu utama: \n");
+            printf(">>> ");
+            STARTINPUTWORD();
+            if (isEqual(CurrentWord, "BACK")) {
+                printf("Kembali ke menu utama.\n");
+                return;
+            } else {
+                printf("Input tidak valid. Harap ketik 'BACK'.\n");
+            }
+        }
     }
 
     printf("Kamu akan membeli barang-barang berikut:\n");
@@ -335,8 +344,13 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
 
     printf("Ketik 'BACK' untuk kembali ke menu utama: ");
     printf("\n>>> ");
-    STARTINPUTWORD();
-    if (isEqual(CurrentWord, "BACK")) {
-        printf("Kembali ke menu utama.\n");
+    while (true) {
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "BACK")) {
+            printf("Kembali ke menu utama.\n");
+            return;
+        } else {
+            printf("Input tidak valid. Harap ketik 'BACK'.\n");
+        }
     }
 }
