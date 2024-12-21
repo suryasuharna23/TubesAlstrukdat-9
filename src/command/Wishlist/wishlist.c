@@ -113,8 +113,8 @@ void wishlistRemove(List *L) {
         } else {
             PrintWishlist(*L);
 
-            printf("Pilih metode penghapusan (nomor/nama barang) (atau ketik 'BACK' untuk kembali): ");
-            printf("\n>>> ");
+            printf("Masukkan perintah: WISHLIST REMOVE <nomor>\n");
+            printf(">>> ");
             STARTINPUTWORD();
 
             if (isEqual(CurrentWord, "BACK")) {
@@ -122,65 +122,22 @@ void wishlistRemove(List *L) {
                 return;
             }
 
-            if (isEqual(CurrentWord, "nomor")) {
-                printf("Masukkan nomor barang yang akan dihapus (atau ketik 'BACK' untuk kembali): \n");
-                printf(">>> ");
-                STARTINPUTWORD();
-                if (isEqual(CurrentWord, "BACK")) {
-                    printf("Kembali ke menu sebelumnya.\n");
-                    return;
-                }
-                char *idx = WordToString(CurrentWord);
-                
-                // cek input valid
-                int nomor = 0;
-                int isValidNumber = 1;
-                for (int i = 0; idx[i] != '\0'; i++) {
-                    if (idx[i] < '0' || idx[i] > '9') {
-                        isValidNumber = 0;
-                        break;
-                    }
-                    nomor = nomor * 10 + (idx[i] - '0');
-                }
+            Word nomorWord = GetWord(CurrentWord, 3);
+            int nomor = WordToInt(nomorWord);
 
-                if (!isValidNumber) {
-                    printf("Input tidak valid! Harap masukkan angka.\n");
-                    return;
+            if (nomor < 1 || nomor > NbElmt(*L)) {
+                printf("Nomor tidak valid!\n");
+            } else {
+                address_list P = First(*L);
+                for (int i = 1; i < nomor; i++) {
+                    P = Next(P);
                 }
-
-                if (IsEmptyList(*L)) {
-                    printf("Penghapusan barang WISHLIST gagal dilakukan, WISHLIST kosong!\n");
-                } else {
-                    if (nomor > 0 && nomor <= NbElmt(*L)) {
-                        address_list P = First(*L);
-                        for (int i = 1; i < nomor; i++) {
-                            P = Next(P);
-                        }
-                        DelP(L, Info(P));
-                        printf("Berhasil menghapus barang posisi ke-%s dari wishlist!\n", idx);
-                    } else if (nomor > NbElmt(*L)) {
-                        printf("Penghapusan barang WISHLIST gagal dilakukan, tidak ada Barang di posisi ke-%s!\n", idx);
-                    }
-                }  
-            } else if (isEqual(CurrentWord, "nama barang")) {
-                printf("Masukkan nama barang yang akan dihapus (atau ketik 'BACK' untuk kembali): ");
-                STARTINPUTWORD();
-                if (isEqual(CurrentWord, "BACK")) {
-                    printf("Kembali ke menu sebelumnya.\n");
-                    return;
-                }
-                char *barang = WordToString(CurrentWord);
-                
-                address_list found = Search(*L, barang);
-                if (found == Nol) {
-                    printf("Penghapusan barang WISHLIST gagal dilakukan, %s tidak ada di WISHLIST!\n", barang);
-                } else {
-                    DelP(L, barang);
-                    printf("%s berhasil dihapus dari WISHLIST!\n", barang);
-                } 
+                DelP(L, Info(P));
+                printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n", nomor);
             }
 
             printf("Ketik 'REMOVE' untuk menghapus barang lagi atau 'BACK' untuk kembali ke menu utama: ");
+            printf("\n>>> ");
             STARTINPUTWORD();
             if (isEqual(CurrentWord, "BACK")) {
                 printf("Kembali ke menu utama.\n");

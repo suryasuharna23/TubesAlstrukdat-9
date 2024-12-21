@@ -124,19 +124,20 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang)
     while (true)
     {
         DisplayAvailableItems(listbarang);
-        printf("Masukkan perintah: CART ADD <nama barang> <jumlah barang>\n");
+        printf("\nMasukkan perintah: CART ADD <nama barang> <jumlah barang>\n");
         printf(">>> ");
         STARTINPUTWORD();
 
         if (isEqual(CurrentWord, "BACK"))
         {
+            printf("Kembali ke menu utama.\n");
             return;
         }
 
         Word namaBarang = GetItemNameFromCommand(CurrentWord);
         if (namaBarang.Length == 0)
         {
-            printf("Format perintah salah!\n");
+            printf("Format perintah salah! Silakan coba lagi.\n");
             continue;
         }
 
@@ -145,7 +146,7 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang)
 
         if (jumlahBarang < 1)
         {
-            printf("Masukkan jumlah barang yang Valid!\n");
+            printf("Masukkan jumlah barang yang valid!\n");
         }
         else
         {
@@ -172,7 +173,14 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang)
                 printf("Barang tidak ada di toko!\n");
             }
         }
-        printf("Ketik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama:\n");
+        printf("\nKetik 'ADD' untuk menambahkan barang lagi atau 'BACK' untuk kembali ke menu utama:\n");
+        printf(">>> ");
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "BACK"))
+        {
+            printf("Kembali ke menu utama.\n");
+            return;
+        }
     }
 }
 
