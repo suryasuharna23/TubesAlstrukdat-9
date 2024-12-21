@@ -1,10 +1,11 @@
-6
+7
 10 AK47
 20 Lalabu
 20 Ayam Goreng Crisbar
 500 Meong
 100 Domba
 5 HAPE FAIZ
+20 Iphone 15
 3
 100 user1 alstrukdatkeren
 5
