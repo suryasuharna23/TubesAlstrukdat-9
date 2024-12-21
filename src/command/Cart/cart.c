@@ -290,6 +290,30 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
         purchase.items[purchase.count++] = item;
     }
 
+    // Sort items in the purchase based on total (descending) and name (lexical descending)
+    for (int i = 0; i < purchase.count - 1; i++) {
+        for (int j = i + 1; j < purchase.count; j++) {
+            // First criteria: total descending
+            if (purchase.items[i].total < purchase.items[j].total ||
+                // Second criteria: name descending when totals are equal
+                (purchase.items[i].total == purchase.items[j].total)) {
+                // Compare names manually
+                const char *name1 = purchase.items[i].name;
+                const char *name2 = purchase.items[j].name;
+                while (*name1 && (*name1 == *name2)) {
+                    name1++;
+                    name2++;
+                }
+                if (*name1 < *name2) {
+                    // Swap items[i] and items[j]
+                    PurchaseItem temp = purchase.items[i];
+                    purchase.items[i] = purchase.items[j];
+                    purchase.items[j] = temp;
+                }
+            }
+        }
+    }
+
     purchase.totalCost = totalBiaya;
     printf("+------------+----------------+------------+------------+\n");
     printf("Total biaya yang harus dikeluarkan adalah %d, apakah jadi dibeli? (Ya/Tidak): ", totalBiaya);
