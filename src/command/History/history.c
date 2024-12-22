@@ -38,20 +38,19 @@ void ShowPurchaseHistory(Stack *history)
         }
 
         printf("Riwayat Pembelian:\n");
-        // Menampilkan riwayat sebanyak 'count' yang diminta
-        for (int i = history->top; i >= 0 && count > 0; i--, count--) {
+        for (int i = 0; i <= history->top && count > 0; i++, count--) {
             Purchase purchase = history->purchases[i];
             if (purchase.count > 0) {
                 printf("\nTransaksi %d - %d item(s), Total: %d\n",
-                       history->top - i + 1, purchase.count, purchase.totalCost);
+                    i + 1, purchase.count, purchase.totalCost);  // Ganti history->top - i + 1 dengan i + 1
                 printf("+---------+---------+-----------------------------+\n");
                 printf("|  Harga  | Jumlah  | Nama Barang                 |\n");
                 printf("+---------+---------+-----------------------------+\n");
                 for (int j = 0; j < purchase.count; j++) {
                     printf("| %7d | %7d | %-27s |\n",
-                           purchase.items[j].total / purchase.items[j].quantity,
-                           purchase.items[j].quantity,
-                           purchase.items[j].name);
+                        purchase.items[j].total / purchase.items[j].quantity,
+                        purchase.items[j].quantity,
+                        purchase.items[j].name);
                 }
                 printf("+---------+---------+-----------------------------+\n");
             }
