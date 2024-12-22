@@ -10,11 +10,13 @@ DISIAPKAN OLEH:
 - ASISTEN TUGAS BESAR: Vincent Franstyo
 
 PURRMART adalah aplikasi simulasi e-commerce berbasis Command-Line Interface (CLI) yang dirancang untuk membantu OWCA dalam memenuhi kebutuhan mereka selama masa kritis. Aplikasi ini memungkinkan pengguna untuk:
-- Menampilkan dan mengelola daftar barang toko.
-- Mendaftarkan dan mengelola akun pengguna.
-- Menyimpan dan membeli barang ke dalam keranjang.
-- Melakukan pekerjaan untuk mendapatkan uang.
-- Menyelesaikan challenge seru untuk mendapatkan keuntungan tambahan.
+- Menampilkan barang toko
+- Meminta dan menyuplai barang baru ke toko
+- Menyimpan dan membeli barang dalam keranjang
+- Menampilkan barang yang sudah dibeli
+- Membuat dan menghapus wishlist
+- Bekerja untuk menghasilkan uang
+
 
 Aplikasi ini dibuat menggunakan bahasa C dengan berbagai ADT (Abstract Data Type) untuk merepresentasikan data seperti barang, pengguna, antrian, dan lain-lain.
 
