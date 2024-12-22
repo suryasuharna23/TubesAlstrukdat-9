@@ -28,9 +28,7 @@ CFLAGS = -I. \
          -ILoading \
          -Icommand/Random_Number \
          -Icommand/Graph \
-         -Icommand/Clear \
-         -IBoolean \
-         -Iconfig
+         -Icommand/Clear
 
 # Source directories
 SRC_DIR = .\src
@@ -38,8 +36,6 @@ ADT_DIR = $(SRC_DIR)\ADT
 COMMAND_DIR = $(SRC_DIR)\command
 ASCII_DIR = $(SRC_DIR)\ASCII
 LOADING_DIR = $(SRC_DIR)\Loading
-BOOLEAN_DIR = $(SRC_DIR)\Boolean
-CONFIG_DIR = $(SRC_DIR)\config
 
 # Source files
 SRC_FILES = $(SRC_DIR)\console_main.c \
@@ -74,24 +70,15 @@ SRC_FILES = $(SRC_DIR)\console_main.c \
 # Object files
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
-# Data files to include
-DATA_FILES = $(CONFIG_DIR)\default.txt $(CONFIG_DIR)\floppydiskdrive.txt
-
 # Output executable
 OUTPUT = runPURRMART
 
 # Default target
-all: $(OUTPUT) copy-data
+all: $(OUTPUT) 
 
 # Rule to build the executable
 $(OUTPUT): $(OBJ_FILES)
 	$(CC) $(OBJ_FILES) -o $(OUTPUT) $(CFLAGS)
-
-# Rule to copy data files
-copy-data:
-	@echo "Copying data files..."
-	copy $(CONFIG_DIR)\default.txt .
-	copy $(CONFIG_DIR)\floppydiskdrive.txt .
 
 # Rule to build object files
 $(SRC_DIR)\%.o: $(SRC_DIR)\%.c
@@ -101,8 +88,6 @@ $(SRC_DIR)\%.o: $(SRC_DIR)\%.c
 clean:
 	del /Q $(OUTPUT)
 	del /Q $(OBJ_FILES)
-	del /Q default.txt
-	del /Q floppydiskdrive.txt
 
 # Phony targets
 .PHONY: all clean copy-data
