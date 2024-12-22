@@ -157,8 +157,10 @@ void CartAdd(User *CurrentUser, ListBarang *listbarang)
                 {
                     found = true;
                     if (IsMember(CurrentUser->keranjang, i))
-                    {
-                        Insert(&CurrentUser->keranjang, i, Value(CurrentUser->keranjang, i) + jumlahBarang);
+                    {                   
+                        int addedValue = Value(CurrentUser->keranjang, i) + jumlahBarang;
+                        Delete(&CurrentUser->keranjang, i);
+                        Insert(&CurrentUser->keranjang, i, addedValue);
                     }
                     else
                     {

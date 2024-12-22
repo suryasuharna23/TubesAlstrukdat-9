@@ -9,5 +9,6 @@ void wishlistSwap(List *L);
 void wishlistRemove(List *L);
 void wishlistClear(List *L);
 void wishlistShow(List L);
+Word GetItemNameFromCommandV2(Word command);
 
 #endif

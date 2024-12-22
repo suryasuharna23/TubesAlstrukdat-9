@@ -123,27 +123,60 @@ void wishlistRemove(List *L) {
         } else {
             PrintWishlist(*L);
 
-            printf("Masukkan perintah: WISHLIST REMOVE <nomor>\n");
+            printf("Pilih metode penghapusan (nomor/nama barang) atau ketik BACK untuk kembali:\n");
             printf(">>> ");
             STARTINPUTWORD();
 
             if (isEqual(CurrentWord, "BACK")) {
-                printf("Kembali ke menu sebelumnya.\n");
-                return;
-            }
-
-            Word nomorWord = GetWord(CurrentWord, 3);
-            int nomor = WordToInt(nomorWord);
-
-            if (nomor < 1 || nomor > NbElmt(*L)) {
-                printf("Nomor tidak valid!\n");
-            } else {
-                address_list P = First(*L);
-                for (int i = 1; i < nomor; i++) {
-                    P = Next(P);
+                    printf("Kembali ke menu sebelumnya.\n");
+                    return;
                 }
-                DelP(L, Info(P));
-                printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n", nomor);
+            else if (isEqual(CurrentWord, "nomor")) {
+                printf("Masukkan perintah: WISHLIST REMOVE <nomor>\n");
+                printf(">>> ");
+                STARTINPUTWORD();
+
+                if (isEqual(CurrentWord, "BACK")) {
+                    printf("Kembali ke menu sebelumnya.\n");
+                    return;
+                }
+
+                Word nomorWord = GetWord(CurrentWord, 3);
+                int nomor = WordToInt(nomorWord);
+
+                if (nomor < 1 || nomor > NbElmt(*L)) {
+                    printf("Nomor tidak valid!\n");
+                } else {
+                    address_list P = First(*L);
+                    for (int i = 1; i < nomor; i++) {
+                        P = Next(P);
+                    }
+                    DelP(L, Info(P));
+                    printf("Berhasil menghapus barang posisi ke-%d dari wishlist!\n", nomor);
+                }
+            } 
+            else if (isEqual(CurrentWord, "nama barang")) {
+                printf("Masukkan perintah: WISHLIST REMOVE <nama barang>\n");
+                printf(">>> ");
+                STARTINPUTWORD();
+
+                if (isEqual(CurrentWord, "BACK")) {
+                    printf("Kembali ke menu sebelumnya.\n");
+                    return;
+                }
+
+                Word namaBarang = GetItemNameFromCommandV2(CurrentWord);
+                char *barang = WordToString(namaBarang);
+                address_list found = Search(*L, barang);
+                if (found == Nol) {
+                    printf("Barang %s tidak ada di wishlist!\n", barang);
+                } else {
+                    DelP(L, barang);
+                    printf("Berhasil menghapus %s dari wishlist!\n", barang);
+                }
+            } 
+            else {
+                printf("Input tidak valid. Harap masukkan nomor atau nama.\n");
             }
 
             printf("Ketik 'REMOVE' untuk menghapus barang lagi atau 'BACK' untuk kembali ke menu utama: ");
@@ -207,4 +240,47 @@ void wishlistShow(List L) {
             printf("Input tidak valid. \n");
         }
     }
+}
+
+Word GetItemNameFromCommandV2(Word command)
+{
+    Word result;
+    result.Length = 0;
+    int i = 0;
+    boolean found_command = false;
+
+    // Skip until after "ADD " or "REMOVE "
+    while (i < command.Length - 6)
+    {
+        if ((command.TabWord[i] == 'A' &&
+             command.TabWord[i + 1] == 'D' &&
+             command.TabWord[i + 2] == 'D' &&
+             command.TabWord[i + 3] == ' ') ||
+            (command.TabWord[i] == 'R' &&
+             command.TabWord[i + 1] == 'E' &&
+             command.TabWord[i + 2] == 'M' &&
+             command.TabWord[i + 3] == 'O' &&
+             command.TabWord[i + 4] == 'V' &&
+             command.TabWord[i + 5] == 'E' &&
+             command.TabWord[i + 6] == ' '))
+        {
+            i += (command.TabWord[i] == 'A') ? 4 : 7;
+            found_command = true;
+            break;
+        }
+        i++;
+    }
+
+    if (!found_command)
+        return result;
+
+    // Copy item name (including spaces and numbers)
+    while (i < command.Length)
+    {
+        result.TabWord[result.Length] = command.TabWord[i];
+        result.Length++;
+        i++;
+    }
+
+    return result;
 }
