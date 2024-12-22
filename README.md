@@ -34,8 +34,21 @@ FITUR UTAMA:
    - Menyelesaikan challenge seperti:
       - Tebak Angka.
       - W0RDL3.
-
-4. Penyimpanan dan Pemulihan Data
+        
+4. Sistem Keranjang
+   - Melihat daftar barang di keranjang.
+   - Menambahkan barang ke keranjang.
+   - Menghapus barang dari keranjang.
+   - Membeli barang di keranjang.
+     
+5. Sistem Wishlist
+   - Melihat daftar barang di wishlist.
+   - Menambahkan barang ke wishlist.
+   - Menghapus barang dari wishlist berdasarkan posisi barang atau nama barang.
+   - Mengosongkan wishlist.
+   - Menukar posisi barang di wishlist.
+     
+6.  Penyimpanan dan Pemulihan Data
    - Menyimpan state aplikasi ke file konfigurasi.
    - Memuat state aplikasi dari file konfigurasi.
 
@@ -51,16 +64,30 @@ CARA MENJALANKAN:
 
 COMMAND DESKRIPSI:
 - START	          - Memulai sesi baru dengan membaca file konfigurasi default.
-- LOAD <filename>	  - Memuat state aplikasi dari file konfigurasi yang disimpan.
+- LOAD <filename>	 - Memuat state aplikasi dari file konfigurasi yang disimpan.
 - LOGIN	          - Masuk ke dalam sistem menggunakan akun terdaftar.
-- REGISTER	      - Mendaftarkan akun baru ke dalam sistem.
+- REGISTER	       - Mendaftarkan akun baru ke dalam sistem.
+- PROFILE          - Menampilkan profil dari pengguna.
 - WORK	          - Melakukan pekerjaan untuk mendapatkan uang.
-- WORK CHALLENGE	  - Menyelesaikan challenge seperti Tebak Angka dan W0RDL3.
-- STORE LIST	      - Melihat daftar barang yang tersedia di toko.
-- STORE REQUEST	  - Meminta penambahan barang baru ke toko melalui antrian permintaan.
-- STORE SUPPLY	  - Menambahkan barang dari antrian permintaan ke toko.
-- STORE REMOVE	  - Menghapus barang dari toko.
-- SAVE <filename>	  - Menyimpan state aplikasi ke file konfigurasi.
+- WORK CHALLENGE	 - Menyelesaikan challenge seperti Tebak Angka dan W0RDL3.
+- STORE LIST	    - Melihat daftar barang yang tersedia di toko.
+- STORE REQUEST	 - Meminta penambahan barang baru ke toko melalui antrian permintaan.
+- STORE SUPPLY	    - Menambahkan barang dari antrian permintaan ke toko.
+- STORE REMOVE	    - Menghapus barang dari toko.
+- CART ADD         - Menambahkan barang ke keranjang.
+- CART REMOVE      - Menghapus barang dari keranjang.
+- CART SHOW        - Menampilkan barang di keranjang.
+- CART PAY         - Membeli barang di keranjang.
+- HISTORY          - Menampilkan riwayat pembelian.
+- WISHLIST ADD     - Menambahkan barang ke wishlist.
+- WISHLIST REMOVE  - Menghapus barang dari wishlist.
+- WISHLIST SWAP    - Menukar posisi barang di wishlist.
+- WISHLIST CLEAR   - Mengosongkan wishlist.
+- WISHLIST SHOW    - Menampilkan daftar wishlist.
+- OPTIMASIRUTE     - Menghasilkan rute paling efektif untuk pengiriman barang.
+- SAVE <filename>	 - Menyimpan state aplikasi ke file konfigurasi.
+- HELP             - Menampilkan bantuan.
+- LOGOUT           - Keluar dari sesi pengguna.
 - QUIT	          - Keluar dari aplikasi.
 
 LISENSI:
