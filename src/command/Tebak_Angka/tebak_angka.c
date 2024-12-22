@@ -101,6 +101,7 @@ void tebak_angka(User *user) {
     if (WordCompare(response, "YES")) {
         tebak_angka(user);
     } else if (WordCompare(response, "BACK")) {
+        printf("Kembali ke menu utama.\n");
         return;
     } else {
         printf("Input tidak valid.\n");
