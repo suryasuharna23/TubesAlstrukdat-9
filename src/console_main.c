@@ -23,7 +23,7 @@
 #include "command/Wishlist/wishlist.h"
 #include "command/Graph/graph.h"
 #include "command/Clear/clear.h"
-#include "ASCII/ASCII.h"
+#include "ASCII/ascii.h"
 #include "Loading/Loadingscreen.h"
 
 ListUser users;
@@ -49,16 +49,13 @@ int main()
     CreateEmptyS(&purchaseHistory);
     CreateEmptyList(&wishlist);
 
-    printf("****************************************\n");
-    printf("*      Selamat Datang di PURRMART      *\n");
-    printf("****************************************\n");
-
+    clear();
     char *commandStr;
-
     while (running)
     {
         if (!IsStarted)
         {
+            ascii_welcome();
             printf("\n+----------------------------------------+\n");
             printf("|           MENU AWAL PURRMART           |\n");
             printf("+----------------------------------------+\n");
@@ -74,7 +71,6 @@ int main()
             if (isEqual(CurrentWord, "START"))
             {
                 displayLoadingDots(3);
-                printASCII();
                 Load("default"); 
                 IsStarted = true;  
                 clear(); 
@@ -108,8 +104,10 @@ int main()
         }
         else
         {
+            
             if (!loggedIn)
             {
+                ascii_sesi();
                 printf("\nSelamat karena kamu sudah berhasil memulai sesi game.\n");
                 printf("Sekarang silakan untuk memasuki game menggunakan suatu akun pengguna :)\n");
                 printf("\n+----------------------------------------+\n");
@@ -163,8 +161,9 @@ int main()
                     loggedIn = false;
                     continue;
                 }
-                printf("Selamat datang di PURRMART, pusat lengkap untuk semua kebutuhan Anda!\n");
-                printf("Bayangkan sebuah tempat di mana apa pun yang Anda cari ada dalam satu genggaman—praktis, cepat, dan terpercaya.\n");
+                ascii_mainmenu();
+                printf("\nSelamat datang di PURRMART, pusat lengkap untuk semua kebutuhan Anda!\n");
+                printf("Bayangkan sebuah tempat di mana apa pun yang Anda cari ada dalam satu genggaman, cepat, dan terpercaya.\n");
                 printf("Jelajahi koleksi terbaik kami dan temukan produk yang dirancang untuk memenuhi kebutuhan Anda.");
                     printf("\n+----------------------------------------------------------+\n");
                 printf("|                  MENU UTAMA PURRMART                     |\n");
@@ -205,15 +204,18 @@ int main()
                 }
                 else if (isEqual(CurrentWord, "WORK"))
                 {
+                    ascii_work();
                     Work(&CurrentUser);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "PROFILE"))
                 {
+                    ascii_profile();
                     Profile(&CurrentUser);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "WORK CHALLENGE")){
+                    ascii_work_challenge();
                     printf("Daftar challenge yang tersedia: \n");
                     printf("1. Tebak Angka (biaya main = 200)\n");
                     printf("2. WORDL399 (biaya main = 500)\n");
@@ -221,35 +223,46 @@ int main()
                     STARTINPUTWORD();
                     if (isEqual(CurrentWord, "Tebak Angka"))
                     {
+                        clear();
+                        ascii_tebak_angka();
                         tebak_angka(&CurrentUser);
+                        clear();
                     }
                     else if (isEqual(CurrentWord, "WORDL399"))
                     {
+                        clear();
+                        ascii_wordl3();
                         wordl3_challenge(&CurrentUser);
+                        clear();
                     }
                 }
                 else if (isEqual(CurrentWord, "STORE LIST"))
                 {
+                    ascii_slist();
                     SList(&listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "STORE REQUEST"))
                 {
+                    ascii_srequest();
                     SRequest(&requestQueue, &listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "STORE SUPPLY"))
                 {
+                    ascii_ssupply();
                     SSupply(&requestQueue, &listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "STORE REMOVE"))
                 {
+                    ascii_sremove();
                     SRemove(&listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "SAVE"))
                 {
+                    ascii_save();
                     printf("Masukkan nama file untuk menyimpan: ");
                     STARTINPUTWORD();                // Mengambil input dari pengguna
                     Save(WordToString(CurrentWord), &listbarang, &users); // Menyimpan dengan nama file yang diinputkan
@@ -257,67 +270,89 @@ int main()
                 }
                 else if (isEqual(CurrentWord, "HELP"))
                 {
+                    ascii_help();
                     help_main();
                     clear();
                 }
                 else if (isEqual(CurrentWord, "CART ADD"))
                 {
+                    ascii_cart_add();
                     CartAdd(&CurrentUser, &listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "CART REMOVE"))
                 {
+                    ascii_cart_remove();
                     CartRemove(&CurrentUser, &listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "CART SHOW"))
                 {
+                    ascii_cart_show();
                     CartShow(&CurrentUser, &listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "CART PAY"))
                 {
+                    ascii_cart_pay();
                     CartPay(&CurrentUser, &listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "HISTORY"))
                 {
+                    ascii_history();
                     ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST ADD"))
                 {
+                    ascii_wishlist_add();
                     wishlistAdd(&CurrentUser.wishlist, &listbarang);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST SHOW"))
                 {
+                    ascii_wishlist_show();
                     wishlistShow(CurrentUser.wishlist);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST SWAP"))
                 {
+                    ascii_wishlist_swap();
                     wishlistSwap(&CurrentUser.wishlist);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST REMOVE"))
                 {
+                    ascii_wishlist_remove();
                     wishlistRemove(&CurrentUser.wishlist);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST CLEAR"))
                 {
+                    ascii_wishlist_clear();
                     wishlistClear(&CurrentUser.wishlist);
                     clear();
                 }
                 else if (isEqual(CurrentWord, "OPTIMASIRUTE"))
                 {
+                    ascii_optimasirute();
                     mulaiTSP();
                     clear();
                 }
                 else
                 {
                     printf("Perintah tidak dikenal. Silakan coba lagi.\n");
+                    while(1){
+                        printf("Ketik 'OK' untuk kembali ke menu utama: ");
+                        printf("\n>>> ");
+                        STARTINPUTWORD();
+                        if (isEqual(CurrentWord, "OK")){
+                            break;
+                        } else {
+                            printf("Input tidak valid.\n");
+                        }
+                    }
                     clear();
                 }
                 users.users[user_id] = CurrentUser;

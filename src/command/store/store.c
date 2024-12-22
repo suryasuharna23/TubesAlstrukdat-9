@@ -127,44 +127,51 @@ void SRemove(ListBarang *listbarang) {
 }
 
 void SRequest(Queue *req, ListBarang *listbarang) {
-    printf("Nama barang yang diminta: \n");
-    printf(">>> ");
-    STARTINPUTWORD();
-    char *req_input = WordToString(CurrentWord);
+    while (1) {
+        printf("Nama barang yang diminta: \n");
+        printf(">>> ");
+        STARTINPUTWORD();
+        char *req_input = WordToString(CurrentWord);
 
-    if (IsBarangExist(listbarang, req_input)) {
-        printf("Barang dengan nama yang sama sudah ada di toko!\n");
-        return;
-    }
-
-    int i = req->idxHead;
-    while (i != ((req->idxTail + 1) % CAPACITY)) {
-        if (StringCompare(req_input, req->buffer[i].name)) {
-            printf("Barang dengan nama yang sama sudah ada di antrian!\n");
-            return;
+        if (IsBarangExist(listbarang, req_input)) {
+            printf("Barang dengan nama yang sama sudah ada di toko!\n");
+            continue; // Meminta input ulang
         }
-        i = (i + 1) % CAPACITY;
-    }
 
-    Barang newRequest;
-    StringCopy(newRequest.name, req_input);
-    newRequest.price = 0;
+        int i = req->idxHead;
+        while (i != ((req->idxTail + 1) % CAPACITY)) {
+            if (StringCompare(req_input, req->buffer[i].name)) {
+                printf("Barang dengan nama yang sama sudah ada di antrian!\n");
+                continue; // Meminta input ulang
+            }
+            i = (i + 1) % CAPACITY;
+        }
 
-    enqueue(req, newRequest);
-    printf("\nBarang %s berhasil ditambahkan ke dalam antrian!\n", req_input);
-    printf("Apakah kamu ingin menambahkan barang lain? (YES/BACK): \n");
-    printf(">>> ");
-    STARTINPUTWORD();
-    char *response = WordToString(CurrentWord);
+        Barang newRequest;
+        StringCopy(newRequest.name, req_input);
+        newRequest.price = 0;
 
-    if (StringCompare(response, "YES")) {
-        SRequest(req, listbarang);
-    } else if (StringCompare(response, "BACK")) {
-        printf("Kembali ke menu utama.\n");
-    } else {
-        printf("Input tidak valid.\n");
+        enqueue(req, newRequest);
+        printf("\nBarang %s berhasil ditambahkan ke dalam antrian!\n", req_input);
+
+        while (1) {
+            printf("Apakah kamu ingin menambahkan barang lain? (YES/BACK): \n");
+            printf(">>> ");
+            STARTINPUTWORD();
+            char *response = WordToString(CurrentWord);
+
+            if (StringCompare(response, "YES")) {
+                break; // Meminta barang baru
+            } else if (StringCompare(response, "BACK")) {
+                printf("Kembali ke menu utama.\n");
+                return;
+            } else {
+                printf("Input tidak valid. Silakan masukkan YES atau BACK.\n");
+            }
+        }
     }
 }
+
 
 void SSupply(Queue *req, ListBarang *listbarang) {
     if (isEmpty(*req)) {
@@ -183,53 +190,62 @@ void SSupply(Queue *req, ListBarang *listbarang) {
         return;
     }
 
-    Barang frontItem = req->buffer[req->idxHead];
-    printf("Apakah kamu ingin menambahkan barang %s (terima/tunda/tolak): ", frontItem.name);
-    printf(">>> ");
-    STARTINPUTWORD();
-    char *input = WordToString(CurrentWord);
+    while (!isEmpty(*req)) {
+        Barang frontItem = req->buffer[req->idxHead];
+        char input[20];
 
-    for (int i = 0; input[i] != '\0'; i++) {
-        if (input[i] >= 'A' && input[i] <= 'Z') {
-            input[i] += 32;
+        while (1) {
+            printf("Apakah kamu ingin menambahkan barang %s (terima/tunda/tolak): ", frontItem.name);
+            printf(">>> ");
+            STARTINPUTWORD();
+            StringCopy(input, WordToString(CurrentWord));
+            ToLowerCase(input);
+
+            if (StringCompare(input, "terima")) {
+                int harga;
+                while (1) {
+                    printf("Harga barang: ");
+                    STARTINPUTWORD();
+                    harga = WordToInt(CurrentWord);
+
+                    if (harga > 0) {
+                        break; // Harga valid
+                    } else {
+                        printf("Harga tidak valid! Silakan masukkan harga yang lebih besar dari 0.\n");
+                    }
+                }
+
+                dequeue(req, &frontItem);
+                frontItem.price = harga;
+                AddBarang(listbarang, frontItem.name, frontItem.price);
+                printf("\n%s dengan harga %d telah ditambahkan ke toko.\n", frontItem.name, harga);
+                break;
+            } else if (StringCompare(input, "tunda")) {
+                Barang temp;
+                dequeue(req, &temp);
+                enqueue(req, temp);
+                printf("\n%s dikembalikan ke antrian.\n", temp.name);
+                break;
+            } else if (StringCompare(input, "tolak")) {
+                Barang temp;
+                dequeue(req, &temp);
+                printf("\n%s dihapuskan dari antrian.\n", temp.name);
+                break;
+            } else {
+                printf("Input tidak valid. Silakan masukkan 'terima', 'tunda', atau 'tolak'.\n");
+            }
         }
-    }
 
-    if (StringCompare(input, "terima")) {
-        printf("Harga barang: ");
-        STARTINPUTWORD();
-        int harga = WordToInt(CurrentWord);
+        while (1) {
+            printf("Ketik 'BACK' untuk kembali ke menu atau lanjut ke barang berikutnya: \n");
+            printf(">>> ");
+            STARTINPUTWORD();
 
-        if (harga <= 0) {
-            printf("Harga tidak valid!\n");
-            return;
-        }
-
-        dequeue(req, &frontItem);
-        frontItem.price = harga;
-        AddBarang(listbarang, frontItem.name, frontItem.price);
-        printf("\n%s dengan harga %d telah ditambahkan ke toko.\n", frontItem.name, harga);
-    } else if (StringCompare(input, "tunda")) {
-        Barang temp;
-        dequeue(req, &temp);
-        enqueue(req, temp); 
-        printf("\n%s dikembalikan ke antrian.\n", temp.name);
-    } else if (StringCompare(input, "tolak")) {
-        Barang temp;
-        dequeue(req, &temp);
-        printf("\n%s dihapuskan dari antrian.\n", temp.name);
-    } else {
-        printf("\n< Balik ke menu >\n");
-    }
-    while(1) {
-        printf("Ketik 'BACK' untuk kembali: \n");
-        printf(">>> ");
-        STARTINPUTWORD();
-
-        if (isEqual(CurrentWord, "BACK")) {
-            break;
-        } else {
-            printf("Input tidak valid. \n");
+            if (isEqual(CurrentWord, "BACK")) {
+                return; // Kembali ke menu utama
+            } else {
+                printf("Input tidak valid. Ketik 'BACK' untuk kembali.\n");
+            }
         }
     }
 }

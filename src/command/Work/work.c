@@ -9,11 +9,11 @@ typedef struct
 } Job;
 
 Job jobs[] = {
-    {"Evil Lab Assistant", 100, 14},
-    {"OWCA Hiring Manager", 4200, 21},
-    {"Cikapundunginator Caretaker", 7000, 30},
-    {"Mewing Specialist", 10000, 22},
-    {"Inator Connoisseur", 997, 15}};
+    {"CEO Persatuan Jomblo Bahagia", 100, 14},
+    {"Consultant Rebahan Professional", 4200, 21},
+    {"Penjual Payung Keliling", 7000, 30},
+    {"Bartender Opiuci", 10000, 22},
+    {"Pelatih Game P.U.B.G", 997, 15}};
 
 int jobCount = sizeof(jobs) / sizeof(jobs[0]);
 
@@ -42,18 +42,17 @@ boolean compareJobName(Word input, char *jobName)
     return true;
 }
 
-
 void Work(User *user) {
     printf("You has %d money.\n", user->money);
     printf("Daftar pekerjaan:\n");
-    printf("+----+-----------------------------+-----------+---------+\n");
-    printf("| No | Job Name                    | Salary    | Duration|\n");
-    printf("+----+-----------------------------+-----------+---------+\n");
+    printf("+----+------------------------------------+-----------+----------+\n");
+    printf("| No | Job Name                           | Salary    | Duration |\n");
+    printf("+----+------------------------------------+-----------+----------+\n");
     for (int i = 0; i < jobCount; i++)
     {
-        printf("| %-2d | %-27s | %-9d | %-7ds |\n", i + 1, jobs[i].jobName, jobs[i].salary, jobs[i].duration);
+        printf("| %-2d | %-34s | %-9d | %-7ds |\n", i + 1, jobs[i].jobName, jobs[i].salary, jobs[i].duration);
     }
-    printf("+----+-----------------------------+-----------+---------+\n");
+    printf("+----+------------------------------------+-----------+----------+\n");
     while (1) {
         printf("Masukkan nama pekerjaan yang dipilih: \n");
         printf(">>> ");
@@ -78,6 +77,19 @@ void Work(User *user) {
         user->money += selectedJob->salary; 
         printf("Pekerjaan selesai, +%d telah ditambahkan ke akun Anda.\n", selectedJob->salary);
         printf("User %s sekarang memiliki %d.\n", user->name, user->money);
-        break;
+        while(1) {
+            printf("Ketik 'WORK' untuk kembali bekerja atau 'BACK' untuk kembali ke menu utama: ");
+            printf("\n>>> ");
+            STARTINPUTWORD();
+            if (isEqual(CurrentWord, "BACK")) {
+                printf("Kembali ke menu utama.\n");
+                return;
+            } else if (isEqual(CurrentWord, "WORK")) {
+                break;
+            } else {
+                printf("Input tidak valid. Silakan masukkan 'WORK' atau 'BACK': ");
+                printf("\n>>> ");
+            }
+        }
     }
 }
