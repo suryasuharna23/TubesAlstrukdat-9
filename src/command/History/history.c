@@ -12,7 +12,7 @@ void ShowPurchaseHistory(Stack *history)
     printf(">>> ");
     
     char input[100];
-    fgets(input, sizeof(input), stdin);  // Membaca input dari pengguna
+    fgets(input, sizeof(input), stdin);  
     
     int count = 0;
     // Mencoba untuk membaca input dengan format "HISTORY <angka>"

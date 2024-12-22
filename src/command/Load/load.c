@@ -25,7 +25,7 @@ boolean Load(char *filename) {
     char filepath[256];
 
     char temp[256];
-    ConcatString("config/", filename, temp);
+    ConcatString("src/config/", filename, temp);
     ConcatString(temp, ".txt", filepath);
 
     file = fopen(filepath, "r");

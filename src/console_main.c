@@ -198,8 +198,8 @@ int main()
                 if (isEqual(CurrentWord, "LOGOUT"))
                 {
                     printf("Berhasil logout. Sampai jumpa, %s!\n", CurrentUser.name);
-                    loggedIn = false;                // Logout
-                    CurrentUser = (User){"", "", 0}; // Reset CurrentUser
+                    loggedIn = false;                
+                    CurrentUser = (User){"", "", 0}; 
                     clear();
                 }
                 else if (isEqual(CurrentWord, "WORK"))
@@ -264,8 +264,8 @@ int main()
                 {
                     ascii_save();
                     printf("Masukkan nama file untuk menyimpan: ");
-                    STARTINPUTWORD();                // Mengambil input dari pengguna
-                    Save(WordToString(CurrentWord), &listbarang, &users); // Menyimpan dengan nama file yang diinputkan
+                    STARTINPUTWORD();                
+                    Save(WordToString(CurrentWord), &listbarang, &users); 
                     clear();
                 }
                 else if (isEqual(CurrentWord, "HELP"))
@@ -302,6 +302,7 @@ int main()
                 {
                     ascii_history();
                     ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
+                    clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST ADD"))
                 {

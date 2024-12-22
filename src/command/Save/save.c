@@ -11,7 +11,7 @@ void Save(char *filename, ListBarang *listbarang, ListUser *users)
     FILE *file;
     char filepath[256];
 
-    StringCopy(filepath, "config/");
+    StringCopy(filepath, "src/config/");
     StringConcat(filepath, filename);
     StringConcat(filepath, ".txt");
 
