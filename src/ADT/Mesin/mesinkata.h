@@ -50,4 +50,6 @@ void STARTINPUT(); // Deklarasi
 void ADVIgnoreLN(); // Deklarasi
 boolean IsBlankExist(Word word); // Declaration
 boolean IsLetterOrDigit(Word word); // Declaration
+Word GetLastWord(Word command);
+
 #endif

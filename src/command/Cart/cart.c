@@ -9,32 +9,6 @@
 
 extern Stack purchaseHistory;
 
-Word GetLastWord(Word command)
-{
-    Word result;
-    result.Length = 0;
-    int i = command.Length - 1;
-
-    while (i >= 0 && command.TabWord[i] == ' ')
-    {
-        i--;
-    }
-
-    int end = i;
-    while (i >= 0 && command.TabWord[i] != ' ')
-    {
-        i--;
-    }
-
-    for (int j = i + 1; j <= end; j++)
-    {
-        result.TabWord[result.Length] = command.TabWord[j];
-        result.Length++;
-    }
-
-    return result;
-}
-
 Word GetItemNameFromCommand(Word command)
 {
     Word result;

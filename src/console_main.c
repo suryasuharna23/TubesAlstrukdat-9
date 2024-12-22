@@ -302,7 +302,6 @@ int main()
                 {
                     ascii_history();
                     ShowPurchaseHistory(&CurrentUser.riwayat_pembelian);
-                    clear();
                 }
                 else if (isEqual(CurrentWord, "WISHLIST ADD"))
                 {

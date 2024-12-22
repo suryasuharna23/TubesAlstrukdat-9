@@ -87,6 +87,17 @@ void RegisterUser(ListUser *users, boolean *flag)
     CreateEmptyList(&newUser.wishlist);
     CreateEmptyS(&newUser.riwayat_pembelian);
     InsertUser(users, newUser);
-    printf("User %s registered.\n", WordToString(username));
+    printf("User %s berhasil didaftarkan.\n", WordToString(username));
     *flag = true;
+
+    while(1){
+        printf("Ketik 'OK' untuk kembali ke menu. ");
+        printf("\n>>> ");
+        STARTINPUTWORD();
+        if (isEqual(CurrentWord, "OK")){
+            break;
+        } else {
+            printf("Input tidak valid.\n");
+        }
+    }
 }

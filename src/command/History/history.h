@@ -2,6 +2,7 @@
 #define HISTORY_H
 
 #include "../../ADT/Stack/stack.h"
+#include "../../ADT/Mesin/mesinkata.h" 
 
 void AddPurchaseHistory(Stack *history, Purchase purchase);
 void ShowPurchaseHistory(Stack *history);
