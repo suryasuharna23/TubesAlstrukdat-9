@@ -30,10 +30,11 @@ void help_main(){
     printf("| 20  | WISHLIST SWAP         | Menukar posisi barang di wishlist  |\n");
     printf("| 21  | WISHLIST CLEAR        | Mengosongkan wishlist              |\n");
     printf("| 22  | WISHLIST SHOW         | Menampilkan daftar wishlist        |\n");
-    printf("| 23  | HELP                  | Menampilkan bantuan                |\n");
-    printf("| 24  | SAVE                  | Menyimpan konfigurasi atau data    |\n");
-    printf("| 25  | LOGOUT                | Keluar dari sesi pengguna          |\n");
-    printf("| 26  | QUIT                  | Keluar dari program                |\n");
+    printf("| 23  | OPTIMASIRUTE          | Menganalisis rute terbaik          |\n");
+    printf("| 24  | HELP                  | Menampilkan bantuan                |\n");
+    printf("| 25  | SAVE                  | Menyimpan konfigurasi atau data    |\n");
+    printf("| 26  | LOGOUT                | Keluar dari sesi pengguna          |\n");
+    printf("| 27  | QUIT                  | Keluar dari program                |\n");
     printf("+-------------------------------------------------------------------+\n");
     printf("\n");
     while(1){

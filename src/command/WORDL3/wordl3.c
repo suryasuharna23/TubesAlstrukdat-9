@@ -4,13 +4,10 @@
 
 void READLINE(char *filename, int IdxLine){
     START(filename);
-    // printf("[DEBUG] readline 1");
     int currentLine = 0;
 
     while ((currentLine < IdxLine) && (!IsEOP())){
-        // printf("[DEBUG] readline 2");
         while ((CurrentChar != '\n') && (!IsEOP())){
-            // printf("[DEBUG] readline 3");
             ADV();
         }
         if (CurrentChar == '\n'){

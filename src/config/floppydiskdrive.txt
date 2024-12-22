@@ -1,15 +1,14 @@
-8
+7
 10 AK47
 10 Zebra
-20 Lalabu
+20 Asus Vivobook
 20 Ayam Goreng Crisbar
-500 Meong
+500 Anggur Merah
 100 Domba
-20000 Allen
-100 Jessica
+120 Zebra
 2
-9300 user1 alstrukdatkeren
-6
+1000 Surya surya23s
+5
 2 40
 20 2 AK47
 20 1 Lalabu
@@ -22,11 +21,11 @@
 500 1 Meong
 1 20
 20 1 Ayam Goreng Crisbar
-1 1000
-1000 10 Jessica
-0
-25 user2 kerenbangetkak
-0
 2
+Ayam Goreng Crisbar
+AK47
+25 Persada persada123
+0
+2 
 Meong
-Domb
+Domba

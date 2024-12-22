@@ -24,7 +24,6 @@ boolean Load(char *filename) {
     FILE *file;
     char filepath[256];
 
-    // Construct the full path to the config folder
     char temp[256];
     ConcatString("config/", filename, temp);
     ConcatString(temp, ".txt", filepath);
@@ -36,7 +35,6 @@ boolean Load(char *filename) {
     }
 
 
-    // Read Barang Data
     int num_barang = 0;
     if (fscanf(file, "%d\n", &num_barang) != 1) {
         printf("Failed to read number of Barang.\n");
@@ -44,7 +42,7 @@ boolean Load(char *filename) {
         return false;
     }
 
-    listbarang.count = 0; // Initialize listbarang
+    listbarang.count = 0; 
     for (int i = 0; i < num_barang; i++) {
         int price;
         char name[MAX_LEN];
@@ -72,7 +70,7 @@ boolean Load(char *filename) {
         return false;
     }
 
-    users.count = 0; // Initialize users
+    users.count = 0; 
     for (int i = 0; i < num_users; i++) {
         int money;
         char name[MAX_LEN];
@@ -101,7 +99,6 @@ boolean Load(char *filename) {
         CreateEmptyS(&user.riwayat_pembelian);
         CreateEmptyList(&user.wishlist);
 
-        // Read Purchase History
         int num_history;
         if (fscanf(file, "%d\n", &num_history) != 1)
         {
@@ -137,7 +134,6 @@ boolean Load(char *filename) {
             Push(&user.riwayat_pembelian, purchase);
         }
 
-        // Read Wishlist
         int num_wishlist;
         if (fscanf(file, "%d\n", &num_wishlist) != 1)
         {

@@ -22,7 +22,6 @@ void Save(char *filename, ListBarang *listbarang, ListUser *users)
         return;
     }
 
-    // Save items data
     printf("tes\n");
     fprintf(file, "%d\n", listbarang->count);
     for (int i = 0; i < listbarang->count; i++)
@@ -32,17 +31,14 @@ void Save(char *filename, ListBarang *listbarang, ListUser *users)
                 listbarang->items[i].name);
     }
 
-    // Save users data
     fprintf(file, "%d\n", users->count);
     for (int i = 0; i < users->count; i++)
     {
-        // Save user info
         fprintf(file, "%d %s %s\n",
                 users->users[i].money,
                 users->users[i].name,
                 users->users[i].password);
 
-        // Save purchase history
         Stack *history = &users->users[i].riwayat_pembelian;
         int history_count = history->top + 1;
         fprintf(file, "%d\n", history_count);
@@ -61,7 +57,6 @@ void Save(char *filename, ListBarang *listbarang, ListUser *users)
             }
         }
 
-        // Save wishlist
         List *wishlist = &users->users[i].wishlist;
         int wishlist_count = 0;
         address_list P = First(*wishlist);

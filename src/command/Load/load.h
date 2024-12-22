@@ -7,7 +7,6 @@
 #include "../../ADT/User/user.h"
 
 boolean Load(char *filename);
-
 extern ListUser users;
 extern ListBarang barangs;
 

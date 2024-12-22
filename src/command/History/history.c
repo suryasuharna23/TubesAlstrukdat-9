@@ -24,7 +24,6 @@ void ShowPurchaseHistory(Stack *history)
     }
 
     printf("Riwayat Pembelian:\n");
-    // Start from bottom of stack to show oldest first
     for (int i = 0; i <= history->top; i++)
     {
         Purchase purchase = history->purchases[i];

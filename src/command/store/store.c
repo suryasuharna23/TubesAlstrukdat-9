@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-// Fungsi untuk menampilkan daftar barang dalam bentuk tabel
 void DisplayBarang(ListBarang *listbarang) {
     printf("+----+-----------------------------+-----------+\n");
     printf("| No | Nama Barang                 | Harga     |\n");
@@ -16,7 +14,6 @@ void DisplayBarang(ListBarang *listbarang) {
     printf("+----+-----------------------------+-----------+\n");
 }
 
-// Menghitung panjang string
 int StringLength(const char *str) {
     int len = 0;
     while (str[len] != '\0') {
@@ -92,9 +89,6 @@ void SRemove(ListBarang *listbarang) {
             while (!barangExist) {
                 printf("Daftar barang yang ada di toko:\n");
                 DisplayBarang(listbarang);
-                // for (int i = 0; i < listbarang->count; i++) {
-                //     printf("%d. %s - %d\n", i + 1, listbarang->items[i].name, listbarang->items[i].price);
-                // }
                 printf("Nama barang yang akan dihapus:\n");
                 printf(">>> ");
                 STARTINPUTWORD();
@@ -142,7 +136,7 @@ void SRequest(Queue *req, ListBarang *listbarang) {
         while (i != ((req->idxTail + 1) % CAPACITY)) {
             if (StringCompare(req_input, req->buffer[i].name)) {
                 printf("Barang dengan nama yang sama sudah ada di antrian!\n");
-                continue; // Meminta input ulang
+                continue; //  input ulang
             }
             i = (i + 1) % CAPACITY;
         }
@@ -161,7 +155,7 @@ void SRequest(Queue *req, ListBarang *listbarang) {
             char *response = WordToString(CurrentWord);
 
             if (StringCompare(response, "YES")) {
-                break; // Meminta barang baru
+                break; // req barang baru
             } else if (StringCompare(response, "BACK")) {
                 printf("Kembali ke menu utama.\n");
                 return;
@@ -242,7 +236,7 @@ void SSupply(Queue *req, ListBarang *listbarang) {
             STARTINPUTWORD();
 
             if (isEqual(CurrentWord, "BACK")) {
-                return; // Kembali ke menu utama
+                return; 
             } else {
                 printf("Input tidak valid. Ketik 'BACK' untuk kembali.\n");
             }

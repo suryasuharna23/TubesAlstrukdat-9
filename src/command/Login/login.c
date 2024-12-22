@@ -42,7 +42,7 @@ void Login(ListUser *users, User *CurrentUser, int *user_id) {
         }
     }
 
-    // Cari username dalam daftar pengguna
+    // cek username dalam daftar pengguna
     for (int i = 0; i < users->count; i++) {
         if (strncmp(users->users[i].name, username.TabWord, username.Length) == 0 && users->users[i].name[username.Length] == '\0') {
             userIdx = i;
@@ -52,19 +52,19 @@ void Login(ListUser *users, User *CurrentUser, int *user_id) {
 
     if (userIdx != -1) {
         if (strncmp(users->users[userIdx].password, password.TabWord, password.Length) == 0 && users->users[userIdx].password[password.Length] == '\0') {
-            // Salin data pengguna ke CurrentUser
+            // copy data pengguna ke CurrentUser
             *user_id = userIdx;
             strcpy(CurrentUser->name, users->users[userIdx].name);
             strcpy(CurrentUser->password, users->users[userIdx].password);
             CurrentUser->money = users->users[userIdx].money;
 
-            // Salin riwayat pembelian
+            // copy riwayat pembelian
             CreateEmptyS(&CurrentUser->riwayat_pembelian);
             for (int j = 0; j <= users->users[userIdx].riwayat_pembelian.top; j++) {
                 Push(&CurrentUser->riwayat_pembelian, users->users[userIdx].riwayat_pembelian.purchases[j]);
             }
 
-            // Salin wishlist
+            // copy wishlist
             CreateEmptyList(&CurrentUser->wishlist);
             address_list P = First(users->users[userIdx].wishlist);
             while (P != Nol) {
@@ -73,7 +73,7 @@ void Login(ListUser *users, User *CurrentUser, int *user_id) {
             }
 
             printf("Anda telah login ke PURRMART sebagai %s.\n", CurrentUser->name);
-            return; // Pastikan fungsi keluar setelah login berhasil
+            return; 
         } else {
             printf("Login gagal. Password salah.\n");
         }

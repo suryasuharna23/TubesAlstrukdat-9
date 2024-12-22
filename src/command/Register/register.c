@@ -10,7 +10,6 @@ void RegisterUser(ListUser *users, boolean *flag)
     boolean blank_exist, valid;
     int i;
 
-    // Input username
     printf("Enter your username: ");
     blank_exist = true;
     valid = false;
@@ -31,7 +30,6 @@ void RegisterUser(ListUser *users, boolean *flag)
         }
         else
         {
-            // Check for duplicate username
             valid = true;
             for (i = 0; i < users->count; i++)
             {
@@ -57,7 +55,6 @@ void RegisterUser(ListUser *users, boolean *flag)
         }
     }
 
-    // Input password
     printf("Enter your password: ");
     blank_exist = true;
     valid = false;
@@ -81,7 +78,6 @@ void RegisterUser(ListUser *users, boolean *flag)
         }
     }
 
-    // Add new user with money set to 0
     User newUser;
     CreateUser(&newUser);
     newUser.money = 0;

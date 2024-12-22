@@ -81,12 +81,11 @@ void tebak_angka(User *user) {
     }
 
     if (!win) {
-        printf("--------------------------------------------\n");
+        printf("-------------------------------------------------\n");
         printf("Yahh kamu kalah :(\n");
         printf("Angka yang benar adalah %d\n", key_value);
     }
     printf("-------------------------------------------------\n");
-    // printf("Poin yang diperoleh: %d\n", poin);
     printf("Total uang Anda sekarang: %d\n", user->money);
 
     for (int i = 0; i < users.count; i++) {

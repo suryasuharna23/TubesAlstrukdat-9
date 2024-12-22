@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h> // Untuk INT_MAX
 #include "graph.h"
 #include "../../ADT/Mesin/mesinkata.h"
 #include "../../ADT/Mesin/mesinkarakter.h"
+
+#define TAK_TERHINGGA 1000000 // asumsi jarak terbesar
 
 int *rute_terbaik;
 int *rute_sementara;
 int *sudah_dikunjungi;
 int biaya_terkecil;
 
-// Fungsi untuk Mencari Rute Terbaik
 void cariRuteTerbaik(Graf *graf, int lokasi_sekarang, int jumlah_terkunjungi, int biaya_sementara) {
     if (jumlah_terkunjungi == graf->jumlah_lokasi) {
         if (biaya_sementara < biaya_terkecil) {
@@ -32,7 +32,6 @@ void cariRuteTerbaik(Graf *graf, int lokasi_sekarang, int jumlah_terkunjungi, in
     }
 }
 
-// Fungsi Membuat Graf
 Graf* buatGraf(int jumlah_lokasi) {
     Graf *graf = (Graf*) malloc(sizeof(Graf));
     graf->jumlah_lokasi = jumlah_lokasi;
@@ -46,13 +45,11 @@ Graf* buatGraf(int jumlah_lokasi) {
     return graf;
 }
 
-// Fungsi Menambahkan Jalur
 void tambahJalur(Graf *graf, int lokasi1, int lokasi2, int jarak) {
     graf->matriks_jarak[lokasi1][lokasi2] = jarak;
     graf->matriks_jarak[lokasi2][lokasi1] = jarak;
 }
 
-// Fungsi Mencari Rute Paling Efektif
 void rutePalingEfektif(Graf *graf) {
     rute_terbaik = (int*) malloc(graf->jumlah_lokasi * sizeof(int));
     rute_sementara = (int*) malloc(graf->jumlah_lokasi * sizeof(int));
@@ -64,7 +61,7 @@ void rutePalingEfektif(Graf *graf) {
     cariRuteTerbaik(graf, 0, 1, 0);
 
     printf("A-ha! Rute paling efektif adalah ");
-    for (int i = 0; i < graf->jumlah_lokasi; i++) { // Tidak mencetak node kembali
+    for (int i = 0; i < graf->jumlah_lokasi; i++) { // gak mencetak node lagi
         printf("%d", rute_terbaik[i]);
         if (i < graf->jumlah_lokasi - 1) printf("-");
     }

@@ -15,20 +15,17 @@ Word GetLastWord(Word command)
     result.Length = 0;
     int i = command.Length - 1;
 
-    // Skip trailing spaces
     while (i >= 0 && command.TabWord[i] == ' ')
     {
         i--;
     }
 
-    // Find start of last word
     int end = i;
     while (i >= 0 && command.TabWord[i] != ' ')
     {
         i--;
     }
 
-    // Copy last word
     for (int j = i + 1; j <= end; j++)
     {
         result.TabWord[result.Length] = command.TabWord[j];
@@ -45,7 +42,6 @@ Word GetItemNameFromCommand(Word command)
     int i = 0;
     boolean found_command = false;
 
-    // Skip until after "ADD " or "REMOVE "
     while (i < command.Length - 6)
     {
         if ((command.TabWord[i] == 'A' &&
@@ -69,15 +65,11 @@ Word GetItemNameFromCommand(Word command)
 
     if (!found_command)
         return result;
-
-    // Find last space (before quantity)
     int end = command.Length - 1;
     while (end >= 0 && command.TabWord[end] != ' ')
     {
         end--;
     }
-
-    // Copy item name (including spaces and numbers)
     while (i < end)
     {
         result.TabWord[result.Length] = command.TabWord[i];
@@ -314,14 +306,10 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
         purchase.items[purchase.count++] = item;
     }
 
-    // Sort items in the purchase based on total (descending) and name (lexical descending)
     for (int i = 0; i < purchase.count - 1; i++) {
         for (int j = i + 1; j < purchase.count; j++) {
-            // First criteria: total descending
             if (purchase.items[i].total < purchase.items[j].total ||
-                // Second criteria: name descending when totals are equal
                 (purchase.items[i].total == purchase.items[j].total)) {
-                // Compare names manually
                 const char *name1 = purchase.items[i].name;
                 const char *name2 = purchase.items[j].name;
                 while (*name1 && (*name1 == *name2)) {
@@ -329,7 +317,6 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
                     name2++;
                 }
                 if (*name1 < *name2) {
-                    // Swap items[i] and items[j]
                     PurchaseItem temp = purchase.items[i];
                     purchase.items[i] = purchase.items[j];
                     purchase.items[j] = temp;
@@ -349,11 +336,7 @@ void CartPay(User *CurrentUser, ListBarang *listbarang) {
             if (CurrentUser->money >= totalBiaya) {
                 CurrentUser->money -= totalBiaya;
                 printf("Selamat kamu telah membeli barang-barang tersebut!\n");
-
-                // Store in user's history instead of global history
                 Push(&CurrentUser->riwayat_pembelian, purchase);
-
-                // Clear cart
                 CreateEmpty(&CurrentUser->keranjang);
             } else {
                 printf("Uang kamu hanya %d, tidak cukup untuk membeli keranjang!\n", CurrentUser->money);
