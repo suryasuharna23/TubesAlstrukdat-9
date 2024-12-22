@@ -194,6 +194,7 @@ void wordl3_challenge(User *user){
     }
     else if (WordCompare(response, "BACK"))
     {
+        printf("Kembali ke menu utama.\n");
         return;
     }
     else
