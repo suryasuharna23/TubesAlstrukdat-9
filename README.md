@@ -56,17 +56,19 @@ FITUR UTAMA:
 
 
 CARA MENJALANKAN:
-1. Jalankan program dengan perintah berikut di folder TubesAlstrukdat-9
-2. Lakukan perintah "make clean" pada terimal yang digunakan untuk menghapus file hasil kompilasi yang dihasilkan selama proses build, seperti file objek (.o), file executable yang sudah dibangun, atau file lainnya yang bersifat sementara.
-3. Selanjutanya lakukan perintah
+1. Pastikan berada di direktori utama proyek: TubesAlstrukdat-9.
+2. Bersihkan file hasil kompilasi sebelumnya dengan perintah:
+   make clean
+3. Kompilasi program menggunakan perintah:
    make
-4. Setelah berhasil, run program dengan perintah
+4. Setelah berhasil, run program dengan perintah:
    ./runPURRMART
-2. Anda akan melihat main menu dengan beberapa opsi seperti:
+5. Semua dijalankan pada terminal
+6. Anda akan melihat main menu dengan beberapa opsi seperti:
     START
     LOAD <filename>
-    HELP
-3. Ikuti instruksi di layar untuk menjalankan fitur-fitur aplikasi.
+    QUIT
+7. Ikuti instruksi di layar untuk menjalankan fitur-fitur aplikasi.
 
 COMMAND DESKRIPSI:
 - START	          - Memulai sesi baru dengan membaca file konfigurasi default.
